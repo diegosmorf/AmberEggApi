@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\Api.Common.Repository.MongoDb\Api.Common.Repository.MongoDb.csproj" />
+    <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

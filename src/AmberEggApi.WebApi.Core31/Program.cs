@@ -1,13 +1,14 @@
-﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Serilog;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Linq;
+using Autofac.Extensions.DependencyInjection;
+using Serilog;
 
-namespace AmberEggApi.WebApi
+namespace AmberEggApi.WebApi.Core31
 {
     public static class Program
     {

@@ -18,8 +18,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using Mongo2Go;
+using Microsoft.OpenApi.Models;
 
-namespace AmberEggApi.WebApi.Server
+namespace AmberEggApi.WebApi
 {
     public class Startup
     {
@@ -65,7 +67,7 @@ namespace AmberEggApi.WebApi.Server
                 });
 
             //Config Swagger
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "AmberEggApi", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "AmberEggApi", Version = "v1"}); });
 
             services.AddCors(config =>
             {
@@ -77,7 +79,16 @@ namespace AmberEggApi.WebApi.Server
                 config.AddPolicy("policy", policy);
             });
 
-            var settings = Configuration.GetSection("MongoSettings").Get<MongoSettings>();
+            //Setup MongoDB InMemory
+            var mongoDbServer = MongoDbRunner.Start();
+
+            var settings = new MongoSettings
+            {
+                ConnectionString = mongoDbServer.ConnectionString,
+                DatabaseName = "Companies"
+            };
+
+            //var settings = Configuration.GetSection("MongoSettings").Get<MongoSettings>();
             services.AddSingleton(settings);
 
             services.AddMemoryCache();

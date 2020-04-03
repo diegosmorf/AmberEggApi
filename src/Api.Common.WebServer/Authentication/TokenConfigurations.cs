@@ -4,6 +4,6 @@
     {
         public string Audience => "Api.Template.Audience";
         public string Issuer => "Api.Template.Issuer";
-        public int Seconds => 86399;
+        public int Seconds => 600; // 10 mins
     }
 }

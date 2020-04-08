@@ -5,6 +5,7 @@
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <UserSecretsId>beddb470-7df7-4ef0-bc68-e8314a2ba753</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>    
+    <ProjectGuid>{336892E1-9089-4C60-8B92-455B1088C5D2}</ProjectGuid>
   </PropertyGroup>
   
   <ItemGroup>

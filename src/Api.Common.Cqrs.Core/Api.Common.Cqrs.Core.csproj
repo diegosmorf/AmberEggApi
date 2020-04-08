@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <ProjectGuid>{2353976C-7698-4D15-8C04-6EB55CD6E8EE}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>

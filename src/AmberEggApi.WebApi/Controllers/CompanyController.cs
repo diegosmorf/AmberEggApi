@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using AmberEggApi.ApplicationService.Interfaces;
+﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.Domain.Commands;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi.Controllers
 {

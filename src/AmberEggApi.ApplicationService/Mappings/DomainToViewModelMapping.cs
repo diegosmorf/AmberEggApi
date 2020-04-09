@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using AmberEggApi.ApplicationService.ViewModels;
+﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Models;
+using AutoMapper;
 
 namespace AmberEggApi.ApplicationService.Mappings
 {

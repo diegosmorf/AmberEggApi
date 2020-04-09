@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AmberEggApi.Domain.Models;
 using Api.Common.Cqrs.Core.Events;
-using AmberEggApi.Domain.Models;
+using System;
 
 namespace AmberEggApi.Domain.Events
 {

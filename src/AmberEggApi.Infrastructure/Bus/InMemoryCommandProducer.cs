@@ -18,11 +18,11 @@ namespace AmberEggApi.Infrastructure.Bus
         {
             //Validating Command Model Attributes
             command.RaiseExceptionIfModelIsNotValid();
-            
+
             //Here you can save into any queue or message broker of your preference
-            
+
             //Calling Consumer InMemory
-            return await consumer.Receive<TCommand,TEntity>(command);
+            return await consumer.Receive<TCommand, TEntity>(command);
         }
     }
 }

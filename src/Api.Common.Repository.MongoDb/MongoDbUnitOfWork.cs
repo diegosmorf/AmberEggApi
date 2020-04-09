@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Api.Common.Repository.Repositories;
 using System.Threading.Tasks;
-using Api.Common.Repository.Repositories;
 
 namespace Api.Common.Repository.MongoDb
 {

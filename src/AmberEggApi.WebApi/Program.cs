@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace AmberEggApi.WebApi
 {
@@ -20,10 +19,8 @@ namespace AmberEggApi.WebApi
 
                 var config = builder.Build();
                 var pathToContentRoot = Directory.GetCurrentDirectory();
-
-                var webHostArgs = args.Where(arg => arg != "--console").ToArray();
-
-                var host = WebHost.CreateDefaultBuilder(webHostArgs)
+                                
+                var host = WebHost.CreateDefaultBuilder(args)
                     .UseConfiguration(config)
                     .ConfigureServices(s => s.AddAutofac())
                     .UseContentRoot(pathToContentRoot)
@@ -31,7 +28,7 @@ namespace AmberEggApi.WebApi
                     .UseSerilog()
                     .Build();
 
-                host.Run();
+                host.RunAsync();
             }
             catch (Exception ex)
             {

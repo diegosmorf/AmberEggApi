@@ -1,5 +1,5 @@
-using System;
 using Api.Common.Contracts.Entities;
+using System;
 
 namespace Api.Common.Repository.Repositories
 {

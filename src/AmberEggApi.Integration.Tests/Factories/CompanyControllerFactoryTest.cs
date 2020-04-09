@@ -1,6 +1,6 @@
-﻿using Api.Common.WebServer.Server;
-using AmberEggApi.ApplicationService.ViewModels;
+﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
+using Api.Common.WebServer.Server;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System;
@@ -31,7 +31,7 @@ namespace AmberEggApi.Integration.Tests.Factories
                 JsonConvert.DeserializeObject<CompanyViewModel>(responseModel.Result.ToString());
 
             // Assert
-            responseModel.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            responseModel.StatusCode.Should().Be((int)HttpStatusCode.OK);
             viewModel.Should().BeOfType<CompanyViewModel>();
 
             viewModel.Id.Should().NotBeEmpty();
@@ -48,7 +48,7 @@ namespace AmberEggApi.Integration.Tests.Factories
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            responseModel.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            responseModel.StatusCode.Should().Be((int)HttpStatusCode.OK);
             responseModel.Result.Should().Be("");
         }
 
@@ -73,7 +73,7 @@ namespace AmberEggApi.Integration.Tests.Factories
             // Assert
             var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
 
-            apiResponse.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
             apiResponse.ResponseException.Should().BeNull();
             apiResponse.Message.Should().Be("Request successful.");
 
@@ -97,7 +97,7 @@ namespace AmberEggApi.Integration.Tests.Factories
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            apiResponse.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
             viewModelResponse.Should().BeOfType<CompanyViewModel>();
 
             viewModelResponse.Id.Should().NotBeEmpty();

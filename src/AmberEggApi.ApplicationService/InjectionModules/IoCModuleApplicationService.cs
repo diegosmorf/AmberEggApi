@@ -18,7 +18,7 @@ namespace AmberEggApi.ApplicationService.InjectionModules
                 .RegisterAssemblyTypes(assemblyToScan)
                 .Where(c => c.IsClass
                             && c.IsInNamespace("AmberEggApi.ApplicationService.Services")).AsImplementedInterfaces();
-            
+
         }
     }
 }

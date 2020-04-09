@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Serilog;
+using System;
+using System.Threading.Tasks;
 
 namespace Api.Common.WebServer.Server
 {

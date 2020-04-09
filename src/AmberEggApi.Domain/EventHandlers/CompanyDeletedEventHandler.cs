@@ -1,7 +1,7 @@
-﻿using Api.Common.Cqrs.Core.Events;
-using Api.Common.Repository.Repositories;
-using AmberEggApi.Domain.Events;
+﻿using AmberEggApi.Domain.Events;
 using AmberEggApi.Domain.QueryModels;
+using Api.Common.Cqrs.Core.Events;
+using Api.Common.Repository.Repositories;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.EventHandlers

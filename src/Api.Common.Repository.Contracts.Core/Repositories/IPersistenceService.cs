@@ -1,8 +1,8 @@
+using Api.Common.Contracts.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Api.Common.Contracts.Entities;
 
 namespace Api.Common.Repository.Repositories
 {

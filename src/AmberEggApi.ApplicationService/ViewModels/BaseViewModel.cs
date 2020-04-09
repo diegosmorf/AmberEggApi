@@ -1,6 +1,5 @@
-﻿using System;
-using Api.Common.Contracts.Entities;
-using Api.Common.Cqrs.Core.Entities;
+﻿using Api.Common.Contracts.Entities;
+using System;
 
 namespace AmberEggApi.ApplicationService.ViewModels
 {

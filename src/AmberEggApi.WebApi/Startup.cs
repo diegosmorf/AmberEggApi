@@ -1,25 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using AmberEggApi.ApplicationService.InjectionModules;
+using AmberEggApi.Database.InjectionModules;
+using AmberEggApi.Infrastructure.InjectionModules;
 using Api.Common.Repository.MongoDb;
 using Api.Common.Repository.Repositories;
 using Api.Common.WebServer.Server;
 using Autofac;
-using AmberEggApi.ApplicationService.InjectionModules;
-using AmberEggApi.Database.InjectionModules;
-using AmberEggApi.Domain.InjectionModules;
-using AmberEggApi.Infrastructure.InjectionModules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using Mongo2Go;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
-using Swashbuckle.AspNetCore.Swagger;
-using Mongo2Go;
-using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace AmberEggApi.WebApi
 {
@@ -29,8 +26,8 @@ namespace AmberEggApi.WebApi
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -67,7 +64,7 @@ namespace AmberEggApi.WebApi
                 });
 
             //Config Swagger
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "AmberEggApi", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmberEggApi", Version = "v1" }); });
 
             services.AddCors(config =>
             {
@@ -88,7 +85,8 @@ namespace AmberEggApi.WebApi
                 DatabaseName = "Companies"
             };
 
-            //var settings = Configuration.GetSection("MongoSettings").Get<MongoSettings>();
+            /// Setup MongoDB ConnectioString
+            /// var settings = Configuration.GetSection("MongoSettings").Get<MongoSettings>();
             services.AddSingleton(settings);
 
             services.AddMemoryCache();

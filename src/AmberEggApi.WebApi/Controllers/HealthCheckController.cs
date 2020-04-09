@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using AmberEggApi.ApplicationService.Interfaces;
+﻿using AmberEggApi.ApplicationService.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi.Controllers
 {
@@ -41,7 +41,7 @@ namespace AmberEggApi.WebApi.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode((int) HttpStatusCode.InternalServerError, new {ex.Message});
+                    return StatusCode((int)HttpStatusCode.InternalServerError, new { ex.Message });
                 }
             });
         }

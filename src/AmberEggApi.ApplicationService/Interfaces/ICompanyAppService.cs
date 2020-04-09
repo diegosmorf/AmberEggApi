@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AmberEggApi.ApplicationService.ViewModels;
+using AmberEggApi.Domain.Commands;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AmberEggApi.ApplicationService.ViewModels;
-using AmberEggApi.Domain.Commands;
 
 namespace AmberEggApi.ApplicationService.Interfaces
 {

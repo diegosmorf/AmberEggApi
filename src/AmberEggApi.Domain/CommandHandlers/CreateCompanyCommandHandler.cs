@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Models;
 using Api.Common.Cqrs.Core.CommandHandlers;
 using Api.Common.Repository.Repositories;
-using AmberEggApi.Domain.Commands;
-using AmberEggApi.Domain.Models;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.CommandHandlers
 {

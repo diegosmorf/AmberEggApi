@@ -1,5 +1,5 @@
-﻿using System;
-using Api.Common.Repository.Entities;
+﻿using Api.Common.Repository.Entities;
+using System;
 
 namespace AmberEggApi.Domain.QueryModels
 {

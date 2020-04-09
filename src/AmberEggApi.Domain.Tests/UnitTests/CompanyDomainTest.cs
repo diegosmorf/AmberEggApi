@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Tests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
-using AmberEggApi.Domain.Commands;
-using AmberEggApi.Domain.Tests.Factories;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {

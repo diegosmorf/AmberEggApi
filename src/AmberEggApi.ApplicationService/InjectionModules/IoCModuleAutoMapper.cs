@@ -1,6 +1,6 @@
-﻿using Autofac;
+﻿using AmberEggApi.ApplicationService.Mappings;
+using Autofac;
 using AutoMapper;
-using AmberEggApi.ApplicationService.Mappings;
 
 namespace AmberEggApi.ApplicationService.InjectionModules
 {

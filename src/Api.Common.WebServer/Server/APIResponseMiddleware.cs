@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Api.Common.WebServer.Extensions;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Api.Common.WebServer.Extensions;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace Api.Common.WebServer.Server
 {
@@ -70,11 +70,11 @@ namespace Api.Common.WebServer.Server
 
             switch (context.Response.StatusCode)
             {
-                case (int) HttpStatusCode.OK:
+                case (int)HttpStatusCode.OK:
                     await HandleRequestAsync(context, body, ResponseMessage.Success);
                     break;
 
-                case (int) HttpStatusCode.Unauthorized:
+                case (int)HttpStatusCode.Unauthorized:
                     await HandleRequestAsync(context, body, ResponseMessage.UnAuthorized);
                     break;
 
@@ -102,14 +102,14 @@ namespace Api.Common.WebServer.Server
 
                 case UnauthorizedAccessException ex:
                     apiError = new ApiError(ex.Message);
-                    context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     break;
 
                 default:
                     var msg = exception.GetBaseException().Message;
                     var stack = exception.StackTrace;
-                    apiError = new ApiError(msg) {Details = stack};
-                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    apiError = new ApiError(msg) { Details = stack };
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
 

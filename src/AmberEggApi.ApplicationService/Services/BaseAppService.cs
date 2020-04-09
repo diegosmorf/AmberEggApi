@@ -1,5 +1,5 @@
-﻿using Api.Common.Cqrs.Core.Commands;
-using AmberEggApi.ApplicationService.Interfaces;
+﻿using AmberEggApi.ApplicationService.Interfaces;
+using Api.Common.Cqrs.Core.Commands;
 using AutoMapper;
 
 namespace AmberEggApi.ApplicationService.Services

@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Api.Common.Repository.Repositories;
+﻿using Api.Common.Repository.Repositories;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Database.Migrations
 {

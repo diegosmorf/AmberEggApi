@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Api.Common.Contracts.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
-using Api.Common.Contracts.Entities;
 
 namespace Api.Common.Repository.Entities
 {

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Api.Common.Repository.Entities;
+﻿using Api.Common.Repository.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Database.Models
 {

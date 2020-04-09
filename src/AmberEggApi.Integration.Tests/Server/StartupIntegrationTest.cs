@@ -1,11 +1,11 @@
-﻿using Api.Common.Repository.MongoDb;
-using Api.Common.Repository.Repositories;
-using Api.Common.WebServer.Server;
-using AmberEggApi.ApplicationService.InjectionModules;
+﻿using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.InjectionModules;
 using AmberEggApi.Domain.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
 using AmberEggApi.Integration.Tests.IntegrationTests;
+using Api.Common.Repository.MongoDb;
+using Api.Common.Repository.Repositories;
+using Api.Common.WebServer.Server;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -73,7 +73,7 @@ namespace AmberEggApi.Integration.Tests.Server
 
         private void ApplyDbMigrations(IApplicationBuilder app)
         {
-           app.ApplicationServices.GetService<IDatabaseMigrator>().ApplyMigrations();
+            app.ApplicationServices.GetService<IDatabaseMigrator>().ApplyMigrations();
         }
     }
 }

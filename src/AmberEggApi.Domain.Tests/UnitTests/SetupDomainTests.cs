@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using Api.Common.Repository.MongoDb;
-using Api.Common.Repository.Repositories;
-using AmberEggApi.ApplicationService.InjectionModules;
+﻿using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.InjectionModules;
 using AmberEggApi.Domain.Tests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
+using Api.Common.Repository.MongoDb;
+using Api.Common.Repository.Repositories;
 using Autofac;
 using Mongo2Go;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {

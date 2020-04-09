@@ -1,6 +1,4 @@
-﻿using Api.Common.WebServer.Server;
-
-namespace AmberEggApi.ApplicationService.Interfaces
+﻿namespace AmberEggApi.ApplicationService.Interfaces
 {
     public interface IBaseAppService
     {

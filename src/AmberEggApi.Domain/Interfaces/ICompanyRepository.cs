@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AmberEggApi.Domain.Models;
+using System;
 using System.Threading.Tasks;
-using AmberEggApi.Domain.Models;
 
 namespace AmberEggApi.Domain.Interfaces
 {

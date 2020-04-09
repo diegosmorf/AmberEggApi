@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Api.Common.Cqrs.Core.Commands;
+﻿using Api.Common.Cqrs.Core.Commands;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Commands
 {

@@ -1,10 +1,10 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using AmberEggApi.ApplicationService.ViewModels;
+﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Integration.Tests.Factories;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests
 {
@@ -28,7 +28,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
                 JsonConvert.DeserializeObject<CompanyViewModel>(responseGet.Result.ToString());
 
             // Assert
-            responseGet.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            responseGet.StatusCode.Should().Be((int)HttpStatusCode.OK);
             viewModelGet.Should().BeOfType<CompanyViewModel>();
             viewModelGet.Id.Should().NotBeEmpty();
             viewModelGet.Id.Should().Be(viewModelCreate.Id);
@@ -44,7 +44,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var responseGet = await companyFactory.Get(viewModelCreate.Id);
 
             // Assert
-            responseGet.StatusCode.Should().Be((int) HttpStatusCode.NoContent);
+            responseGet.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
                 JsonConvert.DeserializeObject<CompanyViewModel>(responseGet.Result.ToString());
 
             // Assert
-            responseGet.StatusCode.Should().Be((int) HttpStatusCode.OK);
+            responseGet.StatusCode.Should().Be((int)HttpStatusCode.OK);
             viewModelGet.Should().BeOfType<CompanyViewModel>();
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
@@ -82,7 +82,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
 
-            responseGetAfterDelete.StatusCode.Should().Be((int) HttpStatusCode.NoContent);
+            responseGetAfterDelete.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
     }
 }

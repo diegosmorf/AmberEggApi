@@ -1,6 +1,6 @@
-﻿using Api.Common.Repository.Entities;
-using AmberEggApi.Domain.Commands;
+﻿using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Events;
+using Api.Common.Repository.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Models

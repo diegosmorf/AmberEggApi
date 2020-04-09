@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Api.Common.Contracts.Entities;
+﻿using Api.Common.Contracts.Entities;
 using Api.Common.Cqrs.Core.Entities;
 using Api.Common.Cqrs.Core.Events;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
 
 namespace Api.Common.Repository.Entities
 {
@@ -16,15 +16,15 @@ namespace Api.Common.Repository.Entities
 
         public int Version { get; set; }
 
-        [BsonIgnore] 
+        [BsonIgnore]
         public List<IEvent> AppliedEvents { get; }
 
-        [BsonId] 
+        [BsonId]
         public virtual Guid Id { get; set; }
 
-        [BsonRequired] 
+        [BsonRequired]
         public DateTime CreateDate { get; set; }
-        
+
         public DateTime? ModifiedDate { get; set; }
 
         public override string ToString()

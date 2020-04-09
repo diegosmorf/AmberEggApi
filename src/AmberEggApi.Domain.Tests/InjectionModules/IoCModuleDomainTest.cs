@@ -1,7 +1,5 @@
 ﻿using Autofac;
-using AmberEggApi.Domain.Tests.UnitTests;
 using System.Reflection;
-using AmberEggApi.Domain.Tests.Factories;
 using Module = Autofac.Module;
 
 namespace AmberEggApi.Domain.Tests.InjectionModules

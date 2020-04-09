@@ -37,7 +37,7 @@ namespace AmberEggApi.Infrastructure.Bus
                 var methodInfo = type.GetMethod(methodName);
 
                 var handler = container.Resolve(type);
-                methodInfo?.Invoke(handler, new object[]{ @event});
+                methodInfo?.Invoke(handler, new object[] { @event });
             }
         }
     }

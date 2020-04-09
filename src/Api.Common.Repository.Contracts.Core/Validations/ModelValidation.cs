@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Api.Common.Repository.Exceptions;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Api.Common.Repository.Exceptions;
 
 namespace Api.Common.Repository.Validations
 {

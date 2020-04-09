@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Api.Common.WebServer.Extensions;
+using Microsoft.AspNetCore.Http;
+using Serilog;
+using Serilog.Events;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Common.WebServer.Extensions;
-using Microsoft.AspNetCore.Http;
-using Serilog;
-using Serilog.Events;
 
 namespace Api.Common.WebServer.Server
 {
@@ -15,7 +15,7 @@ namespace Api.Common.WebServer.Server
         private const string MessageTemplate =
             "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
 
-        private readonly HashSet<string> headerWhitelist = new HashSet<string> {"User-Agent"};
+        private readonly HashSet<string> headerWhitelist = new HashSet<string> { "User-Agent" };
 
         private readonly ILogger log = Log.ForContext<SerilogMiddleware>();
         private readonly RequestDelegate next;
@@ -104,7 +104,7 @@ namespace Api.Common.WebServer.Server
 
         public double GetElapsedMilliseconds(long start, long stop)
         {
-            return (stop - start) * 1000 / (double) Stopwatch.Frequency;
+            return (stop - start) * 1000 / (double)Stopwatch.Frequency;
         }
     }
 }

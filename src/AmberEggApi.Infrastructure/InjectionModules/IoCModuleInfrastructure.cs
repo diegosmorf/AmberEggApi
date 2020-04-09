@@ -1,10 +1,8 @@
-﻿using System.Reflection;
-using Api.Common.Cqrs.Core.Messages;
+﻿using AmberEggApi.Infrastructure.Bus;
 using Api.Common.Repository.MongoDb;
 using Api.Common.Repository.Repositories;
 using Autofac;
-using AmberEggApi.Infrastructure.Bus;
-using Microsoft.AspNetCore.Http;
+using System.Reflection;
 using Module = Autofac.Module;
 
 namespace AmberEggApi.Infrastructure.InjectionModules

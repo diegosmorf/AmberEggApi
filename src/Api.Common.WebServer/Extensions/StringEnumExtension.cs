@@ -21,7 +21,7 @@ namespace Api.Common.WebServer.Extensions
                         var memInfo = type.GetMember(type.GetEnumName(val));
                         var descriptionAttributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
                         if (descriptionAttributes.Length > 0)
-                            description = ((DescriptionAttribute) descriptionAttributes[0]).Description;
+                            description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
 
                         break;
                     }

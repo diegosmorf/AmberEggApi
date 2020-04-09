@@ -1,7 +1,6 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.IO;
@@ -10,25 +9,18 @@ namespace AmberEggApi.WebApi
 {
     public static class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             try
-            {
-                var builder = new ConfigurationBuilder();
-                builder.AddCommandLine(args);
-
-                var config = builder.Build();
-                var pathToContentRoot = Directory.GetCurrentDirectory();
-                                
-                var host = WebHost.CreateDefaultBuilder(args)
-                    .UseConfiguration(config)
+            {   
+                WebHost.CreateDefaultBuilder()
                     .ConfigureServices(s => s.AddAutofac())
-                    .UseContentRoot(pathToContentRoot)
+                    .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseStartup<Startup>()
                     .UseSerilog()
-                    .Build();
+                    .Build()
+                    .Run();
 
-                host.RunAsync();
             }
             catch (Exception ex)
             {

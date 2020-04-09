@@ -64,7 +64,7 @@ dotnet build
 dotnet test
 
 
-dotnet run --p AmberEggApi.WebApi --console --environment "Development" --urls "http://*:5200"
+dotnet run --p AmberEggApi.WebApi
 
 ```
 

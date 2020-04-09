@@ -24,23 +24,21 @@ namespace AmberEggApi.WebApi
     {
         public Startup(IHostingEnvironment environment)
         {
-            var builder = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .Build();
 
-            Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
+                .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
             Log.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
             Log.Information($"Environment: {environment.EnvironmentName}");
         }
-
-        private IConfiguration Configuration { get; }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {

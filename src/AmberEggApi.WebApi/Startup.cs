@@ -16,6 +16,7 @@ using Mongo2Go;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog;
+using Serilog.Events;
 using System.Reflection;
 
 namespace AmberEggApi.WebApi
@@ -33,8 +34,11 @@ namespace AmberEggApi.WebApi
 
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                                    .MinimumLevel.Debug()
+                                    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                                    .Enrich.FromLogContext()
+                                    .WriteTo.Console()
+                                    .CreateLogger();
 
             Log.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
             Log.Information($"Environment: {environment.EnvironmentName}");

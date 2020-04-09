@@ -20,7 +20,6 @@ namespace AmberEggApi.WebApi
                     .UseSerilog()
                     .Build()
                     .Run();
-
             }
             catch (Exception ex)
             {

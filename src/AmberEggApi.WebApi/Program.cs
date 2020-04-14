@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace AmberEggApi.WebApi
 {
@@ -12,7 +13,9 @@ namespace AmberEggApi.WebApi
         public static void Main()
         {
             try
-            {   
+            {
+                Console.WriteLine($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
+
                 WebHost.CreateDefaultBuilder()
                     .ConfigureServices(s => s.AddAutofac())
                     .UseContentRoot(Directory.GetCurrentDirectory())

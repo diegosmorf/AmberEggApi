@@ -19,129 +19,92 @@ namespace Api.Common.WebServer.Server
 
         public async Task Invoke(HttpContext context)
         {
-            if (SkipApiResponseMiddleware(context))
+            if (SkipUri(context.Request))
             {
                 await next(context);
             }
             else
             {
                 var originalBodyStream = context.Response.Body;
+                context.Response.ContentType = "application/json";
+                context.Response.Body = new MemoryStream();
 
-                using (var responseBody = new MemoryStream())
+                try
                 {
-                    context.Response.Body = responseBody;
-
-                    try
-                    {
-                        await next.Invoke(context);
-                        await HandleRequestAsync(context);
-                    }
-                    catch (Exception ex)
-                    {
-                        await HandleRequestAsync(context, ex);
-                    }
-                    finally
-                    {
-                        await PackageResponse(originalBodyStream, responseBody);
-                    }
+                    await next.Invoke(context);
+                    await HandleRequest(context);
                 }
+                catch (Exception ex)
+                {
+                    await HandleRequest(context, ex);
+                }
+                finally
+                {
+                    await PackageResponse(originalBodyStream, context.Response.Body);
+                }
+
             }
         }
 
-        private async Task PackageResponse(Stream originalBodyStream, MemoryStream responseBody)
-        {
+        private async Task PackageResponse(Stream originalBodyStream, Stream responseBody)
+        {            
             responseBody.Seek(0, SeekOrigin.Begin);
-            await responseBody.CopyToAsync(originalBodyStream);
+            await responseBody.CopyToAsync(originalBodyStream);            
         }
 
-        private bool SkipApiResponseMiddleware(HttpContext context)
+        private bool SkipUri(HttpRequest request)
         {
-            return IsSwagger(context) || context.Request.Method == HttpMethods.Options;
+            return IsSwagger(request.Path) || request.Method == HttpMethods.Options;
         }
 
-        private bool IsSwagger(HttpContext context)
+        private bool IsSwagger(PathString path)
         {
-            return context.Request.Path.StartsWithSegments("/swagger");
+            return path.StartsWithSegments("/swagger");
         }
 
-        private async Task HandleRequestAsync(HttpContext context)
-        {
-            var body = await FormatResponse(context.Response);
-
-            switch (context.Response.StatusCode)
-            {
-                case (int)HttpStatusCode.OK:
-                    await HandleRequestAsync(context, body, ResponseMessage.Success);
-                    break;
-
-                case (int)HttpStatusCode.Unauthorized:
-                    await HandleRequestAsync(context, body, ResponseMessage.UnAuthorized);
-                    break;
-
-                default:
-                    await HandleRequestAsync(context, body, ResponseMessage.Failure);
-                    break;
-            }
-        }
-
-        private Task HandleRequestAsync(HttpContext context, Exception exception)
-        {
-            ApiError apiError;
-
-            switch (exception.GetBaseException())
-            {
-                case ApiException ex:
-                    apiError = new ApiError(ex.Message)
-                    {
-                        ValidationErrors = ex.Errors,
-                        ReferenceErrorCode = ex.ReferenceErrorCode,
-                        ReferenceDocumentLink = ex.ReferenceDocumentLink
-                    };
-                    context.Response.StatusCode = ex.StatusCode;
-                    break;
-
-                case UnauthorizedAccessException ex:
-                    apiError = new ApiError(ex.Message);
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    break;
-
-                default:
-                    var msg = exception.GetBaseException().Message;
-                    var stack = exception.StackTrace;
-                    apiError = new ApiError(msg) { Details = stack };
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
-            }
-
-            return HandleRequestAsync(context, null, ResponseMessage.Exception, apiError);
-        }
-
-        private Task HandleRequestAsync(HttpContext context, object body, ResponseMessage message,
-            ApiError apiError = null)
+        private async Task HandleRequest(HttpContext context, Exception exception)
         {
             var code = context.Response.StatusCode;
-            context.Response.ContentType = "application/json";
+            var apiResponse = new ApiResponse(code, exception);
 
-            var bodyText = string.Empty;
+            await HandleRequest(context, apiResponse); ;
+        }
 
-            if (body != null)
-                bodyText = !body.ToString().IsValidJson() ? JsonConvert.SerializeObject(body) : body.ToString();
+        private async Task HandleRequest(HttpContext context)
+        {
+            var code = context.Response.StatusCode;
+            var body = await FormatResponse(context.Response);
+            var apiResponse = new ApiResponse(code, body);
 
-            var bodyContent = JsonConvert.DeserializeObject<dynamic>(bodyText);
-            var apiResponse = new ApiResponse(code, message.GetDescription(), bodyContent, apiError);
+            await HandleRequest(context, apiResponse);
+        }
+
+        private async Task HandleRequest(HttpContext context, ApiResponse apiResponse)
+        {
             var jsonString = JsonConvert.SerializeObject(apiResponse);
 
             context.Response.Body.SetLength(0L);
-            return context.Response.WriteAsync(jsonString);
+            await context.Response.WriteAsync(jsonString);
         }
 
-        private async Task<string> FormatResponse(HttpResponse response)
+        private async Task<dynamic> FormatResponse(HttpResponse response)
         {
             response.Body.Seek(0, SeekOrigin.Begin);
-            var plainBodyText = await new StreamReader(response.Body).ReadToEndAsync();
-            response.Body.Seek(0, SeekOrigin.Begin);
+            var body = await new StreamReader(response.Body).ReadToEndAsync();
 
-            return plainBodyText.Replace("\"", "'");
+            if (string.IsNullOrEmpty(body))
+            {
+                body = "";
+            }
+
+            if (!body.ToString().IsValidJson())
+            {
+                body = JsonConvert.SerializeObject(body);
+            }
+
+            body = body.Replace("\"", "'");
+
+            return JsonConvert.DeserializeObject<dynamic>(body);
         }
     }
 }

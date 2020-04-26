@@ -1,8 +1,6 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi.Controllers
@@ -19,31 +17,15 @@ namespace AmberEggApi.WebApi.Controllers
             this.logger = logger;
         }
 
-        /// <summary>
-        ///     Verify system's conectivity
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return await Task.Run(() =>
-            {
-                try
-                {
-                    const string message = "HealthCheck Status OK";
-                    //validate Database Connection (read method)
-                    appService.GetAll();
+            const string message = "HealthCheck Status OK";
 
-                    logger.LogInformation(message);
+            await appService.GetAll();
+            logger.LogInformation(message);
+            return Ok(message);
 
-                    return Ok(message);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode((int)HttpStatusCode.InternalServerError, new { ex.Message });
-                }
-            });
         }
     }
 }

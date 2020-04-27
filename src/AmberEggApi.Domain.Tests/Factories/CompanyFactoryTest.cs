@@ -25,6 +25,22 @@ namespace AmberEggApi.Domain.Tests.Factories
             return await Create(command);
         }
 
+        public async Task<CompanyViewModel> Create(CreateCompanyCommand command)
+        {
+            //arrange
+            const int expectedNumberOfErrors = 0;
+
+            //act
+            var response = await appService.Create(command);
+
+            //assert
+            command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
+            response.Id.Should().NotBe(Guid.Empty);
+            response.Name.Should().Be(command.Name);
+
+            return response;
+        }
+
         public async Task Delete(Guid id)
         {
             var commandDelete = new DeleteCompanyCommand(id);
@@ -44,22 +60,6 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<IEnumerable<CompanyViewModel>> GetListByName(string name)
         {
             return await appService.GetListByName(name);
-        }
-
-        public async Task<CompanyViewModel> Create(CreateCompanyCommand command)
-        {
-            //arrange
-            const int expectedNumberOfErrors = 0;
-
-            //act
-            var response = await appService.Create(command);
-
-            //assert
-            command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
-            response.Id.Should().NotBe(Guid.Empty);
-            response.Name.Should().Be(command.Name);
-
-            return response;
         }
 
         public async Task<CompanyViewModel> Update(UpdateCompanyCommand command)

@@ -1,7 +1,7 @@
-﻿using Api.Common.WebServer.Extensions;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -47,19 +47,27 @@ namespace Api.Common.WebServer.Server
         }
 
         private async Task PackageResponse(Stream originalBodyStream, Stream responseBody)
-        {            
+        {
             responseBody.Seek(0, SeekOrigin.Begin);
-            await responseBody.CopyToAsync(originalBodyStream);            
+            await responseBody.CopyToAsync(originalBodyStream);
         }
 
         private bool SkipUri(HttpRequest request)
         {
-            return IsSwagger(request.Path) || request.Method == HttpMethods.Options;
+            return IsSkipUri(request.Path) || request.Method == HttpMethods.Options;
         }
 
-        private bool IsSwagger(PathString path)
+        private bool IsSkipUri(PathString path)
         {
-            return path.StartsWithSegments("/swagger");
+            var skiplist = new HashSet<string> { "/swagger", "/healthcheck", "/healthchecks-ui" };
+
+            foreach (var uri in skiplist)
+            {
+                if (path.StartsWithSegments(uri))
+                    return true;
+            }
+
+            return false;
         }
 
         private async Task HandleRequest(HttpContext context, Exception exception)
@@ -102,12 +110,7 @@ namespace Api.Common.WebServer.Server
         {
             response.Body.Seek(0, SeekOrigin.Begin);
             var body = await new StreamReader(response.Body).ReadToEndAsync();
-
-            if (!body.IsValidJson())
-            {
-                body = JsonConvert.SerializeObject(body);
-            }
-
+            body = JsonConvert.SerializeObject(body);
             body = body.Replace("\"", "'");
 
             return JsonConvert.DeserializeObject<dynamic>(body);

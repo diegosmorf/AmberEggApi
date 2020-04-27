@@ -39,7 +39,6 @@ namespace Api.Common.Repository.MongoDb
 
                 await Session.CommitTransactionAsync();
             }
-
             commands.Clear();
         }
 

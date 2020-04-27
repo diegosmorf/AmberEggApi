@@ -17,7 +17,7 @@ namespace AmberEggApi.Database.Migrations
         public override async Task Up()
         {
             var company = new Company();
-            company.Create(new CreateCompanyCommand("Initial Company"));
+            company.Create(new CreateCompanyCommand("Company Test Acme"));
 
             await repository.Insert(company);
         }

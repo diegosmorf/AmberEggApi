@@ -8,11 +8,11 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Api.Common.WebServer.Tests
+namespace Api.Common.WebServer.Tests.UnitTests
 {
 
     [TestFixture]
-    public class APIResponseMiddlewareTest
+    public class ApiResponseMiddlewareTest
     {
         [TestCase("OK")]
         [TestCase("")]

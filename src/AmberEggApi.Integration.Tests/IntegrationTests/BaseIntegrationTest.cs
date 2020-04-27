@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 namespace AmberEggApi.Integration.Tests.IntegrationTests
 {
     [SetUpFixture]
-    public class SetupIntegrationTests
+    internal class BaseIntegrationTest
     {
         private static TestServer apiServer;
         public static HttpClient Client { get; private set; }

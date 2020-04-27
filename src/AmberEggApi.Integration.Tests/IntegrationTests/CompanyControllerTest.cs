@@ -14,7 +14,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
 
         public CompanyControllerTest()
         {
-            companyFactory = new CompanyControllerFactoryTest(SetupIntegrationTests.Client);
+            companyFactory = new CompanyControllerFactoryTest(BaseIntegrationTest.Client);
         }
 
         [Test]

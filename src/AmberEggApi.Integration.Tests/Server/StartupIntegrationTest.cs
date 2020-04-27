@@ -21,15 +21,12 @@ namespace AmberEggApi.Integration.Tests.Server
     {
         public StartupIntegrationTest(IHostingEnvironment environment)
         {
-            var builder = new ConfigurationBuilder()
+            new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+                .AddEnvironmentVariables()
+                .Build();
         }
-
-        private IConfiguration Configuration { get; }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -56,7 +53,7 @@ namespace AmberEggApi.Integration.Tests.Server
 
             var settings = new MongoSettings
             {
-                ConnectionString = SetupIntegrationTests.MongoDbServer.ConnectionString,
+                ConnectionString = BaseIntegrationTest.MongoDbServer.ConnectionString,
                 DatabaseName = "Database-Integration-Tests"
             };
 

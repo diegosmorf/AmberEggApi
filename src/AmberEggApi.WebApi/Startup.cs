@@ -88,7 +88,6 @@ namespace AmberEggApi.WebApi
             /// Setup MongoDB ConnectioString
             /// var settings = Configuration.GetSection("MongoSettings").Get<MongoSettings>();
             services.AddSingleton(settings);
-
             services.AddMemoryCache();
         }
 

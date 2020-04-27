@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
     [TestFixture]
-    public class CompanyDomainTests
+    public class CompanyDomainTest
     {
         private readonly CompanyFactoryTest factory;
 
-        public CompanyDomainTests()
+        public CompanyDomainTest()
         {
             factory = SetupDomainTests.Container.Resolve<CompanyFactoryTest>();
         }

@@ -10,7 +10,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Api.Common.WebServer.Tests
+namespace Api.Common.WebServer.Tests.UnitTests
 {
     [TestFixture]
     public class ValidateModelAttributeTest

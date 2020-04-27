@@ -74,7 +74,7 @@ namespace AmberEggApi.Integration.Tests.Factories
             var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
 
             apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
-            apiResponse.IsOk.Should().BeTrue();
+            apiResponse.IsSuccessRequest.Should().BeTrue();
             apiResponse.Message.Should().Be(HttpStatusCode.OK.ToString());
 
             return apiResponse;

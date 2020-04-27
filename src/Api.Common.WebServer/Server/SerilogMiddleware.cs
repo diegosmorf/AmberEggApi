@@ -6,16 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Api.Common.WebServer.Server
 {
-    public class SerilogMiddleware : IServerMiddleware
+    public class SerilogMiddleware
     {
         private const string MessageTemplate =
             "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
 
-        private readonly HashSet<string> headerWhitelist = new HashSet<string> { "User-Agent" };
+        private readonly HashSet<string> headerWhitelist = new HashSet<string> { "Content-Type", "Content-Length", "User-Agent" };
 
         private readonly ILogger log = Log.ForContext<SerilogMiddleware>();
         private readonly RequestDelegate next;
@@ -74,7 +75,7 @@ namespace Api.Common.WebServer.Server
                     MessageTemplate,
                     httpContext.Request.Method,
                     httpContext.Request.GetPath(),
-                    500,
+                    (int)HttpStatusCode.InternalServerError,
                     elapsedMs);
 
             return false;

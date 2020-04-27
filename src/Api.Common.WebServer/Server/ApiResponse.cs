@@ -15,20 +15,24 @@ namespace Api.Common.WebServer.Server
             StatusCode = statusCode;
             Message = Enum.Parse<HttpStatusCode>(statusCode.ToString()).ToString();
             Result = result;
-            IsOk = true;
+            IsSuccessRequest = true;
         }
 
         public ApiResponse(int statusCode, Exception ex)
         {
             StatusCode = statusCode;
             Message = Enum.Parse<HttpStatusCode>(statusCode.ToString()).ToString();
-            Result = new { ex.Message, ex.StackTrace };
-            IsOk = false;
+            ExceptionMessage = ex.Message;
+            ExceptionDetail = ex.ToString();
+            IsSuccessRequest = false;
         }
 
+        
         public int StatusCode { get; set; }
-        public bool IsOk{ get; set; }
+        public bool IsSuccessRequest{ get; set; }
         public string Message { get; set; }
+        public string ExceptionMessage { get; set; }
+        public string ExceptionDetail { get; set; }
         public object Result { get; set; }
 
         public string Version => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()

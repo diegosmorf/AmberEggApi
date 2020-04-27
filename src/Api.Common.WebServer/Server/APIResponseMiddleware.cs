@@ -64,10 +64,21 @@ namespace Api.Common.WebServer.Server
 
         private async Task HandleRequest(HttpContext context, Exception exception)
         {
+            switch (exception.GetBaseException())
+            {
+                case UnauthorizedAccessException ex:
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    break;
+
+                default:
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    break;
+            }
+
             var code = context.Response.StatusCode;
             var apiResponse = new ApiResponse(code, exception);
 
-            await HandleRequest(context, apiResponse); ;
+            await HandleRequest(context, apiResponse);
         }
 
         private async Task HandleRequest(HttpContext context)
@@ -92,12 +103,7 @@ namespace Api.Common.WebServer.Server
             response.Body.Seek(0, SeekOrigin.Begin);
             var body = await new StreamReader(response.Body).ReadToEndAsync();
 
-            if (string.IsNullOrEmpty(body))
-            {
-                body = "";
-            }
-
-            if (!body.ToString().IsValidJson())
+            if (!body.IsValidJson())
             {
                 body = JsonConvert.SerializeObject(body);
             }

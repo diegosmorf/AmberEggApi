@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
-    public class CompanyFactoryTest : IDomainFactoryTest
+    public class CompanyFactoryTest
     {
         private readonly ICompanyAppService appService;
 

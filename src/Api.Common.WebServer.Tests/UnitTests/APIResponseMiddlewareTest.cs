@@ -22,7 +22,7 @@ namespace Api.Common.WebServer.Tests
             var context = new DefaultHttpContext();
             context.Response.Body = new MemoryStream();
 
-            RequestDelegate next = async (HttpContext httpContext) => await httpContext.Response.WriteAsync(content);
+            async Task next(HttpContext httpContext) => await httpContext.Response.WriteAsync(content);
             var middleware = new ApiResponseMiddleware(next);
 
             //act

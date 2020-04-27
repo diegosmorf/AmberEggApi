@@ -66,7 +66,7 @@ namespace Api.Common.WebServer.Server
         {
             switch (exception.GetBaseException())
             {
-                case UnauthorizedAccessException ex:
+                case UnauthorizedAccessException _:
                     context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     break;
 

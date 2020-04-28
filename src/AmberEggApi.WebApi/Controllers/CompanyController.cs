@@ -34,7 +34,7 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateCompanyCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateCompanyCommand command)
         {
             return Ok(await appService.Create(command));
         }

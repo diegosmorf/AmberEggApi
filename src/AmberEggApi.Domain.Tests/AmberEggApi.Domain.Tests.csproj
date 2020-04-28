@@ -26,6 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Mongo2Go" Version="2.2.12" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
@@ -40,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AmberEggApi.WebApi\AmberEggApi.WebApi.csproj" />
     <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
     <ProjectReference Include="..\Api.Common.Repository.MongoDb\Api.Common.Repository.MongoDb.csproj" />
     <ProjectReference Include="..\AmberEggApi.ApplicationService\AmberEggApi.ApplicationService.csproj" />

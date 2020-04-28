@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
-    public class CompanyFactoryTest
+    public class CompanyAppServiceFactory
     {
         private readonly ICompanyAppService appService;
 
-        public CompanyFactoryTest(ICompanyAppService appService)
+        public CompanyAppServiceFactory(ICompanyAppService appService)
         {
             this.appService = appService;
         }

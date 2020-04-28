@@ -15,6 +15,11 @@ namespace AmberEggApi.Domain.Tests.InjectionModules
                 .Where(c => c.IsClass
                             && c.IsInNamespace("AmberEggApi.Domain.Tests.Factories")).AsSelf();
 
+            builder
+                .RegisterAssemblyTypes(Assembly.Load("AmberEggApi.WebApi"))
+                .Where(c => c.IsClass
+                            && c.IsInNamespace("AmberEggApi.WebApi.Controllers")).AsSelf();
+
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Api.Common.Contracts.Entities;
-using Api.Common.Cqrs.Core.Entities;
+﻿using Api.Common.Cqrs.Core.Entities;
 using Api.Common.Cqrs.Core.Events;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
 
 namespace Api.Common.Repository.Entities

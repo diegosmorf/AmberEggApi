@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -41,6 +42,27 @@ namespace Api.Common.WebServer.Tests.UnitTests
                         .NotBeNull()
                         .And
                         .Be(content);
+        }
+
+        [Test]
+        public void WhenException_Then_ReturnError()
+        {
+            //arrange
+            var message = "Error during test.";
+            var context = new DefaultHttpContext();
+            context.Response.Body = new MemoryStream();
+
+            Task next(HttpContext httpContext) => throw new Exception(message);
+            var middleware = new SerilogMiddleware(next);
+                        
+            //act
+            Func<Task> action = async () => { await middleware.Invoke(context); };
+
+            //assert            
+            action.Should()
+                .Throw<Exception>()
+                .WithMessage(message);
+
         }
     }
 }

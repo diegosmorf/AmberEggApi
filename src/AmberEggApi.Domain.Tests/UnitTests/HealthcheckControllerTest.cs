@@ -7,7 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using Serilog;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
@@ -38,9 +40,21 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             //arrange
             var host = WebHost.CreateDefaultBuilder()
-                            .ConfigureServices(s => s.AddAutofac())
-                            .UseStartup<Startup>()
-                            .Build();
+                                .ConfigureServices(s => s.AddAutofac())
+                                .UseContentRoot(Directory.GetCurrentDirectory())
+                                .UseStartup<Startup>()
+                                .UseSerilog()
+                                .Build();
+
+            //assert
+            host.Should().NotBeNull();
+        }
+
+        [Test]
+        public void WhenStartupHostViaProgram_Then_Success()
+        {
+            //arrange
+            var host = Program.CreteWebHost();
 
             //assert
             host.Should().NotBeNull();

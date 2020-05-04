@@ -16,18 +16,22 @@ namespace AmberEggApi.WebApi
             {
                 Console.WriteLine($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
 
-                WebHost.CreateDefaultBuilder()
-                    .ConfigureServices(s => s.AddAutofac())
-                    .UseContentRoot(Directory.GetCurrentDirectory())
-                    .UseStartup<Startup>()
-                    .UseSerilog()
-                    .Build()
-                    .Run();
+                CreteWebHost().Run();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        public static IWebHost CreteWebHost()
+        {
+            return WebHost.CreateDefaultBuilder()
+                    .ConfigureServices(s => s.AddAutofac())
+                    .UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseStartup<Startup>()
+                    .UseSerilog()
+                    .Build();
         }
     }
 }

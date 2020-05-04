@@ -24,8 +24,7 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
         public async Task WhenCreate_Then_ICanFindItById()
         {
             //arrange
-            var numberOfMigrations = 1;
-            var version = 1;
+            var numberOfMigrations = 1;            
             var name = "V20191001001InitialState";
 
             //act

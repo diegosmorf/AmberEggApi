@@ -5,7 +5,7 @@ namespace AmberEggApi.Database.Migrations
 {
     public abstract class BaseDatabaseMigration : IDatabaseMigration
     {
-        public string Name => GetType().FullName;
+        public string Name => GetType().Name;
         public abstract Task Up();
     }
 }

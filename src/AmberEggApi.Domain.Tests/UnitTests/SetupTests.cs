@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
     [SetUpFixture]
-    public class SetupDomainTests
+    public class SetupTests
     {
         public static IContainer Container { get; protected set; }
         public static MongoDbRunner MongoDbServer { get; protected set; }

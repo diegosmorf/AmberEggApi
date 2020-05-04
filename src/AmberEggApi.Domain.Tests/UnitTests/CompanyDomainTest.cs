@@ -17,7 +17,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
 
         public CompanyDomainTest()
         {
-            factory = SetupDomainTests.Container.Resolve<CompanyAppServiceFactory>();
+            factory = SetupTests.Container.Resolve<CompanyAppServiceFactory>();
         }
 
         [Test]

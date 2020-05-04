@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Database", "Amb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.WebServer.Tests", "Api.Common.WebServer.Tests\Api.Common.WebServer.Tests.csproj", "{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Common.Repository.MongoDb.Tests", "Api.Common.Repository.MongoDb.Tests\Api.Common.Repository.MongoDb.Tests.csproj", "{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{986CD88A-ADC2-4FB5-A5D0-37B7791C17A7} = {6A607D58-847A-46A5-A600-BD782970CD8B}
 		{B2300667-54DE-418B-93DB-37A553BD1480} = {FB19DF3C-356A-442F-8E68-C6AA4B45880D}
 		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67} = {7CC95871-4B70-411F-AB2C-7CCEDBB47E03}
+		{C8BA72D2-0EF5-4AF3-BA92-2CA4C341D85A} = {7CC95871-4B70-411F-AB2C-7CCEDBB47E03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3592426-5D97-42AD-87E8-83047C0ABD25}

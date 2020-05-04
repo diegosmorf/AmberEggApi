@@ -33,6 +33,7 @@ namespace AmberEggApi.Database.Migrators
                 }
 
                 await migration.Up();
+                await repository.Insert(new DatabaseVersion { Name = migration.Name });
                 await unitOfWork.Commit();
             }
         }

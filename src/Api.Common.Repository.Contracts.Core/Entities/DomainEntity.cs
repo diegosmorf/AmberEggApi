@@ -6,11 +6,14 @@ namespace Api.Common.Repository.Entities
 {
     public abstract class DomainEntity : IDomainEntity
     {
-        [Required] public Guid AuditUserId { get; set; }
+        [Required] 
+        public Guid AuditUserId { get; set; }
 
-        [Key] public Guid Id { get; set; }
+        [Key] 
+        public Guid Id { get; set; }
 
-        [Required] public DateTime CreateDate { get; set; }
+        [Required] 
+        public DateTime CreateDate { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 

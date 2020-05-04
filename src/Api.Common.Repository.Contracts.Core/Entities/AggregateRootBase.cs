@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Api.Common.Repository.Entities
 {
-    public abstract class AggregateRootBase : IAggregateRoot, IDomainEntity
+    public abstract class AggregateRootBase : DomainEntity, IAggregateRoot
     {
         protected AggregateRootBase()
         {
@@ -17,19 +17,6 @@ namespace Api.Common.Repository.Entities
         public int Version { get; set; }
 
         [BsonIgnore]
-        public List<IEvent> AppliedEvents { get; }
-
-        [BsonId]
-        public virtual Guid Id { get; set; }
-
-        [BsonRequired]
-        public DateTime CreateDate { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        public override string ToString()
-        {
-            return $"Type:{GetType().Name} - Id:{Id}";
-        }
+        public List<IEvent> AppliedEvents { get; }        
     }
 }

@@ -1,7 +1,13 @@
 ﻿using AmberEggApi.Domain.Tests.Factories;
+using AmberEggApi.WebApi;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using FluentAssertions;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
@@ -17,7 +23,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         }
 
         [Test]
-        public async Task WhenCreate_Then_ICanFindItById()
+        public async Task WhenCheck_Then_Success()
         {
             //arrange
             var message = "HealthCheck Status OK";
@@ -25,6 +31,19 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var response = await factory.Get();
             //assert
             response.Should().Be(message);            
+        }        
+
+        [Test]
+        public void WhenStartupHost_Then_Success()
+        {
+            //arrange
+            var host = WebHost.CreateDefaultBuilder()
+                            .ConfigureServices(s => s.AddAutofac())
+                            .UseStartup<Startup>()
+                            .Build();
+
+            //assert
+            host.Should().NotBeNull();
         }
     }
 }

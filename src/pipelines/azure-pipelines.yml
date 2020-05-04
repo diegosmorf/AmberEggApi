@@ -4,6 +4,12 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
+  RestoreBuildProjects: '**/*.csproj'
+  Testprojects: '**/*[Tt]ests/*.csproj'  
+
 steps:
 
 - task: UseDotNet@2
@@ -41,7 +47,7 @@ steps:
   displayName: Build
   inputs:
     projects: '$(Parameters.RestoreBuildProjects)'
-    arguments: '--configuration $(BuildConfiguration) --no-restore -p:Version=$(Build.BuildNumber)'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Test

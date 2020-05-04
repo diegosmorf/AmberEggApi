@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   BuildConfiguration: 'Release'
@@ -11,7 +11,6 @@ variables:
   Testprojects: '**/*[Tt]ests/*.csproj'  
 
 steps:
-
 # - task: UseDotNet@2
 #   inputs:
 #     packageType: sdk

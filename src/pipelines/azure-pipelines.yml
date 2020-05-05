@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   BuildConfiguration: 'Release'
@@ -11,12 +11,10 @@ variables:
   Testprojects: '**/*[Tt]ests/*.csproj'  
 
 steps:
-# - task: UseDotNet@2
-#   inputs:
-#     packageType: sdk
-#     version: 2.2.x
-#     installationPath: $(Agent.ToolsDirectory)/dotnet
-#     includePreviewVersions: true
+- task: UseDotNet@2
+  displayName: 'Use .Net Core sdk 2.2.x'
+  inputs:
+    version: 2.2.x
 
 # - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
 #   displayName: 'Set Assembly Info Data'

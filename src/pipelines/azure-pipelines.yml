@@ -34,45 +34,38 @@ steps:
     FailOnWarning: false
     DisableTelemetry: false
 
-# - task: SonarCloudPrepare@1
-#   inputs:
-#     SonarCloud: 'SonarCloud.AmberEggApi'
-#     organization: 'diegosmorf'
-#     scannerMode: 'MSBuild'
-#     projectKey: 'AmberEggApi'
-#     projectName: 'AmberEggApi'
-#     extraProperties: |     
-#      sonar.exclusions=**/obj/**,**/*.dll
-#      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
-#      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'restore'
-#     feedsToUse: 'select'
-#     projects: $(BuildProjects)
-#     vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
-#     verbosityRestore: 'Minimal'
-
-# - task: DotNetCoreCLI@2
-#   displayName: Build
-#   inputs:
-#     projects: $(BuildProjects)
-#     arguments: '--configuration $(BuildConfiguration) --no-restore'
-
-# - task: DotNetCoreCLI@2
-#   displayName: Test
-#   inputs:
-#     command: test
-#     projects: $(Testprojects)
-#     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
-
-- task: OWASPDependencyCheck@0
+- task: SonarCloudPrepare@1
   inputs:
-    outputDirectory: '$(Agent.TempDirectory)/dependency-scan-results'
-    scanDirectory: '$(Build.SourcesDirectory)'
-    outputFormat: 'ALL'
-    useSonarQubeIntegration: true
+    SonarCloud: 'SonarCloud.AmberEggApi'
+    organization: 'diegosmorf'
+    scannerMode: 'MSBuild'
+    projectKey: 'AmberEggApi'
+    projectName: 'AmberEggApi'
+    extraProperties: |     
+     sonar.exclusions=**/obj/**,**/*.dll
+     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+     sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    projects: $(BuildProjects)
+    vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
+    verbosityRestore: 'Minimal'
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: $(BuildProjects)
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: $(Testprojects)
+    arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
 
 - task: DeleteFiles@1
   displayName: 'Delete files from $(Build.ArtifactStagingDirectory)'

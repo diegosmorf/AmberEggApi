@@ -2,8 +2,7 @@
 # - master
 
 pool:
-  vmImage: 'ubuntu-latest'
-
+  vmImage: 'ubuntu-18.04'
 
 variables:
   BuildConfiguration: 'Release'
@@ -39,14 +38,14 @@ steps:
   inputs:
     command: 'restore'
     feedsToUse: 'select'
-    projects: '$(parameters.BuildProjects)'
+    projects: '**/*.csproj'
     vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
     verbosityRestore: 'Minimal'
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '$(parameters.BuildProjects)'
+    projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2

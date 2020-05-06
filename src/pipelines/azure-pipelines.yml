@@ -11,10 +11,10 @@ variables:
   Testprojects: '**/*[Tt]ests/*.csproj'  
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Use .Net Core sdk 2.2.x'
-  inputs:
-    version: 2.2.x
+# - task: UseDotNet@2
+#   displayName: 'Use .Net Core sdk 2.2.x'
+#   inputs:
+#     version: 2.2.x
 
 # - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
 #   displayName: 'Set Assembly Info Data'

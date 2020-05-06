@@ -11,7 +11,7 @@ variables:
   Testprojects: '**/*[Tt]ests/*.csproj'  
   Version.MajorMinor: 1.0
   Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
-  VersionDocs: $[variables['Build.BuildNumber']$(Date:yyyy.MM.dd)$(Rev:.r)]
+  
 steps:
 - task: CmdLine@2
   inputs:
@@ -20,7 +20,8 @@ steps:
       echo $(Build.DefinitionName)
       echo $(Build.SourceBranchName)
       echo $(Build.BuildNumber)
-      echo $(VersionDocs)
+      echo $(Date:yyyy.MM.dd)
+      echo $(Build.BuildId)
       echo $(Version.Revision)
       
 

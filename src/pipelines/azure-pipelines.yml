@@ -2,7 +2,7 @@
 # - master
 
 pool:
-  vmImage: 'ubuntu-18.04'
+  vmImage: 'windows-2019'
 
 variables:
   BuildConfiguration: 'Release'

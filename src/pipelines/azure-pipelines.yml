@@ -2,7 +2,7 @@
 # - master
 
 pool:
-  vmImage: 'linux-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   BuildConfiguration: 'Release'

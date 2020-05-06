@@ -9,57 +9,58 @@ variables:
   BuildPlatform: 'Any CPU'
   BuildProjects: '**/*.csproj'
   Testprojects: '**/*[Tt]ests/*.csproj'  
+  Version.MajorMinor: 1.0
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
 
 steps:
-# - task: UseDotNet@2
-#   displayName: 'Use .Net Core sdk 2.2.x'
-#   inputs:
-#     version: 2.2.x
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Hello world      
+      echo ${{ variables.Version.Revision }}
+      echo Hello world
 
-# - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
-#   displayName: 'Set Assembly Info Data'
+- task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2
+  displayName: 'Set Assembly Info Data'
 
-# - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
-#   displayName: 'Prepare analysis on SonarCloud'
-#   inputs:
-#     SonarCloud: SonarCloud.AmberEggApi
-#     organization: diegosmorf
-#     projectKey: AmberEggApi
-#     projectName: AmberEggApi
-#     extraProperties: |
-#      # Additional properties that will be passed to the scanner, 
-#      # Put one key=value per line, example:
-#      # sonar.exclusions=**/*.bin
-#      sonar.exclusions=**/obj/**,**/*.dll
-#      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
-#      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  inputs:
+    SonarCloud: SonarCloud.AmberEggApi
+    organization: diegosmorf
+    projectKey: AmberEggApi
+    projectName: AmberEggApi
+    extraProperties: |     
+     sonar.exclusions=**/obj/**,**/*.dll
+     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+     sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
     feedsToUse: 'select'
-    projects: '**/*.csproj'
+    projects: '${{ variables.BuildProjects}}'
     vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
     verbosityRestore: 'Minimal'
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '**/*.csproj'
+    projects: '${{ variables.BuildProjects}}'
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
-    projects: '$(parameters.TestProjects)'
+    projects: '${{variables.TestProjects}}'
     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
 
-# - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
-#   displayName: 'Run Code Analysis'
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
 
-# - task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
-#   displayName: 'Publish Quality Gate Result'
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
 
 - task: DotNetCoreCLI@2
   displayName: Publish

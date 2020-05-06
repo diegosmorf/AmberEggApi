@@ -2,7 +2,7 @@
 # - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'linux-latest'
 
 variables:
   BuildConfiguration: 'Release'
@@ -67,28 +67,12 @@ steps:
 #     projects: $(Testprojects)
 #     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
 
-- task: dependency-checker@1
-  inputs:
-    path: '$(Build.SourcesDirectory)'
-    searchRecursive: true
-    combineProjects: true
-    includePrerelease: false
-    useArtifacts: true
-    artifactsFeeds: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
-    createBadge: false
-    createReport: true
-    reportPath: '$(Build.ArtifactStagingDirectory)\dependencies.html'
-  env:
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-
 - task: OWASPDependencyCheck@0
   inputs:
     outputDirectory: '$(Agent.TempDirectory)/dependency-scan-results'
     scanDirectory: '$(Build.SourcesDirectory)'
     outputFormat: 'ALL'
     useSonarQubeIntegration: true
-  env:
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - task: DeleteFiles@1
   displayName: 'Delete files from $(Build.ArtifactStagingDirectory)'

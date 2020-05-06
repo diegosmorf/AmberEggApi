@@ -78,6 +78,27 @@ steps:
     projects: $(Testprojects)
     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
 
+- task: DeleteFiles@1
+  displayName: 'Delete files from $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: |
+     **/*.pdb
+     **/cs
+     **/da
+     **/de
+     **/es
+     **/fa
+     **/fi
+     **/fr
+     **/it
+     **/nl
+     **/pl
+     **/pt
+     **/ru
+     **/sv
+     **/zh-cn
+
 - task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1

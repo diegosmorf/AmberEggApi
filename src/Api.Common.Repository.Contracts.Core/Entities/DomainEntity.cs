@@ -5,9 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Api.Common.Repository.Entities
 {
     public abstract class DomainEntity : IDomainEntity
-    {
-        [Required] 
-        public Guid AuditUserId { get; set; }
+    {       
 
         [Key] 
         public Guid Id { get; set; }

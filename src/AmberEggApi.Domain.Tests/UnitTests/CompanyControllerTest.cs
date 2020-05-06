@@ -6,6 +6,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
@@ -96,6 +97,33 @@ namespace AmberEggApi.Domain.Tests.UnitTests
                 .Throw<ModelException>()
                 .WithMessage(
                     "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.");
+        }
+
+        [Test]
+        public async Task WhenGetNotExistent_Then_NotFound()
+        {
+            var response = await factory.GetNotExistent();
+
+            //assert
+            response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task WhenGetNameNotExistent_Then_NotFound()
+        {
+            var response = await factory.GetByNameNotExistent();
+
+            //assert
+            response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task WhenUpdateNotExistent_Then_NotFound()
+        {
+            var response = await factory.UpdateNotExistent();
+
+            //assert
+            response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
 
         public async Task<Company> Create()
         {
-            var name = "Company 0001";
+            var name = "Company Test";
             var command = new CreateCompanyCommand(name);
            
             return await Create(command);
@@ -29,6 +29,7 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
 
         public async Task<Company> Create(CreateCompanyCommand command)
         {
+            var datetime = DateTime.Now;
             var company = new Company();
             company.Create(command);
 
@@ -38,7 +39,10 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
 
             //assert
             company.Id.Should().NotBe(Guid.Empty);
-            company.Name.Should().Be(command.Name);
+            company.Name.Should().Be(command.Name);            
+            company.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
+            company.ModifiedDate.Should().BeNull();
+            company.ToString().Should().Be($"Type:{company.GetType().Name} - Id:{company.Id}");
 
             return company;
         }
@@ -52,6 +56,11 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
         public async Task<IEnumerable<Company>> GetAll()
         {
             return await repository.All();
+        }
+
+        public async Task<IEnumerable<Company>> GetList(string name)
+        {
+            return await repository.FindList(x=>x.Name == name);
         }
 
         public async Task<IEnumerable<Company>> GetListByName(string name)
@@ -93,9 +102,15 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
             await unitOfWork.Commit();
         }
 
-        public async Task Delete(Guid[] list)
+        public async Task Delete(IEnumerable<Guid> list)
         {
             await repository.Delete(list);
+            await unitOfWork.Commit();
+        }
+
+        public async Task Update(IEnumerable<Company> list)
+        {
+            await repository.Update(list);
             await unitOfWork.Commit();
         }
     }

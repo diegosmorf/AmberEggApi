@@ -47,7 +47,7 @@ namespace AmberEggApi.WebApi.Controllers
         {
             var result = await appService.GetListByName(name);
 
-            if (result == null)
+            if (! result.Any())
             {
                 return NotFound();
             }

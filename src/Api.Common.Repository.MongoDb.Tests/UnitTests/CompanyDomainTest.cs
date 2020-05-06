@@ -29,6 +29,7 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
             //assert
             objGet.Id.Should().Be(objCreate.Id);
             objGet.Name.Should().Be(objCreate.Name);
+            
         }
 
         [Test]
@@ -92,6 +93,30 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
             var currentInserted = (await factory.GetAll()).Count();
             await factory.Delete(list);
             var currentResult = (await factory.GetAll()).Count();
+            //assert
+            expectedInserted.Should().Be(currentInserted);
+            finalResult.Should().Be(currentResult);
+        }
+
+        [Test]
+        public async Task WhenUpdateMultiples_Then_KeepMultiples()
+        {
+            //arrange
+            var expectedInserted = 4;
+            var finalResult = 4;
+            var name = "Company Test";
+
+            //act
+            await factory.DeleteAll();
+            var company1 = await factory.Create();
+            var company2 = await factory.Create();
+            var company3 = await factory.Create();
+            var company4 = await factory.Create();
+
+            var list = new[] { company1, company2, company3, company4 };
+            var currentInserted = (await factory.GetListByName(name)).Count();
+            await factory.Update(list);
+            var currentResult = (await factory.GetListByName(name)).Count();
             //assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);

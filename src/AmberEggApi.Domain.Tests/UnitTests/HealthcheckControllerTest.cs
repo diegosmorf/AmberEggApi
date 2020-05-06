@@ -5,10 +5,8 @@ using Autofac.Extensions.DependencyInjection;
 using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Serilog;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -53,9 +51,9 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public void WhenStartupHostViaProgram_Then_Success()
         {
-            //arrange
+            //act
             var host = Program.CreteWebHost();
-
+            
             //assert
             host.Should().NotBeNull();
         }

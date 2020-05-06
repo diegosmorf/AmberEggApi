@@ -35,7 +35,9 @@ namespace Api.Common.WebServer.Server
         public string ExceptionDetail { get; set; }
         public object Result { get; set; }
 
-        public string Version => Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion;
+        public string Version => Assembly
+                                    .GetEntryAssembly()
+                                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+                                    .InformationalVersion;
     }
 }

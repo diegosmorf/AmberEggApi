@@ -4,6 +4,7 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Api.Common.Repository.MongoDb.Tests.UnitTests
@@ -71,6 +72,29 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
 
             //assert
             objGet.Should().BeNull();
+        }
+
+        [Test]
+        public async Task WhenCreateMultiples_Then_DeleteMultiples()
+        {
+            //arrange
+            var expectedInserted = 4;
+            var finalResult = 0;
+
+            //act
+            await factory.DeleteAll();
+            var company1 = await factory.Create();
+            var company2 = await factory.Create();
+            var company3 = await factory.Create();
+            var company4 = await factory.Create();
+            
+            var list = new [] { company1.Id, company2.Id, company3.Id, company4.Id };
+            var currentInserted = (await factory.GetAll()).Count();
+            await factory.Delete(list);
+            var currentResult = (await factory.GetAll()).Count();
+            //assert
+            expectedInserted.Should().Be(currentInserted);
+            finalResult.Should().Be(currentResult);
         }
     }
 }

@@ -43,11 +43,6 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
             return company;
         }
 
-        public async Task Delete(Guid id)
-        {
-            await repository.Delete(id);
-            await unitOfWork.Commit();
-        }
 
         public async Task<Company> Get(Guid id)
         {
@@ -78,6 +73,30 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
             company.Name.Should().Be(command.Name);
 
             return company;
+        }
+
+        public async Task DeleteAll()
+        {
+            var list = await repository.All();
+
+            foreach (var item in list)
+            {
+                await repository.Delete(item.Id);
+            }
+
+            await unitOfWork.Commit();
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await repository.Delete(id);
+            await unitOfWork.Commit();
+        }
+
+        public async Task Delete(Guid[] list)
+        {
+            await repository.Delete(list);
+            await unitOfWork.Commit();
         }
     }
 }

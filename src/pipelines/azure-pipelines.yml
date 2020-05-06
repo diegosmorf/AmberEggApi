@@ -2,7 +2,7 @@
 # - master
 
 pool:
-  vmImage: 'ubun-latest'
+  vmImage: 'ubuntu-latest'
 
 
 variables:

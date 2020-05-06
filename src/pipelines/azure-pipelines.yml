@@ -19,8 +19,9 @@ steps:
       echo Hello world
       echo $(Build.DefinitionName)
       echo $(Build.SourceBranchName)
+      echo $(Build.BuildNumber)
       echo $(Build.BuildNumber)_$(Date:yyyy.MM.dd)$(Rev:.r)
-      echo $(Version.MajorMinor)
+      echo $(Version.Revision)
       
 
 # - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2

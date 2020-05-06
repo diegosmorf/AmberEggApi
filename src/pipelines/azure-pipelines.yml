@@ -16,9 +16,11 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      echo Hello world      
-      echo ${{ variables.Version.MajorMinor }}
-      echo $(TeamProject)_$(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+      echo Hello world           
+      echo $(TeamProject)
+      echo $(BuildDefinitionName)
+      echo $(SourceBranchName)
+      echo $(Date:yyyy.MM.dd)$(Rev:.r)
       
 
 # - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2

@@ -2,12 +2,13 @@
 # - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubun-latest'
+
 
 variables:
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
-  RestoreBuildProjects: '**/*.csproj'
+  BuildProjects: '**/*.csproj'
   Testprojects: '**/*[Tt]ests/*.csproj'  
 
 steps:
@@ -35,24 +36,24 @@ steps:
 #      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: DotNetCoreCLI@2
-  displayName: Restore
   inputs:
-    command: restore
-    # projects: '$(Parameters.RestoreBuildProjects)'
-    # vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
-    verbosityRestore: Minimal
+    command: 'restore'
+    feedsToUse: 'select'
+    projects: '$(parameters.BuildProjects)'
+    vstsFeed: 'e515f851-a794-40b2-a603-30214ed962ae/a86b4459-e784-456a-af3b-bd0dec42c1ce'
+    verbosityRestore: 'Minimal'
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: '$(parameters.BuildProjects)'
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
-    projects: '$(Parameters.TestProjects)'
+    projects: '$(parameters.TestProjects)'
     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
 
 # - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1

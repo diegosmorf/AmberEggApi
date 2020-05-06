@@ -45,6 +45,18 @@ steps:
     FailOnWarning: false
     DisableTelemetry: false
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud.AmberEggApi'
+    organization: 'diegosmorf'
+    scannerMode: 'MSBuild'
+    projectKey: 'AmberEggApi'
+    projectName: 'AmberEggApi'
+    extraProperties: |     
+     sonar.exclusions=**/obj/**,**/*.dll
+     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+     sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
@@ -65,18 +77,6 @@ steps:
     command: test
     projects: $(Testprojects)
     arguments: '--configuration $(BuildConfiguration) --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx'
-
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'SonarCloud.AmberEggApi'
-    organization: 'diegosmorf'
-    scannerMode: 'MSBuild'
-    projectKey: 'AmberEggApi'
-    projectName: 'AmberEggApi'
-    extraProperties: |     
-     sonar.exclusions=**/obj/**,**/*.dll
-     sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
-     sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: SonarCloudAnalyze@1
 

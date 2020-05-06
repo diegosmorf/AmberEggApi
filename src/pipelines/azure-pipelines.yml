@@ -13,16 +13,26 @@ variables:
   Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
   
 steps:
-- task: CmdLine@2
+- task: GitflowBranchGate@1
+  displayName: 'Gitflow Branch Gate'
   inputs:
-    script: |
-      echo Hello world
-      echo $(Build.DefinitionName)
-      echo $(Build.SourceBranchName)
-      echo $(Build.BuildNumber)
-      echo $(Date:yyyyMMdd)
-      echo $(Build.BuildId)
-      echo $(Version.Revision)
+    developBranch: desenvolvimento
+    hotfixBranchLimit: 5
+    hotfixBranchDaysLimit: 30
+    releaseBranchLimit: 5
+    releaseBranchDaysLimit: 365
+    featureBranchLimit: 10
+    featureBranchDaysLimit: 90
+    hotfixBranchesMustNotHavePendingPullRequests: false
+    releaseBranchesMustNotHavePendingPullRequests: false
+    releaseMustNotBeBehindMaster: false
+    mustNotHaveHotfixAndReleaseBranches: false
+    featureBranchesMustNotBeBehindMaster: false
+    CurrentFeatureMustNotBeBehindMaster: false
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+  continueOnError: true
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
       
 - task: Assembly-Info-NetCore@2
   inputs:
@@ -98,6 +108,7 @@ steps:
      **/ru
      **/sv
      **/zh-cn
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
 - task: SonarCloudAnalyze@1
 
@@ -113,9 +124,10 @@ steps:
     projects: '**/*WebApi*.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
     zipAfterPublish: True
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))

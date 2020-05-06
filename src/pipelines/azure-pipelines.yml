@@ -78,6 +78,8 @@ steps:
     createBadge: false
     createReport: true
     reportPath: '$(Build.ArtifactStagingDirectory)\dependencies.html'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - task: OWASPDependencyCheck@0
   inputs:
@@ -85,6 +87,8 @@ steps:
     scanDirectory: '$(Build.SourcesDirectory)'
     outputFormat: 'ALL'
     useSonarQubeIntegration: true
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
 - task: DeleteFiles@1
   displayName: 'Delete files from $(Build.ArtifactStagingDirectory)'

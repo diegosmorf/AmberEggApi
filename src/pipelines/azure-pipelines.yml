@@ -16,10 +16,9 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      echo Hello world           
-      echo $(TeamProject)
-      echo $(BuildDefinitionName)
-      echo $(SourceBranchName)
+      echo Hello world
+      echo $(Build.DefinitionName)
+      echo $(Build.SourceBranchName)
       echo $(Date:yyyy.MM.dd)$(Rev:.r)
       
 

@@ -44,7 +44,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var responseGet = await companyFactory.Get(viewModelCreate.Id);
 
             // Assert
-            responseGet.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            responseGet.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
 
-            responseGetAfterDelete.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            responseGetAfterDelete.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
     }
 }

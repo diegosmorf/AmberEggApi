@@ -31,7 +31,7 @@ namespace AmberEggApi.Integration.Tests.Factories
                 JsonConvert.DeserializeObject<CompanyViewModel>(responseModel.Result.ToString());
 
             // Assert
-            responseModel.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            responseModel.StatusCode.Should().Be((int)HttpStatusCode.Created);
             viewModel.Should().BeOfType<CompanyViewModel>();
 
             viewModel.Id.Should().NotBeEmpty();
@@ -47,8 +47,8 @@ namespace AmberEggApi.Integration.Tests.Factories
             var responseModel = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
 
             // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            responseModel.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            responseModel.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
             responseModel.Result.Should().Be("");
         }
 
@@ -73,9 +73,9 @@ namespace AmberEggApi.Integration.Tests.Factories
             // Assert
             var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
 
-            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.Created);
             apiResponse.IsSuccessRequest.Should().BeTrue();
-            apiResponse.Message.Should().Be(HttpStatusCode.OK.ToString());
+            apiResponse.Message.Should().Be(HttpStatusCode.Created.ToString());
 
             return apiResponse;
         }

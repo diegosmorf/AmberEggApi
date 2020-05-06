@@ -26,7 +26,7 @@ namespace AmberEggApi.Domain.Tests.Factories
 
         public async Task<CompanyViewModel> Create(CreateCompanyCommand command)
         {
-            var response = await controller.Create(command) as OkObjectResult;
+            var response = await controller.Create(command) as CreatedResult;
             var viewmodel = response.Value as CompanyViewModel;
             return viewmodel;
         }
@@ -39,6 +39,12 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<CompanyViewModel> Get(Guid id)
         {
             var response = await controller.Get(id) as OkObjectResult;
+
+            if (response == null)
+            {
+                return null; 
+            }
+
             var viewmodel = response.Value as CompanyViewModel;
             return viewmodel;
         }

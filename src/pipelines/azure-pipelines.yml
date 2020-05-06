@@ -19,7 +19,7 @@ steps:
       echo Hello world
       echo $(Build.DefinitionName)
       echo $(Build.SourceBranchName)
-      echo $(Date:yyyy.MM.dd)$(Rev:.r)
+      echo $(Build.BuildNumber)$(Date:yyyy.MM.dd)$(Rev:.r)
       
 
 # - task: bleddynrichards.Assembly-Info-Task.Assembly-Info-NetCore.Assembly-Info-NetCore@2

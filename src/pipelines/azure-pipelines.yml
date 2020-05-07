@@ -1,5 +1,5 @@
-# trigger:
-# - master
+ trigger:
+ - master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -10,10 +10,13 @@ variables:
   BuildProjects: '**/*.csproj'
   Testprojects: '**/*[Tt]ests/*.csproj'  
   Version.MajorMinor: 1.0
-  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]  
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]]
+  Project.Author: 'diegosmorf'
+  Project.Name: 'AmberEggApi'
 
 steps:
 - task: Assembly-Info-NetCore@2
+  displayName: 'Assembly Info'
   inputs:
     Path: '$(Build.SourcesDirectory)'
     FileNames: $(BuildProjects)
@@ -21,11 +24,11 @@ steps:
     FileEncoding: 'auto'
     WriteBOM: false
     PackageId: '$(Build.SourceBranchName)'
-    Authors: '$(Build.DefinitionName)'
-    Company: '$(Build.DefinitionName)'
-    Product: '$(Build.DefinitionName)'
-    Description: '$(Build.DefinitionName)'
-    Copyright: '$(Build.DefinitionName)'        
+    Authors: '$(Project.Author)'
+    Company: '$(Project.Name)'
+    Product: '$(Project.Name)'
+    Description: '$(Project.Name)'
+    Copyright: '$(Project.Name)'        
     VersionNumber: '$(Build.BuildNumber)'
     FileVersionNumber: '$(Build.BuildNumber)'
     InformationalVersion: '$(Build.BuildNumber)'
@@ -35,18 +38,20 @@ steps:
     DisableTelemetry: false
 
 - task: SonarCloudPrepare@1
+  displayName: 'Sonarcloud Prepare'
   inputs:
     SonarCloud: 'SonarCloud.AmberEggApi'
-    organization: 'diegosmorf'
+    organization: '$(Project.Author)'
     scannerMode: 'MSBuild'
-    projectKey: 'AmberEggApi'
-    projectName: 'AmberEggApi'
+    projectKey: '$(Project.Name)'
+    projectName: '$(Project.Name)'
     extraProperties: |     
      sonar.exclusions=**/obj/**,**/*.dll
      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: DotNetCoreCLI@2
+  displayName: 'DotNetCore Restore'
   inputs:
     command: 'restore'
     feedsToUse: 'select'
@@ -55,13 +60,13 @@ steps:
     verbosityRestore: 'Minimal'
 
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: 'DotNetCore Build'  
   inputs:
     projects: $(BuildProjects)
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: 'DotNetCore Test'  
   inputs:
     command: test
     projects: $(Testprojects)
@@ -90,13 +95,15 @@ steps:
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
 - task: SonarCloudAnalyze@1
+  displayName: 'Sonarcloud Analyze'
 
 - task: SonarCloudPublish@1
+  displayName: 'Sonarcloud Publish'
   inputs:
     pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish
+  displayName: 'DotNetCore Publish'
   inputs:
     command: publish
     publishWebProjects: false

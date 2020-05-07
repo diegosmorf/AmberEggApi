@@ -10,7 +10,7 @@ variables:
   BuildProjects: '**/*.csproj'
   Testprojects: '**/*[Tt]ests/*.csproj'  
   Version.MajorMinor: 1.0
-  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]]
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
   Project.Author: 'diegosmorf'
   Project.Name: 'AmberEggApi'
 

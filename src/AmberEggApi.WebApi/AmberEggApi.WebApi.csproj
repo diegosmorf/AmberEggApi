@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>    
     <ProjectGuid>{336892E1-9089-4C60-8B92-455B1088C5D2}</ProjectGuid>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
   
   <ItemGroup>

@@ -18,13 +18,16 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore -s src/AmberEggApi.sln
-    
+      run: dotnet restore 
+      working-directory: ./src
+      
     - name: Build
-      run: dotnet build  -s src/AmberEggApi.sln --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ./src
     
     - name: Publish
-      run: dotnet publish -s src/AmberEggApi.sln -c Release -o '${{ github.workspace }}/out'
+      run: dotnet publish -c Release -o '${{ github.workspace }}/out'
+      working-directory: ./src
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1

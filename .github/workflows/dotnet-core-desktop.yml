@@ -16,20 +16,12 @@ jobs:
 
     env:
       Solution_Name: src/AmberEggApi.sln                        # Replace with your solution name, i.e. MyWpfApp.sln.
-      Wap_Project_Directory: src    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      Wap_Project_Path: your-wap-project-path                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
@@ -41,7 +33,9 @@ jobs:
       env:
         Configuration: Release
 
-
+    - run: |
+       cd ${{ github.workspace }}\
+       dir
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-artifact
     - name: Upload build artifacts

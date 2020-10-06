@@ -1,6 +1,7 @@
 name: .NET Core
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -9,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -21,26 +22,37 @@ jobs:
       run: dotnet restore 
       working-directory: ./src
 
-
-      
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-      working-directory: ./src
-    
-    - name: Sonarscanner for dotnet
-      uses: Secbyte/dotnet-sonarscanner@v2.3
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
       with:
-        projectKey: ${{ secrets.PROJECT_KEY }}
-        projectName: ${{ secrets.PROJECT_NAME }}
-        buildCommand: dotnet build src/.
-        sonarOrganisation: ${{ secrets.SONAR_ORGANIZATION }} 
-        beginArguments: >
-            /d:sonar.verbose="true"
-            /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'
-            /d:sonar.coverage.exclusions='"**/*.cs","**/*.md"'
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: .\.sonar\scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+    
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        New-Item -Path .\.sonar\scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+    - name: Build and analyze
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      shell: pwsh
+      run: |
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet build src/. --configuration Release --no-restore
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         
         
     - name: Publish

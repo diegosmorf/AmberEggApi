@@ -30,10 +30,10 @@ jobs:
     - name: Sonarscanner for dotnet
       uses: Secbyte/dotnet-sonarscanner@v2.3
       with:
-        projectKey: julioarruda_AmberEggApi
-        projectName: AmberEggApi
+        projectKey: ${{ secrets.PROJECT_KEY }}
+        projectName: ${{ secrets.PROJECT_NAME }}
         buildCommand: dotnet build src/.
-        sonarOrganisation: julioarruda
+        sonarOrganisation: ${{ secrets.SONAR_ORGANIZATION }} 
         beginArguments: >
             /d:sonar.verbose="true"
             /d:sonar.cs.opencover.reportsPaths='"/path/to/coverage.xml","/path/to/coverage.2.xml"'

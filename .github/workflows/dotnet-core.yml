@@ -20,6 +20,12 @@ jobs:
     - name: Install dependencies
       run: dotnet restore 
       working-directory: ./src
+
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       
     - name: Build
       run: dotnet build --configuration Release --no-restore

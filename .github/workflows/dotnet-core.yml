@@ -3,7 +3,7 @@ name: .NET Core
 on:
   workflow_dispatch:
   push:
-    branches: [ test ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 

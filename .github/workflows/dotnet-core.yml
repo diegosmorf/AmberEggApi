@@ -32,6 +32,7 @@ jobs:
       with:
         projectKey: AmberEggApi
         projectName: AmberEggApi
+        buildCommand: dotnet build src/.
         sonarOrganisation: julioarruda
         beginArguments: >
             /d:sonar.verbose="true"

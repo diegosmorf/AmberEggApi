@@ -30,7 +30,7 @@ jobs:
     - name: Sonarscanner for dotnet
       uses: Secbyte/dotnet-sonarscanner@v2.3
       with:
-        projectKey: AmberEggApi
+        projectKey: julioarruda
         projectName: AmberEggApi
         buildCommand: dotnet build src/.
         sonarOrganisation: julioarruda

@@ -41,7 +41,7 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
 
             //act
             var objCreate = await factory.Create();
-            var commandUpdate = new UpdateCompanyCommand(
+            var commandUpdate = new UpdatePersonaCommand(
                 objCreate.Id,
                 expectedNameAfterUpdate);
 
@@ -62,7 +62,7 @@ namespace Api.Common.Repository.MongoDb.Tests.UnitTests
 
             //act
             var objCreate = await factory.Create();
-            var commandUpdate = new UpdateCompanyCommand(
+            var commandUpdate = new UpdatePersonaCommand(
                 objCreate.Id,
                 expectedNameAfterUpdate);
 

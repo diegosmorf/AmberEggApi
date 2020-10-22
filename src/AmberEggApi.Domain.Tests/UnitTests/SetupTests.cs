@@ -1,13 +1,11 @@
 ﻿using AmberEggApi.ApplicationService.InjectionModules;
-using AmberEggApi.Database.InjectionModules;
+using AmberEggApi.Database.Repositories;
 using AmberEggApi.Domain.Tests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
-using Api.Common.Repository.MongoDb;
-using Api.Common.Repository.Repositories;
 using Autofac;
-using Mongo2Go;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
@@ -15,42 +13,36 @@ namespace AmberEggApi.Domain.Tests.UnitTests
     public class SetupTests
     {
         public static IContainer Container { get; protected set; }
-        public static MongoDbRunner MongoDbServer { get; protected set; }
-
+        
 
         [OneTimeSetUp]
-        public async Task RunBeforeAllTests()
+        public void RunBeforeAllTests()
         {
-            //Setup MongoDB InMemory
-            MongoDbServer = MongoDbRunner.Start();
-
             // Setup IoC Container
             var builder = new ContainerBuilder();
             builder.RegisterModule(new IoCModuleApplicationService());
             builder.RegisterModule(new IoCModuleInfrastructure());
             builder.RegisterModule(new IoCModuleAutoMapper());
             builder.RegisterModule(new IoCModuleDomainTest());
-            builder.RegisterModule(new IoCModuleDatabase());
 
-            var settings = new MongoSettings
-            {
-                ConnectionString = MongoDbServer.ConnectionString,
-                DatabaseName = "Database-Domain-Tests"
-            };
+            var opt = new DbContextOptionsBuilder<EfCoreDbContext>();
+            opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
 
-            builder.RegisterInstance(settings);
+            builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();                
+                                    
             Container = builder.Build();
 
+
             //Apply Db Migrations
-            var migrator = Container.Resolve<IDatabaseMigrator>();
-            await migrator.ApplyMigrations();
+            //var context = Container.Resolve<EfCoreDbContext>();
+            //context.Database.Migrate();            
         }
+
 
         [OneTimeTearDown]
         public void RunAfterAllTests()
         {
-            Container.Dispose();
-            MongoDbServer.Dispose();
+            Container.Dispose();            
         }
     }
 }

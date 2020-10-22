@@ -8,7 +8,7 @@ namespace AmberEggApi.ApplicationService.Mappings
     {
         public DomainToViewModelMapping()
         {
-            CreateMap<Company, CompanyViewModel>();
+            CreateMap<Persona, PersonaViewModel>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace AmberEggApi.ApplicationService.Mappings
     {
         public QueryModelToViewModelMapping()
         {
-            CreateMap<CompanyQueryModel, CompanyViewModel>();
+            CreateMap<PersonaQueryModel, PersonaViewModel>();
         }
     }
 }

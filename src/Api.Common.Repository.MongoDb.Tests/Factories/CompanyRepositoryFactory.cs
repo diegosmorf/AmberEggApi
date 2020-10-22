@@ -10,27 +10,27 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
 {
     public class CompanyRepositoryFactory
     {
-        private readonly IRepository<Company> repository;
+        private readonly IRepository<Persona> repository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CompanyRepositoryFactory(IRepository<Company> repository, IUnitOfWork unitOfWork)
+        public CompanyRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Company> Create()
+        public async Task<Persona> Create()
         {
             var name = "Company Test";
-            var command = new CreateCompanyCommand(name);
+            var command = new CreatePersonaCommand(name);
            
             return await Create(command);
         }
 
-        public async Task<Company> Create(CreateCompanyCommand command)
+        public async Task<Persona> Create(CreatePersonaCommand command)
         {
             var datetime = DateTime.Now;
-            var company = new Company();
+            var company = new Persona();
             company.Create(command);
 
             //act
@@ -48,27 +48,27 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
         }
 
 
-        public async Task<Company> Get(Guid id)
+        public async Task<Persona> Get(Guid id)
         {
             return await repository.FindById(id);
         }
 
-        public async Task<IEnumerable<Company>> GetAll()
+        public async Task<IEnumerable<Persona>> GetAll()
         {
             return await repository.All();
         }
 
-        public async Task<IEnumerable<Company>> GetList(string name)
+        public async Task<IEnumerable<Persona>> GetList(string name)
         {
             return await repository.FindList(x=>x.Name == name);
         }
 
-        public async Task<IEnumerable<Company>> GetListByName(string name)
+        public async Task<IEnumerable<Persona>> GetListByName(string name)
         {
             return await repository.FindList(x=>x.Name == name);
         }
 
-        public async Task<Company> Update(UpdateCompanyCommand command)
+        public async Task<Persona> Update(UpdatePersonaCommand command)
         {
             var company = await Get(command.Id);
             company.Update(command);
@@ -108,7 +108,7 @@ namespace Api.Common.Repository.MongoDb.Tests.Factories
             await unitOfWork.Commit();
         }
 
-        public async Task Update(IEnumerable<Company> list)
+        public async Task Update(IEnumerable<Persona> list)
         {
             await repository.Update(list);
             await unitOfWork.Commit();

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <ProjectGuid>{95FAC297-9C32-4E6E-8AA8-DB2BD7E2FA3C}</ProjectGuid>
   </PropertyGroup>
@@ -11,9 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
     <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
-    <ProjectReference Include="..\Api.Common.Repository.MongoDb\Api.Common.Repository.MongoDb.csproj" />
     <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
+    <ProjectReference Include="..\Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj" />
   </ItemGroup>
 
 </Project>

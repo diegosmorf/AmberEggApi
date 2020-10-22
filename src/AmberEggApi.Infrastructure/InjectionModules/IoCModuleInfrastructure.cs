@@ -1,7 +1,9 @@
-﻿using AmberEggApi.Infrastructure.Bus;
-using Api.Common.Repository.MongoDb;
+﻿using AmberEggApi.Database.Repositories;
+using AmberEggApi.Infrastructure.Bus;
+using Api.Common.Repository.EFCore;
 using Api.Common.Repository.Repositories;
 using Autofac;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Module = Autofac.Module;
 
@@ -21,19 +23,16 @@ namespace AmberEggApi.Infrastructure.InjectionModules
                 .AsImplementedInterfaces();
 
             // Infra - DbContext
-            builder
-                .RegisterType<MongoDbContext>()
-                .As<IMongoDbContext>()
-                .InstancePerLifetimeScope();
+            builder.RegisterType<EfCoreDbContext>().As<DbContext>();
 
             // Infra - Unit Of Work            
             builder
-                .RegisterType<MongoDbUnitOfWork>()
+                .RegisterType<EFCoreUnitOfWork>()
                 .As<IUnitOfWork>();
 
             // Infra - Repository
             builder
-                .RegisterGeneric(typeof(MongoDbRepository<>))
+                .RegisterGeneric(typeof(EfCoreRepository<>))
                 .AsImplementedInterfaces();
 
             //Registering all Infra services

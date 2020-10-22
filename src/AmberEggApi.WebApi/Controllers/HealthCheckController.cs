@@ -6,9 +6,9 @@ namespace AmberEggApi.WebApi.Controllers
 {
     public class HealthCheckController : BaseController
     {
-        private readonly ICompanyAppService appService;        
+        private readonly IPersonaAppService appService;        
 
-        public HealthCheckController(ICompanyAppService appService)
+        public HealthCheckController(IPersonaAppService appService)
         {
             this.appService = appService;            
         }

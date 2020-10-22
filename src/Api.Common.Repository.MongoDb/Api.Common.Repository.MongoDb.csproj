@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <ProjectGuid>{986CD88A-ADC2-4FB5-A5D0-37B7791C17A7}</ProjectGuid>

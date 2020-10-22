@@ -2,7 +2,6 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Mongo2Go;
 using NUnit.Framework;
 using System.IO;
 using System.Net.Http;
@@ -15,15 +14,10 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
     {
         private static TestServer apiServer;
         public static HttpClient Client { get; private set; }
-        public static MongoDbRunner MongoDbServer { get; private set; }
-
 
         [OneTimeSetUp]
         public void RunBeforeAllTests()
         {
-            //Setup MongoDB InMemory
-            MongoDbServer = MongoDbRunner.Start();
-
             // Setup API SERVER
             apiServer = new TestServer(new WebHostBuilder()
                 .ConfigureServices(s => s.AddAutofac())
@@ -39,8 +33,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         public void RunAfterAllTests()
         {
             Client.Dispose();
-            apiServer.Dispose();
-            MongoDbServer.Dispose();
+            apiServer.Dispose();            
         }
     }
 }

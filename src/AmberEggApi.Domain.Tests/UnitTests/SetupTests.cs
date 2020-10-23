@@ -26,7 +26,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var opt = new DbContextOptionsBuilder<EfCoreDbContext>();
             opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
 
-            builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();                
+            builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();
                                     
             Container = builder.Build();       
         }

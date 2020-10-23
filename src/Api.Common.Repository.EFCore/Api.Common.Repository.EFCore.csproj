@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <ProjectGuid>{949EA0A5-5AA1-442C-9EA7-2A9663942977}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>

@@ -13,7 +13,6 @@ namespace AmberEggApi.Domain.Tests.UnitTests
     {
         public static IContainer Container { get; protected set; }
         
-
         [OneTimeSetUp]
         public void RunBeforeAllTests()
         {

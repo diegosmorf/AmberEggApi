@@ -4,7 +4,6 @@ using AmberEggApi.Domain.Tests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
@@ -30,14 +29,8 @@ namespace AmberEggApi.Domain.Tests.UnitTests
 
             builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();                
                                     
-            Container = builder.Build();
-
-
-            //Apply Db Migrations
-            //var context = Container.Resolve<EfCoreDbContext>();
-            //context.Database.Migrate();            
+            Container = builder.Build();       
         }
-
 
         [OneTimeTearDown]
         public void RunAfterAllTests()

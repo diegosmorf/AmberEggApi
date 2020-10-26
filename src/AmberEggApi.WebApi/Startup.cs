@@ -31,8 +31,9 @@ namespace AmberEggApi.WebApi
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console()
+                    .CreateLogger();
 
             Log.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
             Log.Information($"Environment: {environment.EnvironmentName}");

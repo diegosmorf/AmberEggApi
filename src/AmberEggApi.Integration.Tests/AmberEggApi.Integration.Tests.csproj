@@ -12,10 +12,6 @@
    <None Remove="Properties\**" />
  </ItemGroup>
 
- <ItemGroup>
-   <None Remove="appsettings.json" />
- </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
@@ -56,12 +52,6 @@
     <ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
     <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />
     <ProjectReference Include="..\AmberEggApi.WebApi\AmberEggApi.WebApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

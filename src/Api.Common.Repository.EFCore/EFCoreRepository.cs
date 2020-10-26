@@ -13,23 +13,7 @@ namespace Api.Common.Repository.EFCore
     {
         protected readonly DbContext context;
         protected readonly DbSet<TEntity> dbSet;
-
-        public void Dispose()
-        {
-            // Cleanup
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            //Commit
-            context.SaveChanges();
-
-            // Cleanup
-            context.Dispose();
-        }
-
+                
         public EfCoreRepository(DbContext context)
         {
             this.context = context;

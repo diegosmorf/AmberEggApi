@@ -5,9 +5,7 @@ using AmberEggApi.Infrastructure.InjectionModules;
 using Api.Common.WebServer.Server;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,17 +13,8 @@ namespace AmberEggApi.Integration.Tests.Server
 {
 
     public class StartupIntegrationTest
-    {
+  {
 
-        private readonly IConfiguration configuration;
-        public StartupIntegrationTest(IWebHostEnvironment environment)
-        {
-            configuration = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
-                .AddEnvironmentVariables()
-                .Build();
-        }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -33,7 +22,12 @@ namespace AmberEggApi.Integration.Tests.Server
             builder.RegisterModule(new IoCModuleApplicationService());
             builder.RegisterModule(new IoCModuleInfrastructure());
             builder.RegisterModule(new IoCModuleDomain());
-            builder.RegisterModule(new IoCModuleAutoMapper());            
+            builder.RegisterModule(new IoCModuleAutoMapper());
+
+            var opt = new DbContextOptionsBuilder<EfCoreDbContext>();
+            opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
+
+            builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -42,10 +36,7 @@ namespace AmberEggApi.Integration.Tests.Server
             services
                 .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
                 .AddApplicationPart(Assembly.Load("AmberEggApi.WebApi"))
-                .AddNewtonsoftJson();
-
-            var connectionStringApp = configuration.GetConnectionString("ApiDbConnection");
-            services.AddDbContext<EfCoreDbContext>(options => { options.UseSqlServer(connectionStringApp); });
+                .AddNewtonsoftJson();            
 
             services.AddMemoryCache();
         }
@@ -61,21 +52,7 @@ namespace AmberEggApi.Integration.Tests.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            
-
-            UpdateDatabaseUsingEfCore(app);
-        }
-
-        private void UpdateDatabaseUsingEfCore(IApplicationBuilder app)
-        {
-            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            serviceScope
-                .ServiceProvider
-                .GetRequiredService<EfCoreDbContext>()
-                .Database
-                .Migrate();
+            });            
         }
     }
 }

@@ -72,17 +72,11 @@ namespace Api.Common.WebServer.Server
 
         private async Task HandleRequest(HttpContext context, Exception exception)
         {
-            switch (exception.GetBaseException())
+            context.Response.StatusCode = (exception.GetBaseException()) switch
             {
-                case UnauthorizedAccessException _:
-                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    break;
-
-                default:
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
-            }
-
+                UnauthorizedAccessException _ => (int)HttpStatusCode.Unauthorized,
+                _ => (int)HttpStatusCode.InternalServerError,
+            };
             var code = context.Response.StatusCode;
             var apiResponse = new ApiResponse(code, exception);
 

@@ -1,6 +1,5 @@
 ﻿using Api.Common.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore
@@ -18,19 +17,6 @@ namespace Api.Common.Repository.EFCore
         public async Task Commit()
         {
             await context.SaveChangesAsync();            
-        }
-
-        public void Dispose()
-        {
-            // Cleanup            
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            // Cleanup              
-            context?.Dispose();
-        }        
+        }      
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Models;
 using Api.Common.Repository.EFCore.Tests.Factories;
+using Api.Common.Repository.Repositories;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
@@ -12,24 +14,25 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
     [TestFixture]
     public class PersonaDomainTest
     {
+        private readonly IRepository<Persona> repository;        
         private readonly PersonaRepositoryFactory factory;
 
         public PersonaDomainTest()
         {
+            repository = SetupTests.Container.Resolve<IRepository<Persona>>();            
             factory = SetupTests.Container.Resolve<PersonaRepositoryFactory>();
-        }
+        }        
 
         [Test]
         public async Task WhenCreate_Then_ICanFindItById()
         {
             //act
             var objCreate = await factory.Create();
-            var objGet = await factory.Get(objCreate.Id);
+            var objGet = await repository.FindById(objCreate.Id);
 
             //assert
             objGet.Id.Should().Be(objCreate.Id);
-            objGet.Name.Should().Be(objCreate.Name);
-            
+            objGet.Name.Should().Be(objCreate.Name);            
         }
 
         [Test]
@@ -46,7 +49,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
-            var objGet = await factory.Get(objCreate.Id);
+            var objGet = await repository.Find(x=> x.Id == objCreate.Id);
 
             //assert
             objGet.Id.Should().Be(responseUpdate.Id);
@@ -67,9 +70,9 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 expectedNameAfterUpdate);
 
             await factory.Update(commandUpdate);
-            await factory.Delete(objCreate.Id);
+            await repository.Delete(objCreate.Id);
 
-            var objGet = await factory.Get(objCreate.Id);
+            var objGet = await repository.FindById(objCreate.Id);
 
             //assert
             objGet.Should().BeNull();
@@ -84,15 +87,14 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
 
             //act
             await factory.DeleteAll();
-            var company1 = await factory.Create();
-            var company2 = await factory.Create();
-            var company3 = await factory.Create();
-            var company4 = await factory.Create();
-            
-            var list = new [] { company1.Id, company2.Id, company3.Id, company4.Id };
-            var currentInserted = (await factory.GetAll()).Count();
-            await factory.Delete(list);
-            var currentResult = (await factory.GetAll()).Count();
+            await factory.Create();
+            await factory.Create();
+            await factory.Create();
+            await factory.Create();
+
+            var currentInserted = (await repository.FindList(x => x.Name.Contains("Test"))).Count();
+            await repository.Delete(x => x.Name.Contains("Test"));
+            var currentResult = (await repository.All()).Count();
             //assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);
@@ -115,8 +117,9 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
 
             var list = new[] { company1, company2, company3, company4 };
             var currentInserted = (await factory.GetListByName(name)).Count();
-            await factory.Update(list);
+            await repository.Update(list);
             var currentResult = (await factory.GetListByName(name)).Count();
+
             //assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);

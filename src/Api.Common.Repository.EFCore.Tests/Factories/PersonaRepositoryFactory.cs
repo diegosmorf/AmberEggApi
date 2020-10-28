@@ -68,22 +68,6 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
             return await repository.FindList(x=>x.Name == name);
         }
 
-        public async Task<Persona> Update(UpdatePersonaCommand command)
-        {
-            var company = await Get(command.Id);
-            company.Update(command);
-
-            //act
-            await repository.Update(company);
-            await unitOfWork.Commit();
-
-            //assert
-            company.Id.Should().Be(command.Id);
-            company.Name.Should().Be(command.Name);
-
-            return company;
-        }
-
         public async Task DeleteAll()
         {
             var list = await repository.All();
@@ -112,6 +96,22 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
         {
             await repository.Update(list);
             await unitOfWork.Commit();
+        }
+
+        public async Task<Persona> Update(UpdatePersonaCommand command)
+        {
+            var company = await Get(command.Id);
+            company.Update(command);
+
+            //act
+            await repository.Update(company);
+            await unitOfWork.Commit();
+
+            //assert
+            company.Id.Should().Be(command.Id);
+            company.Name.Should().Be(command.Name);
+
+            return company;
         }
     }
 }

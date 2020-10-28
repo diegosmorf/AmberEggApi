@@ -23,52 +23,28 @@ namespace Api.Common.Repository.EFCore
             dbSet = this.context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> All()
+        public async Task<IEnumerable<TEntity>> ListAll()
         {
             return await dbSet.ToArrayAsync();
-        }
-
-        public async Task Delete(IEnumerable<Guid> ids)
-        {
-            foreach (var id in ids)
-            {
-                await DeleteInstance(id);
-            }
-
-            await context.SaveChangesAsync();
-        }
+        }        
 
         public async Task Delete(Guid id)
         {
             await DeleteInstance(id);
             await context.SaveChangesAsync();
-        }
+        }       
 
-        public async Task Delete(Expression<Func<TEntity, bool>> expression)
-        {
-            var instances = await dbSet.Where(expression).ToArrayAsync();
-            foreach (var instance in instances)
-            {
-                await DeleteInstance(instance);
-            }
-
-            if (instances.Any())
-            {
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<TEntity> Find(Expression<Func<TEntity, bool>> expression)
+        public async Task<TEntity> Search(Expression<Func<TEntity, bool>> expression)
         {
             return await dbSet.FirstOrDefaultAsync(expression);
         }
 
-        public async Task<TEntity> FindById(Guid id)
+        public async Task<TEntity> SearchById(Guid id)
         {
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<TEntity>> FindList(Expression<Func<TEntity, bool>> expression)
+        public async Task<IEnumerable<TEntity>> SearchList(Expression<Func<TEntity, bool>> expression)
         {
             return await dbSet.Where(expression).ToArrayAsync();
         }
@@ -121,7 +97,7 @@ namespace Api.Common.Repository.EFCore
 
         private async Task DeleteInstance(Guid id)
         {
-            var instance = await FindById(id);
+            var instance = await SearchById(id);
 
             if (instance != null)
                 await DeleteInstance(instance);

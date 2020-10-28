@@ -28,7 +28,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         {
             //act
             var objCreate = await factory.Create();
-            var objGet = await repository.FindById(objCreate.Id);
+            var objGet = await repository.SearchById(objCreate.Id);
 
             //assert
             objGet.Id.Should().Be(objCreate.Id);
@@ -49,7 +49,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
-            var objGet = await repository.Find(x=> x.Id == objCreate.Id);
+            var objGet = await repository.Search(x=> x.Id == objCreate.Id);
 
             //assert
             objGet.Id.Should().Be(responseUpdate.Id);
@@ -72,7 +72,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             await factory.Update(commandUpdate);
             await repository.Delete(objCreate.Id);
 
-            var objGet = await repository.FindById(objCreate.Id);
+            var objGet = await repository.SearchById(objCreate.Id);
 
             //assert
             objGet.Should().BeNull();
@@ -92,9 +92,9 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             await factory.Create();
             await factory.Create();
 
-            var currentInserted = (await repository.FindList(x => x.Name.Contains("Test"))).Count();
+            var currentInserted = (await repository.SearchList(x => x.Name.Contains("Test"))).Count();
             await factory.DeleteAll();
-            var currentResult = (await repository.All()).Count();
+            var currentResult = (await repository.ListAll()).Count();
             //assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);

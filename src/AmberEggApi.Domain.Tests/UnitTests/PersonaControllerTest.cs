@@ -26,11 +26,11 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             //act
             var responseCreate = await factory.Create();
-            var responseFindById = await factory.Get(responseCreate.Id);
+            var responseSearchById = await factory.Get(responseCreate.Id);
 
             //assert
-            responseFindById.Id.Should().Be(responseCreate.Id);
-            responseFindById.Name.Should().Be(responseCreate.Name);
+            responseSearchById.Id.Should().Be(responseCreate.Id);
+            responseSearchById.Name.Should().Be(responseCreate.Name);
         }
 
         [Test]
@@ -47,11 +47,11 @@ namespace AmberEggApi.Domain.Tests.UnitTests
                 expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
-            var responseFindById = await factory.Get(responseCreate.Id);
+            var responseSearchById = await factory.Get(responseCreate.Id);
 
             //assert
-            responseFindById.Id.Should().Be(responseUpdate.Id);
-            responseFindById.Name.Should().Be(responseUpdate.Name);
+            responseSearchById.Id.Should().Be(responseUpdate.Id);
+            responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
 
         [Test]
@@ -70,10 +70,10 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             await factory.Update(commandUpdate);
             await factory.Delete(responseCreate.Id);
 
-            var responseFindById = await factory.Get(responseCreate.Id);
+            var responseSearchById = await factory.Get(responseCreate.Id);
 
             //assert
-            responseFindById.Should().BeNull();
+            responseSearchById.Should().BeNull();
         }
 
         [Test]

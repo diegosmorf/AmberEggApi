@@ -26,21 +26,21 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()
         {
-            var list = await repository.All();
+            var list = await repository.ListAll();
 
             return mapper.Map<IEnumerable<PersonaViewModel>>(list);
         }
 
         public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name)
         {
-            var list = await repository.FindList(x => x.Name.Contains(name));
+            var list = await repository.SearchList(x => x.Name.Contains(name));
 
             return mapper.Map<IEnumerable<PersonaViewModel>>(list).OrderBy(x => x.Name);
         }
 
         public async Task<PersonaViewModel> Get(Guid id)
         {
-            var instance = await repository.FindById(id);
+            var instance = await repository.SearchById(id);
 
             return mapper.Map<PersonaViewModel>(instance);
         }

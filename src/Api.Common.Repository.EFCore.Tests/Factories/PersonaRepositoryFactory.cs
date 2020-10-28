@@ -50,27 +50,27 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
         public async Task<Persona> Get(Guid id)
         {
-            return await repository.FindById(id);
+            return await repository.SearchById(id);
         }
 
         public async Task<IEnumerable<Persona>> GetAll()
         {
-            return await repository.All();
+            return await repository.ListAll();
         }
 
         public async Task<IEnumerable<Persona>> GetList(string name)
         {
-            return await repository.FindList(x=>x.Name == name);
+            return await repository.SearchList(x=>x.Name == name);
         }
 
         public async Task<IEnumerable<Persona>> GetListByName(string name)
         {
-            return await repository.FindList(x=>x.Name == name);
+            return await repository.SearchList(x=>x.Name == name);
         }
 
         public async Task DeleteAll()
         {
-            var list = await repository.All();
+            var list = await repository.ListAll();
 
             foreach (var item in list)
             {
@@ -88,7 +88,11 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
         public async Task Delete(IEnumerable<Guid> list)
         {
-            await repository.Delete(list);
+            foreach (var id in list)
+            {
+                await repository.Delete(id);
+            }
+
             await unitOfWork.Commit();
         }
 

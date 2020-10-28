@@ -21,7 +21,7 @@ namespace AmberEggApi.Domain.CommandHandlers
         public async Task<Persona> Handle(UpdatePersonaCommand command)
         {
             //Domain
-            var instance = await repository.FindById(command.Id);
+            var instance = await repository.SearchById(command.Id);
             instance.Update(command);
 
             //Persistence

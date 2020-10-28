@@ -8,12 +8,12 @@ namespace Api.Common.Repository.Repositories
 {
     public interface IQueryService<TEntity> where TEntity : IDomainEntity
     {
-        Task<TEntity> FindById(Guid id);
+        Task<TEntity> SearchById(Guid id);
 
-        Task<TEntity> Find(Expression<Func<TEntity, bool>> expression);
+        Task<TEntity> Search(Expression<Func<TEntity, bool>> expression);
 
-        Task<IEnumerable<TEntity>> All();
+        Task<IEnumerable<TEntity>> ListAll();
 
-        Task<IEnumerable<TEntity>> FindList(Expression<Func<TEntity, bool>> expression);
+        Task<IEnumerable<TEntity>> SearchList(Expression<Func<TEntity, bool>> expression);
     }
 }

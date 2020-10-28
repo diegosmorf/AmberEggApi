@@ -20,7 +20,7 @@ namespace AmberEggApi.Domain.EventHandlers
         public async Task Handle(PersonaDeletedEvent @event)
         {
             //Domain Changes
-            var instance = await repository.FindById(@event.Persona.Id);
+            var instance = await repository.SearchById(@event.Persona.Id);
 
 
             if (instance == null)

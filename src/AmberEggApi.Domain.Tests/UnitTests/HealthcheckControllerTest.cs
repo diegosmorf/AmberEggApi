@@ -6,7 +6,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using NUnit.Framework;
-using Serilog;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -40,8 +39,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var host = WebHost.CreateDefaultBuilder()
                                 .ConfigureServices(s => s.AddAutofac())
                                 .UseContentRoot(Directory.GetCurrentDirectory())
-                                .UseStartup<Startup>()
-                                .UseSerilog()
+                                .UseStartup<Startup>()                                
                                 .Build();
 
             //assert

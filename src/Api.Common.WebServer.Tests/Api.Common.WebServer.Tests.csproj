@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />
     <ProjectReference Include="..\Api.Common.WebServer\Api.Common.WebServer.csproj" />
   </ItemGroup>
 

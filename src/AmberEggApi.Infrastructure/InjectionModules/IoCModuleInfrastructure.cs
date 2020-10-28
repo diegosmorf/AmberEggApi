@@ -1,5 +1,6 @@
 ﻿using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.Bus;
+using AmberEggApi.Infrastructure.Loggers;
 using Api.Common.Repository.EFCore;
 using Api.Common.Repository.Repositories;
 using Autofac;
@@ -13,6 +14,10 @@ namespace AmberEggApi.Infrastructure.InjectionModules
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder
+               .RegisterType<ConsoleLogger>()
+               .AsImplementedInterfaces();
+
             // Service Bus
             builder
                 .RegisterType<InMemoryCommandProducer>()

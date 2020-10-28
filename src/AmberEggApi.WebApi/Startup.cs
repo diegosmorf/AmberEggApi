@@ -1,6 +1,7 @@
 ﻿using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.InjectionModules;
+using AmberEggApi.Infrastructure.Loggers;
 using Api.Common.WebServer.Server;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
@@ -10,9 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using System.Reflection;
 
 namespace AmberEggApi.WebApi
@@ -20,6 +19,8 @@ namespace AmberEggApi.WebApi
     public class Startup
     {
         private readonly IConfiguration configuration;
+
+        private readonly ConsoleLogger looger = new ConsoleLogger();
 
         public Startup(IWebHostEnvironment environment)
         {
@@ -30,19 +31,14 @@ namespace AmberEggApi.WebApi
                 .AddEnvironmentVariables()
                 .Build();
 
-            Log.Logger = new LoggerConfiguration()
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console()
-                    .CreateLogger();
-
-            Log.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
-            Log.Information($"Environment: {environment.EnvironmentName}");
+            looger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
+            looger.Information($"Environment: {environment.EnvironmentName}");
 
             if (environment.IsDevelopment())
             {
                 foreach (var item in configuration.AsEnumerable())
                 {
-                    Log.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
+                    looger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
                 }
             }
         }
@@ -82,12 +78,11 @@ namespace AmberEggApi.WebApi
             services.AddMemoryCache();
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseMiddleware<ApiResponseMiddleware>();
-            app.UseMiddleware<SerilogMiddleware>();
-            loggerFactory.AddSerilog();
-
+            app.UseMiddleware<LoggerMiddleware>();
+            
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -102,7 +97,7 @@ namespace AmberEggApi.WebApi
 
         private void UpdateDatabaseUsingEfCore(IApplicationBuilder app)
         {
-            Log.Information("Starting: Database Migration");
+            looger.Information("Starting: Database Migration");
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
@@ -113,7 +108,7 @@ namespace AmberEggApi.WebApi
                     .Migrate();
             }
 
-            Log.Information("Ending: Database Migration");
+            looger.Information("Ending: Database Migration");
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             await factory.Create();
 
             var currentInserted = (await repository.FindList(x => x.Name.Contains("Test"))).Count();
-            await repository.Delete(x => x.Name.Contains("Test"));
+            await factory.DeleteAll();
             var currentResult = (await repository.All()).Count();
             //assert
             expectedInserted.Should().Be(currentInserted);

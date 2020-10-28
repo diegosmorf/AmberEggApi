@@ -1,4 +1,5 @@
-﻿using Api.Common.WebServer.Server;
+﻿using AmberEggApi.Infrastructure.Loggers;
+using Api.Common.WebServer.Server;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace Api.Common.WebServer.Tests.UnitTests
 {
 
     [TestFixture]
-    public class SerilogMiddlewareTest
+    public class ConsoleMiddlewareTest
     {
         [TestCase("OK")]
         [TestCase("")]
@@ -22,7 +23,7 @@ namespace Api.Common.WebServer.Tests.UnitTests
             context.Response.Body = new MemoryStream();
 
             async Task next(HttpContext httpContext) => await httpContext.Response.WriteAsync(content);
-            var middleware = new SerilogMiddleware(next);
+            var middleware = new LoggerMiddleware(next, new ConsoleLogger());
 
             //act
             await middleware.Invoke(context);
@@ -53,7 +54,7 @@ namespace Api.Common.WebServer.Tests.UnitTests
             context.Response.Body = new MemoryStream();
 
             Task next(HttpContext httpContext) => throw new Exception(message);
-            var middleware = new SerilogMiddleware(next);
+            var middleware = new LoggerMiddleware(next, new ConsoleLogger());
                         
             //act
             Func<Task> action = async () => { await middleware.Invoke(context); };

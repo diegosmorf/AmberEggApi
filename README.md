@@ -20,7 +20,7 @@ This project AmberEggApi cover concepts about:
 
 ## DotNetCore
 
-Using .NETCore version 2.2 
+Using Asp.NET 5.0
 
 ## 3rd Party Nuget Packages 
 - Autofac
@@ -31,14 +31,15 @@ Using .NETCore version 2.2
 - Serilog
 
 ## Repository
-- MongoDb Drive
-- Mongo2Go (inmemory)
+- Entity Framework 
+- Entity Framework (inmemory)
+- EF Data Migration
  
 ## Development Tools
 
- - Visual Studio (2017 or newer) or Visual Studio Code
+ - Visual Studio Code
  - Azure DevOps ( Backlog and Code Repository)
- - MSSQL Server Management Studio 17 
+ - MSSQL Server Management Studio 18 
  - Swagger Editor 
  - GIT
 

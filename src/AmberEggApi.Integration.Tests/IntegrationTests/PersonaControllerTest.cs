@@ -1,9 +1,7 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Integration.Tests.Factories;
 using FluentAssertions;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests
@@ -22,13 +20,9 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         {
             // Act
             var viewModelCreate = await factory.Create();
-            var responseGet = await factory.Get(viewModelCreate.Id);
+            var viewModelGet = await factory.Get(viewModelCreate.Id);
 
-            var viewModelGet =
-                JsonConvert.DeserializeObject<PersonaViewModel>(responseGet.Result.ToString());
-
-            // Assert
-            responseGet.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            // Assert            
             viewModelGet.Should().BeOfType<PersonaViewModel>();
             viewModelGet.Id.Should().NotBeEmpty();
             viewModelGet.Id.Should().Be(viewModelCreate.Id);
@@ -41,11 +35,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // Act
             var viewModelCreate = await factory.Create();
             await factory.Delete(viewModelCreate.Id);
-            
+
             var responseGet = await factory.Get(viewModelCreate.Id);
 
             // Assert
-            responseGet.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            responseGet.Should().BeNull();
         }
 
         [Test]
@@ -54,13 +48,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // Act
             var viewModelCreate = await factory.Create();
             var viewModelUpdate = await factory.Update(viewModelCreate);
-            
-            var responseGet = await factory.Get(viewModelCreate.Id);
-            var viewModelGet =
-                JsonConvert.DeserializeObject<PersonaViewModel>(responseGet.Result.ToString());
 
-            // Assert
-            responseGet.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            var viewModelGet = await factory.Get(viewModelCreate.Id);
+
+
+            // Assert            
             viewModelGet.Should().BeOfType<PersonaViewModel>();
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
@@ -72,10 +64,8 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // Act
             var viewModelCreate = await factory.Create();
             var viewModelUpdate = await factory.Update(viewModelCreate);
-            
-            var responseGet = await factory.Get(viewModelCreate.Id);
-            var viewModelGet =
-                JsonConvert.DeserializeObject<PersonaViewModel>(responseGet.Result.ToString());
+
+            var viewModelGet = await factory.Get(viewModelCreate.Id);
 
             await factory.Delete(viewModelCreate.Id);
             var responseGetAfterDelete = await factory.Get(viewModelCreate.Id);
@@ -84,7 +74,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
 
-            responseGetAfterDelete.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            responseGetAfterDelete.Should().BeNull();
         }
     }
 }

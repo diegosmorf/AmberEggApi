@@ -4,8 +4,7 @@ namespace Api.Common.Cqrs.Core.Messages
 {
     public interface IMessage
     {
-        Guid MessageId { get; }
-        Guid AuditUserId { get; set; }
+        Guid MessageId { get; }        
         string MessageType { get; }
         DateTime MessageCreatedDate { get; }
     }

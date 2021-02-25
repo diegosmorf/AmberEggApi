@@ -1,4 +1,4 @@
-﻿using AmberEggApi.ApplicationService.InjectionModules;
+using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.InjectionModules;
 using AmberEggApi.Infrastructure.Loggers;
@@ -48,19 +48,18 @@ namespace AmberEggApi.WebApi
             // IoC Container Module Registration
             builder.RegisterModule(new IoCModuleApplicationService());
             builder.RegisterModule(new IoCModuleInfrastructure());
-            builder.RegisterModule(new IoCModuleAutoMapper());            
+            builder.RegisterModule(new IoCModuleAutoMapper());
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
-                .AddNewtonsoftJson();
-                
 
-            //Config Swagger
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmberEggApi", Version = "v1" }); });
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmberEggApi", Version = "v1" });
+            });
 
             services.AddCors(config =>
             {
@@ -78,19 +77,22 @@ namespace AmberEggApi.WebApi
             services.AddMemoryCache();
         }
 
-        public void Configure(IApplicationBuilder app)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ApiResponseMiddleware>();
             app.UseMiddleware<LoggerMiddleware>();
-            
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });            
 
-            app.UseSwagger(c => c.RouteTemplate = "swagger/{documentName}/swagger.json");
-            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "AmberEggApi Documentation"));
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AmberEggApi v1"));
+            }
+
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             UpdateDatabaseUsingEfCore(app);
         }

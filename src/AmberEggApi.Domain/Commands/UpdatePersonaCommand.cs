@@ -17,6 +17,6 @@ namespace AmberEggApi.Domain.Commands
         [MinLength(2)]
         [MaxLength(255)]
         [Required]
-        public string Name { get; protected set; }
+        public string Name { get; set; }
     }
 }

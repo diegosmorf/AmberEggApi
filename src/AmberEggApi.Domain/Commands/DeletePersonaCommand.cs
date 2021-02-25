@@ -11,6 +11,6 @@ namespace AmberEggApi.Domain.Commands
             Id = id;
         }
 
-        [Required] public Guid Id { get; protected set; }
+        [Required] public Guid Id { get; set; }
     }
 }

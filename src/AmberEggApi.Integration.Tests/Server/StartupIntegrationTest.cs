@@ -11,11 +11,8 @@ using System.Reflection;
 
 namespace AmberEggApi.Integration.Tests.Server
 {
-
     public class StartupIntegrationTest
-  {
-
-
+    {
         public void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration
@@ -36,23 +33,20 @@ namespace AmberEggApi.Integration.Tests.Server
             services
                 .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
                 .AddApplicationPart(Assembly.Load("AmberEggApi.WebApi"))
-                .AddNewtonsoftJson();            
+                .AddNewtonsoftJson();
 
             services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-
-            app.UseMiddleware<ApiResponseMiddleware>();
-
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });            
+            });
         }
     }
 }

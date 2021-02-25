@@ -17,9 +17,7 @@ namespace Api.Common.Cqrs.Core.Messages
             MessageCreatedDate = DateTime.UtcNow;
         }
 
-        [JsonIgnore] public Guid MessageId { get; }
-
-        [JsonIgnore] public Guid AuditUserId { get; set; }
+        [JsonIgnore] public Guid MessageId { get; }        
 
         [JsonIgnore] public string MessageType { get; }
 

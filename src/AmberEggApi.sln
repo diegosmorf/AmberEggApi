@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Domain", "1 - Domain", "{F430C77E-DDAB-45DA-8D24-A04F577AECBF}"
 EndProject
@@ -37,11 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Contracts", "Api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Database", "AmberEggApi.Database\AmberEggApi.Database.csproj", "{B2300667-54DE-418B-93DB-37A553BD1480}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.WebServer.Tests", "Api.Common.WebServer.Tests\Api.Common.WebServer.Tests.csproj", "{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCore", "Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj", "{949EA0A5-5AA1-442C-9EA7-2A9663942977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Common.Repository.EFCore.Tests", "Api.Common.Repository.EFCore.Tests\Api.Common.Repository.EFCore.Tests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCore.Tests", "Api.Common.Repository.EFCore.Tests\Api.Common.Repository.EFCore.Tests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,10 +91,6 @@ Global
 		{B2300667-54DE-418B-93DB-37A553BD1480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2300667-54DE-418B-93DB-37A553BD1480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2300667-54DE-418B-93DB-37A553BD1480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{949EA0A5-5AA1-442C-9EA7-2A9663942977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{949EA0A5-5AA1-442C-9EA7-2A9663942977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{949EA0A5-5AA1-442C-9EA7-2A9663942977}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -121,7 +115,6 @@ Global
 		{6587DF7E-2B0D-49B3-B9CE-3F0F47869E8A} = {6A607D58-847A-46A5-A600-BD782970CD8B}
 		{F2EDD5AF-AE53-4F1A-A921-97E40E88413D} = {6A607D58-847A-46A5-A600-BD782970CD8B}
 		{B2300667-54DE-418B-93DB-37A553BD1480} = {FB19DF3C-356A-442F-8E68-C6AA4B45880D}
-		{9A058F9F-B836-4581-BCB6-5A48FF8CDF67} = {7CC95871-4B70-411F-AB2C-7CCEDBB47E03}
 		{949EA0A5-5AA1-442C-9EA7-2A9663942977} = {6A607D58-847A-46A5-A600-BD782970CD8B}
 		{71EE458E-462D-48D1-B693-DBDE4116835D} = {7CC95871-4B70-411F-AB2C-7CCEDBB47E03}
 	EndGlobalSection

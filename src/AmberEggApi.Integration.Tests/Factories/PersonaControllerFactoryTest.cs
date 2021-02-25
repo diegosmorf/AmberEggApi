@@ -26,12 +26,14 @@ namespace AmberEggApi.Integration.Tests.Factories
             var name = "Persona Test";
 
             //Act
-            var responseModel = await Create(new CreatePersonaCommand(name));
-            var viewModel =
-                JsonConvert.DeserializeObject<PersonaViewModel>(responseModel.Result.ToString());
+            // var responseModel = await Create(new CreatePersonaCommand(name));
+            // var viewModel =
+            //     JsonConvert.DeserializeObject<PersonaViewModel>(responseModel.Result.ToString());
+
+             var viewModel = await Create(new CreatePersonaCommand(name));
 
             // Assert
-            responseModel.StatusCode.Should().Be((int)HttpStatusCode.Created);
+            //responseModel.StatusCode.Should().Be((int)HttpStatusCode.Created);
             viewModel.Should().BeOfType<PersonaViewModel>();
 
             viewModel.Id.Should().NotBeEmpty();
@@ -44,25 +46,31 @@ namespace AmberEggApi.Integration.Tests.Factories
         {
             // Act
             var response = await client.DeleteAsync($"{url}/{id}");
-            var responseModel = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
+            //var responseModel = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
-            responseModel.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
-            responseModel.Result.Should().Be("");
+            //responseModel.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+            //responseModel.Result.Should().Be("");
         }
 
-        public async Task<ApiResponse> Get(Guid id)
+        public async Task<PersonaViewModel> Get(Guid id)
         {
             await Task.Delay(2);
             // Act
             var response = await client.GetAsync($"{url}/{id}");
-            var responseModel = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
+
+            if(response.StatusCode == HttpStatusCode.NoContent)
+            {
+                return null;
+            }
+
+            var responseModel = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
 
             return responseModel;
         }
 
-        private async Task<ApiResponse> Create(CreatePersonaCommand command)
+        private async Task<PersonaViewModel> Create(CreatePersonaCommand command)
         {
             // Arrange
             var requestBody =
@@ -72,11 +80,11 @@ namespace AmberEggApi.Integration.Tests.Factories
             var response = await client.PostAsync(url, requestBody);
 
             // Assert
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
+            var apiResponse = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
 
-            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.Created);
-            apiResponse.IsSuccessRequest.Should().BeTrue();
-            apiResponse.Message.Should().Be(HttpStatusCode.Created.ToString());
+            response.StatusCode.Should().Be((int)HttpStatusCode.Created);
+            //apiResponse.IsSuccessRequest.Should().BeTrue();
+            //apiResponse.Message.Should().Be(HttpStatusCode.Created.ToString());
 
             return apiResponse;
         }
@@ -92,13 +100,14 @@ namespace AmberEggApi.Integration.Tests.Factories
 
             // Act
             var response = await client.PutAsync($"{url}/{viewModel.Id}", requestBody);
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
-            var viewModelResponse =
-                JsonConvert.DeserializeObject<PersonaViewModel>(apiResponse.Result.ToString());
+            // var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(await response.Content.ReadAsStringAsync());
+            // var viewModelResponse =
+            //     JsonConvert.DeserializeObject<PersonaViewModel>(apiResponse.Result.ToString());
 
+            var viewModelResponse = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            //apiResponse.StatusCode.Should().Be((int)HttpStatusCode.OK);
             viewModelResponse.Should().BeOfType<PersonaViewModel>();
 
             viewModelResponse.Id.Should().NotBeEmpty();

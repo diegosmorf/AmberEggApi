@@ -1,9 +1,7 @@
 # Amber Egg Api
-
 This is a starting point (TEMPLATE) for Clean Architecture with ASP.NET Core. [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) is just the latest in a series of names for the same loosely-coupled, dependency-inverted architecture. You will also find it named [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture), [ports-and-adapters](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html), or [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
 
 ## Summary
-
 This project AmberEggApi cover concepts about:
   
  - CQRS (http://www.codeproject.com/Articles/555855/Introduction-to-CQRS)
@@ -18,9 +16,8 @@ This project AmberEggApi cover concepts about:
 - [SOLID Principles of Object Oriented Design](https://www.pluralsight.com/courses/principles-oo-design)
 - [Domain-Driven Design Fundamentals](https://www.pluralsight.com/courses/domain-driven-design-fundamentals)
 
-## DotNetCore
-
-Using Asp.NET 5.0
+## .Net Version
+.NET 5.0
 
 ## 3rd Party Nuget Packages 
 - Autofac
@@ -31,17 +28,15 @@ Using Asp.NET 5.0
 - Serilog
 
 ## Repository
-- Entity Framework 
-- Entity Framework (inmemory)
-- EF Data Migration
+- Entity Framework 6 + InMmemory
+- Entity Framework Data Migration
  
 ## Development Tools
-
  - Visual Studio Code
- - Azure DevOps ( Backlog and Code Repository)
+ - GIT Bash
+ - GitHub(Repos, Actions)
  - MSSQL Server Management Studio 18 
- - Swagger Editor 
- - GIT
+ - Swagger Editor  
 
 ## How to clone this project
 

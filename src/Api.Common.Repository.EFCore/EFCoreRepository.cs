@@ -1,11 +1,7 @@
 ﻿using Api.Common.Repository.Entities;
 using Api.Common.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore
 {
@@ -13,7 +9,7 @@ namespace Api.Common.Repository.EFCore
     {
         protected readonly DbContext context;
         protected readonly DbSet<TEntity> dbSet;
-                
+
         public EfCoreRepository(DbContext context)
         {
             this.context = context;
@@ -26,13 +22,13 @@ namespace Api.Common.Repository.EFCore
         public async Task<IEnumerable<TEntity>> ListAll()
         {
             return await dbSet.ToArrayAsync();
-        }        
+        }
 
         public async Task Delete(Guid id)
         {
             await DeleteInstance(id);
             await context.SaveChangesAsync();
-        }       
+        }
 
         public async Task<TEntity> Search(Expression<Func<TEntity, bool>> expression)
         {

@@ -1,6 +1,6 @@
 param(
-[string]$currentName,
-[string]$newName
+[string]$newName,
+[string]$currentName
 )
 
 function Get-FileEncoding
@@ -26,12 +26,12 @@ function Get-FileEncoding
 If ($newName -eq "" -and $currentName -ne "") {
 	# If only one parameter passed in treat first parameter as new name
 	$newName = $currentName
-	$currentName = "Api.Starter.Kit"
+	$currentName = "AmberEggApi"
 }
 
 If ($newName -eq "") {
 	$newName = Read-Host "Enter new name"
-	$currentName = "Api.Starter.Kit"
+	$currentName = "AmberEggApi"
 }
 
 If ($currentName -eq $newName) {

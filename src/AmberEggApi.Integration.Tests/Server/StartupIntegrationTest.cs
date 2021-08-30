@@ -13,7 +13,7 @@ namespace AmberEggApi.Integration.Tests.Server
 {
     public class StartupIntegrationTest
     {
-        public void ConfigureContainer(ContainerBuilder builder)
+        public static void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration
             builder.RegisterModule(new IoCModuleApplicationService());
@@ -28,7 +28,7 @@ namespace AmberEggApi.Integration.Tests.Server
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
@@ -38,7 +38,7 @@ namespace AmberEggApi.Integration.Tests.Server
             services.AddMemoryCache();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public static void Configure(IApplicationBuilder app)
         {
             app.UseHttpsRedirection();
             app.UseRouting();

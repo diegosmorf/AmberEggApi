@@ -6,8 +6,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using NUnit.Framework;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
@@ -29,8 +27,8 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             //act            
             var response = await factory.Get();
             //assert
-            response.Should().Be(message);            
-        }        
+            response.Should().Be(message);
+        }
 
         [Test]
         public void WhenStartupHost_Then_Success()
@@ -39,7 +37,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var host = WebHost.CreateDefaultBuilder()
                                 .ConfigureServices(s => s.AddAutofac())
                                 .UseContentRoot(Directory.GetCurrentDirectory())
-                                .UseStartup<Startup>()                                
+                                .UseStartup<Startup>()
                                 .Build();
 
             //assert
@@ -51,7 +49,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             //act
             var host = Program.CreteWebHost();
-            
+
             //assert
             host.Should().NotBeNull();
         }

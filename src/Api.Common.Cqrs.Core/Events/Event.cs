@@ -1,5 +1,4 @@
 ﻿using Api.Common.Cqrs.Core.Messages;
-using System;
 
 namespace Api.Common.Cqrs.Core.Events
 {

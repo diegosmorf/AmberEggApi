@@ -2,7 +2,6 @@
 using AmberEggApi.Domain.Models;
 using Api.Common.Cqrs.Core.CommandHandlers;
 using Api.Common.Repository.Repositories;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.CommandHandlers
 {

@@ -2,7 +2,6 @@
 using AmberEggApi.Integration.Tests.Factories;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests
 {
@@ -50,7 +49,6 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var viewModelUpdate = await factory.Update(viewModelCreate);
 
             var viewModelGet = await factory.Get(viewModelCreate.Id);
-
 
             // Assert            
             viewModelGet.Should().BeOfType<PersonaViewModel>();

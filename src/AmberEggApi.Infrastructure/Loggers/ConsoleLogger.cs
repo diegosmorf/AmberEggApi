@@ -1,15 +1,14 @@
 ﻿using Api.Common.Contracts.Loggers;
-using System;
 
 namespace AmberEggApi.Infrastructure.Loggers
 {
     public class ConsoleLogger : ILogger
     {
         public void Debug(string message)
-        {            
+        {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(message);
-            Console.ResetColor();            
+            Console.ResetColor();
         }
 
         public void Error(string message)

@@ -1,5 +1,4 @@
 ﻿using Api.Common.Contracts.Entities;
-using System;
 
 namespace AmberEggApi.ApplicationService.ViewModels
 {

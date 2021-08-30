@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Api.Common.Cqrs.Core.Events
+﻿namespace Api.Common.Cqrs.Core.Events
 {
     public interface IEventConsumer
     {

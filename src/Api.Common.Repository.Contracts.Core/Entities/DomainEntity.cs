@@ -1,16 +1,15 @@
 ﻿using Api.Common.Contracts.Entities;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Common.Repository.Entities
 {
     public abstract class DomainEntity : IDomainEntity
-    {       
+    {
 
-        [Key] 
+        [Key]
         public Guid Id { get; set; }
 
-        [Required] 
+        [Required]
         public DateTime CreateDate { get; set; }
 
         public DateTime? ModifiedDate { get; set; }

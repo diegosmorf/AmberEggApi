@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    <ProjectGuid>{5479439B-0A47-4184-92F6-3FF2D03EEF23}</ProjectGuid>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+		<ProjectGuid>{5479439B-0A47-4184-92F6-3FF2D03EEF23}</ProjectGuid>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
-    <ProjectReference Include="..\Api.Common.Cqrs.Core\Api.Common.Cqrs.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
+		<ProjectReference Include="..\Api.Common.Cqrs.Core\Api.Common.Cqrs.Core.csproj" />
+	</ItemGroup>
 
 </Project>

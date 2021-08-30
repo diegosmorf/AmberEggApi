@@ -4,13 +4,8 @@ using AmberEggApi.Infrastructure.InjectionModules;
 using AmberEggApi.Infrastructure.Loggers;
 using Api.Common.WebServer.Server;
 using Autofac;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -20,7 +15,7 @@ namespace AmberEggApi.WebApi
     {
         private readonly IConfiguration configuration;
 
-        private readonly ConsoleLogger looger = new ConsoleLogger();
+        private readonly ConsoleLogger looger = new();
 
         public Startup(IWebHostEnvironment environment)
         {

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 
 namespace Api.Common.Cqrs.Core.Messages
 {
@@ -17,11 +16,14 @@ namespace Api.Common.Cqrs.Core.Messages
             MessageCreatedDate = DateTime.UtcNow;
         }
 
-        [JsonIgnore] public Guid MessageId { get; }        
+        [JsonIgnore]
+        public Guid MessageId { get; }
 
-        [JsonIgnore] public string MessageType { get; }
+        [JsonIgnore]
+        public string MessageType { get; }
 
-        [JsonIgnore] public DateTime MessageCreatedDate { get; }
+        [JsonIgnore]
+        public DateTime MessageCreatedDate { get; }
 
         public override string ToString()
         {

@@ -12,7 +12,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
     public class SetupTests
     {
         public static IContainer Container { get; protected set; }
-        
+
         [OneTimeSetUp]
         public void RunBeforeAllTests()
         {
@@ -27,14 +27,14 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
 
             builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();
-                                    
-            Container = builder.Build();       
+
+            Container = builder.Build();
         }
 
         [OneTimeTearDown]
         public void RunAfterAllTests()
         {
-            Container.Dispose();            
+            Container.Dispose();
         }
     }
 }

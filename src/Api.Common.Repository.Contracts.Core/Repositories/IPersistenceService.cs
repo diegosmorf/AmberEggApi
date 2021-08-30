@@ -1,7 +1,4 @@
 using Api.Common.Contracts.Entities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Api.Common.Repository.Repositories
 {
@@ -9,7 +6,7 @@ namespace Api.Common.Repository.Repositories
     {
         Task Insert(TEntity instance);
 
-        Task Insert(IEnumerable<TEntity> instances);        
+        Task Insert(IEnumerable<TEntity> instances);
 
         Task Delete(Guid id);
 

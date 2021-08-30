@@ -3,9 +3,6 @@ using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
 using Api.Common.Repository.Validations;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {

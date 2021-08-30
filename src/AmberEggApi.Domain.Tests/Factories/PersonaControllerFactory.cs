@@ -3,10 +3,7 @@ using AmberEggApi.Domain.Commands;
 using AmberEggApi.WebApi.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
@@ -42,14 +39,12 @@ namespace AmberEggApi.Domain.Tests.Factories
 
         public async Task<PersonaViewModel> Get(Guid id)
         {
-            var response = await controller.Get(id) as OkObjectResult;
-            
-            if (response == null)
+            if (await controller.Get(id) is not OkObjectResult response)
             {
-                return null; 
+                return null;
             }
 
-            var viewmodel = response.Value  as PersonaViewModel;
+            var viewmodel = response.Value as PersonaViewModel;
             return viewmodel;
         }
 
@@ -65,7 +60,7 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<NoContentResult> UpdateNotExistent()
         {
             var id = Guid.NewGuid();
-            return await controller.Update(id, new UpdatePersonaCommand(id,"")) as NoContentResult;
+            return await controller.Update(id, new UpdatePersonaCommand(id, "")) as NoContentResult;
         }
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()

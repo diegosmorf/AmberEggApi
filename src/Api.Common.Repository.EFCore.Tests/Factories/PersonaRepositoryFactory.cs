@@ -2,9 +2,6 @@
 using AmberEggApi.Domain.Models;
 using Api.Common.Repository.Repositories;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore.Tests.Factories
 {
@@ -23,7 +20,7 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
         {
             var name = "Persona Test";
             var command = new CreatePersonaCommand(name);
-           
+
             return await Create(command);
         }
 
@@ -39,7 +36,7 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
             //assert
             company.Id.Should().NotBe(Guid.Empty);
-            company.Name.Should().Be(command.Name);            
+            company.Name.Should().Be(command.Name);
             company.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
             company.ModifiedDate.Should().BeNull();
             company.ToString().Should().Be($"Type:{company.GetType().Name} - Id:{company.Id}");
@@ -60,12 +57,12 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
         public async Task<IEnumerable<Persona>> GetList(string name)
         {
-            return await repository.SearchList(x=>x.Name == name);
+            return await repository.SearchList(x => x.Name == name);
         }
 
         public async Task<IEnumerable<Persona>> GetListByName(string name)
         {
-            return await repository.SearchList(x=>x.Name == name);
+            return await repository.SearchList(x => x.Name == name);
         }
 
         public async Task DeleteAll()

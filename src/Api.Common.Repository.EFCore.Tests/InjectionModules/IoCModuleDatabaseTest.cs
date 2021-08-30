@@ -14,7 +14,7 @@ namespace Api.Common.Repository.EFCore.Tests.InjectionModules
                 .RegisterAssemblyTypes(assemblyToScan)
                 .Where(c => c.IsClass
                             && c.IsInNamespace("Api.Common.Repository.EFCore.Tests.Factories")).AsSelf();
-                        
+
         }
     }
 }

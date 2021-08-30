@@ -5,23 +5,20 @@ using Api.Common.Repository.Repositories;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore.Tests.UnitTests
 {
     [TestFixture]
     public class PersonaDomainTest
     {
-        private readonly IRepository<Persona> repository;        
+        private readonly IRepository<Persona> repository;
         private readonly PersonaRepositoryFactory factory;
 
         public PersonaDomainTest()
         {
-            repository = SetupTests.Container.Resolve<IRepository<Persona>>();            
+            repository = SetupTests.Container.Resolve<IRepository<Persona>>();
             factory = SetupTests.Container.Resolve<PersonaRepositoryFactory>();
-        }        
+        }
 
         [Test]
         public async Task WhenCreate_Then_ICanFindItById()
@@ -32,7 +29,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
 
             //assert
             objGet.Id.Should().Be(objCreate.Id);
-            objGet.Name.Should().Be(objCreate.Name);            
+            objGet.Name.Should().Be(objCreate.Name);
         }
 
         [Test]
@@ -49,7 +46,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
-            var objGet = await repository.Search(x=> x.Id == objCreate.Id);
+            var objGet = await repository.Search(x => x.Id == objCreate.Id);
 
             //assert
             objGet.Id.Should().Be(responseUpdate.Id);

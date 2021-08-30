@@ -4,9 +4,6 @@ using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
@@ -89,11 +86,11 @@ namespace AmberEggApi.Domain.Tests.UnitTests
 
             //assert
             action.Should()
-                .Throw<ModelException>()
+                .ThrowAsync<ModelException>()
                 .Where(x => x.Errors.Count() == expectedNumberOfErrors);
 
             action.Should()
-                .Throw<ModelException>()
+                .ThrowAsync<ModelException>()
                 .WithMessage(
                     "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.");
         }

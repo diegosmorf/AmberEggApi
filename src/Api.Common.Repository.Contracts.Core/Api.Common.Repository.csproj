@@ -8,10 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
 		<ProjectReference Include="..\Api.Common.Cqrs.Core\Api.Common.Cqrs.Core.csproj" />
 	</ItemGroup>

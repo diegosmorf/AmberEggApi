@@ -32,8 +32,7 @@ namespace AmberEggApi.Integration.Tests.Server
         {
             services
                 .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
-                .AddApplicationPart(Assembly.Load("AmberEggApi.WebApi"))
-                .AddNewtonsoftJson();
+                .AddApplicationPart(Assembly.Load("AmberEggApi.WebApi"));
 
             services.AddMemoryCache();
         }

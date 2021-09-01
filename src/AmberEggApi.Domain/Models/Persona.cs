@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Models
 {
-    public class Persona : AggregateRootBase
+    public class Persona : AggregateRoot
     {
         [MinLength(2)]
         [MaxLength(255)]
@@ -15,7 +15,7 @@ namespace AmberEggApi.Domain.Models
         public void Create(CreatePersonaCommand command)
         {
             Name = command.Name;
-
+            Version++;
             AppliedEvents.Add(new PersonaCreatedEvent(this, command.MessageId));
         }
 
@@ -27,7 +27,7 @@ namespace AmberEggApi.Domain.Models
         public void Update(UpdatePersonaCommand command)
         {
             Name = command.Name;
-
+            Version++;
             AppliedEvents.Add(new PersonaUpdatedEvent(this, command.MessageId));
         }
     }

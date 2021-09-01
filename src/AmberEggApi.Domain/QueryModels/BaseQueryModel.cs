@@ -2,7 +2,7 @@
 
 namespace AmberEggApi.Domain.QueryModels
 {
-    public class BaseQueryModel : AggregateRootBase
+    public class BaseQueryModel : AggregateRoot
     {
         public Guid CorrelationId { get; set; }
     }

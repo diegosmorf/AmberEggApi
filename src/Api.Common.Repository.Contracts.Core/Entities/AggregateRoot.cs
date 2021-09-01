@@ -3,9 +3,9 @@ using Api.Common.Cqrs.Core.Events;
 
 namespace Api.Common.Repository.Entities
 {
-    public abstract class AggregateRootBase : DomainEntity, IAggregateRoot
+    public abstract class AggregateRoot : DomainEntity, IAggregateRoot
     {
-        protected AggregateRootBase()
+        protected AggregateRoot()
         {
             AppliedEvents = new List<IEvent>();
         }

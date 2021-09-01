@@ -8,16 +8,20 @@ using AutoMapper;
 
 namespace AmberEggApi.ApplicationService.Services
 {
-    public class PersonaAppService : BaseAppService, IPersonaAppService
+    public class PersonaAppService : IPersonaAppService
     {
         private readonly IRepository<Persona> repository;
+        private readonly ICommandProducer producer;
+        private readonly IMapper mapper;
 
         public PersonaAppService(
             ICommandProducer producer,
             IMapper mapper,
-            IRepository<Persona> repository) : base(producer, mapper)
+            IRepository<Persona> repository)
         {
             this.repository = repository;
+            this.producer = producer;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()

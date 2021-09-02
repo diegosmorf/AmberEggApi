@@ -40,7 +40,7 @@ git clone https://github.com/diegosmorf/AmberEggApi.git
 
 ### Cloning the strucuture using your namespace
 ```
-powershell .\CopyProject.ps1 "AmberEggApi" "Your.Namespace"
+powershell .\clone-to-your-namespace.ps1 "Your.Namespace"
 cd ..\Your.Namespace
 ```
 

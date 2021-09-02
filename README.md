@@ -17,10 +17,9 @@ This project AmberEggApi cover concepts about:
 - FluentAssertiong
 - NUnit
 - Swagger (Swashbuckle) 
-- Serilog
 
 ## Repository
-- Entity Framework 6 + InMmemory
+- Entity Framework + InMmemory
 - Entity Framework Data Migration
  
 ## Development Tools

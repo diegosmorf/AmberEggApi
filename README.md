@@ -3,10 +3,10 @@ This is a starting point (TEMPLATE) for Clean Architecture with ASP.NET Core. [C
 
 ## Summary
 This project AmberEggApi cover concepts about:  
- - CQRS (http://www.codeproject.com/Articles/555855/Introduction-to-CQRS)
- - Dependency Injection (http://en.wikipedia.org/wiki/Dependency_injection)
- - Loose Coupling (http://en.wikipedia.org/wiki/Loose_coupling)
- - SOLID Principles (http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29)
+ - [CQRS](http://www.codeproject.com/Articles/555855/Introduction-to-CQRS)
+ - [Dependency Injection](http://en.wikipedia.org/wiki/Dependency_injection)
+ - [Loose Coupling](http://en.wikipedia.org/wiki/Loose_coupling)
+ - [SOLID Principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29)
  
 ## .Net Version
 .NET 6.0

@@ -9,7 +9,7 @@ namespace AmberEggApi.Database.Repositories
         public EfCoreDbContext CreateDbContext(string[] args)
         {
 
-            var builder = new ConfigurationBuilder()                
+            var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", false, true)
                 .AddEnvironmentVariables();
 

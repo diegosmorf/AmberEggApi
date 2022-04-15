@@ -16,13 +16,13 @@ namespace Api.Common.Cqrs.Core.Messages
             MessageCreatedDate = DateTime.UtcNow;
         }
 
-        
+
         public Guid MessageId { get; }
 
-        
+
         public string MessageType { get; }
 
-        
+
         public DateTime MessageCreatedDate { get; }
 
         public override string ToString()

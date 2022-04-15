@@ -74,9 +74,7 @@ While ($hasMoreDirectories) {
 Get-ChildItem ".\" -Recurse -Exclude 'Re-Template.ps1', 'packages', 'bin' | ?{ !$_.PSIsContainer -and $_.FullName -notlike $gitPath} | % {
 	
 	Set-ItemProperty $_.FullName -name IsReadOnly -value $false
-
-	$encoding = Get-FileEncoding $_.FullName
-	
+	$encoding = Get-FileEncoding $_.FullName	
 	$content = $encoding.GetString(([System.IO.File]::ReadAllBytes($_.FullName))) 	
 
 	If ($content -match $currentName) {		

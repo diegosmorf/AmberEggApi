@@ -2,6 +2,7 @@
 using AmberEggApi.Integration.Tests.Factories;
 using FluentAssertions;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests
 {

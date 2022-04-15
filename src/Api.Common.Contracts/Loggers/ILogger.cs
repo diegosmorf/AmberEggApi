@@ -1,4 +1,6 @@
-﻿namespace Api.Common.Contracts.Loggers
+﻿using System;
+
+namespace Api.Common.Contracts.Loggers
 {
     public interface ILogger
     {

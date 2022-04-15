@@ -1,4 +1,5 @@
 ﻿using Api.Common.Cqrs.Core.Entities;
+using System.Threading.Tasks;
 
 namespace Api.Common.Cqrs.Core.Commands
 {

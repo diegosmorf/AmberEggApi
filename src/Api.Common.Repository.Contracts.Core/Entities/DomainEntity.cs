@@ -1,4 +1,5 @@
 ﻿using Api.Common.Contracts.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Common.Repository.Entities

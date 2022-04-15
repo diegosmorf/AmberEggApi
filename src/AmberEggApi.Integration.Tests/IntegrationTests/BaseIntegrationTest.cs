@@ -3,6 +3,8 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
+using System.IO;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests

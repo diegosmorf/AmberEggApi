@@ -2,6 +2,9 @@
 using AmberEggApi.Domain.Models;
 using Api.Common.Repository.Repositories;
 using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore.Tests.Factories
 {

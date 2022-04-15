@@ -3,6 +3,8 @@ using Api.Common.Cqrs.Core.Commands;
 using Api.Common.Cqrs.Core.Entities;
 using Api.Common.Cqrs.Core.Events;
 using Autofac;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Bus
 {

@@ -1,5 +1,8 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using System;
+using System.IO;
 using System.Reflection;
 
 namespace AmberEggApi.WebApi

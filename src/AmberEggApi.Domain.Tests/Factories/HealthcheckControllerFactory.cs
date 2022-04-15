@@ -1,5 +1,6 @@
 ﻿using AmberEggApi.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {

@@ -5,6 +5,9 @@ using Api.Common.Repository.Repositories;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore.Tests.UnitTests
 {

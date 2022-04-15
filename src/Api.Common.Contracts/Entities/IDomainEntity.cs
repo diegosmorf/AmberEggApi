@@ -1,4 +1,6 @@
-﻿namespace Api.Common.Contracts.Entities
+﻿using System;
+
+namespace Api.Common.Contracts.Entities
 {
     public interface IDomainEntity :
         IEntityWithPrimaryKey<Guid>,

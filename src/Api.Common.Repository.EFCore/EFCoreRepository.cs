@@ -1,7 +1,11 @@
 ﻿using Api.Common.Repository.Entities;
 using Api.Common.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore
 {

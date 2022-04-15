@@ -1,4 +1,6 @@
-﻿namespace Api.Common.Cqrs.Core.Events
+﻿using System.Threading.Tasks;
+
+namespace Api.Common.Cqrs.Core.Events
 {
     public interface IEventProducer
     {

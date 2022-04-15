@@ -1,4 +1,5 @@
 ﻿using Api.Common.Contracts.Loggers;
+using System;
 
 namespace AmberEggApi.Infrastructure.Loggers
 {

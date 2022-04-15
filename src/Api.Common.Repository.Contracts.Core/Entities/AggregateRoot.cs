@@ -1,5 +1,6 @@
 ﻿using Api.Common.Cqrs.Core.Entities;
 using Api.Common.Cqrs.Core.Events;
+using System.Collections.Generic;
 
 namespace Api.Common.Repository.Entities
 {

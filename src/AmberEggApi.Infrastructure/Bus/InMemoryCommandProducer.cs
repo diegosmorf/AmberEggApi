@@ -1,6 +1,7 @@
 ﻿using Api.Common.Cqrs.Core.Commands;
 using Api.Common.Cqrs.Core.Entities;
 using Api.Common.Repository.Validations;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Bus
 {

@@ -4,6 +4,9 @@ using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {

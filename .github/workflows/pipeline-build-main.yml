@@ -19,12 +19,20 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: /AmberEggApi/src
     - name: Build
       run: dotnet build --no-restore
+      working-directory: /AmberEggApi/src
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      working-directory: /AmberEggApi/src
     - name: Publish
-      run: dotnet publish DotNet6WithGithubActions/DotNet6WithGithubActions.csproj -c Release -o release — nologo
+      run: dotnet publish AmberEggApi.ApplicationService/AmberEggApi.ApplicationService.csproj -c Release -o release — nologo
+      working-directory: /AmberEggApi/src
+    - name: Content list
+      uses: enricomarino/actions@v2
+      with:      
+        source: /
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:

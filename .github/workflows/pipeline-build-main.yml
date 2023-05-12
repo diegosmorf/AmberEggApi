@@ -18,9 +18,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Content list
-      uses: enricomarino/actions@v2
-      with:      
-        source: /
+      run: ls
     - name: Restore dependencies
       run: dotnet restore
       working-directory: /AmberEggApi/src

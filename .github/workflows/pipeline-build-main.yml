@@ -21,25 +21,4 @@ jobs:
       run: ls
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: /src
-    - name: Build
-      run: dotnet build --no-restore
-      working-directory: /src
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-      working-directory: /src
-    - name: Publish
-      run: dotnet publish AmberEggApi.ApplicationService/AmberEggApi.ApplicationService.csproj -c Release -o release — nologo
-      working-directory: /src
-    - name: Content list
-      uses: enricomarino/actions@v2
-      with:      
-        source: /
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
-      with:
-        # Artifact name
-        name: build-artifact        
-        path: /home/runner/work/AmberEggApi/src/AmberEggApi.ApplicationService/bin/Debug/net6.0/
-        # The desired behavior if no files are found using the provided path.
-   
+      working-directory: src    

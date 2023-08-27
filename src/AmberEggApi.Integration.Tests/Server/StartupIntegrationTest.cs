@@ -2,7 +2,6 @@
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Domain.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
-using Api.Common.WebServer.Server;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +30,7 @@ namespace AmberEggApi.Integration.Tests.Server
         public static void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers(opt => { opt.Filters.Add(new ValidateModelAttribute()); })
+                .AddControllers()
                 .AddApplicationPart(Assembly.Load("AmberEggApi.WebApi"));
 
             services.AddMemoryCache();

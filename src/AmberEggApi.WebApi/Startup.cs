@@ -2,7 +2,6 @@ using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.InjectionModules;
 using AmberEggApi.Infrastructure.Loggers;
-using Api.Common.WebServer.Server;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -80,7 +79,7 @@ namespace AmberEggApi.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<LoggerMiddleware>();
+            //app.UseMiddleware<LoggerMiddleware>();
 
             if (env.IsDevelopment())
             {

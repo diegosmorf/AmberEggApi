@@ -17,4 +17,10 @@ jobs:
         dotnet-version: 7.0.x        
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: src    
+      working-directory: src
+    - name: Build
+      run: dotnet build
+      working-directory: src
+    - name: Test 
+      run: dotnet test
+      working-directory: src

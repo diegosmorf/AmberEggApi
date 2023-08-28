@@ -92,8 +92,6 @@ DomainTest: NUnit will test ApplicationService classes with no external dependen
 
 IntegrationTests:Longer running, more involved tests that test the integration of multiple components and external dependencies as Database/Email.
 
-AcceptanceTests: SpecFlow acceptance tests project (may modify data, so are meant to run in non-production environments)
-
 ## You shouldn't find:
 
   - Binaries committed to source control.

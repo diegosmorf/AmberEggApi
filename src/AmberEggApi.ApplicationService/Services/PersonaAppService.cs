@@ -12,21 +12,14 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.ApplicationService.Services
 {
-    public class PersonaAppService : IPersonaAppService
+    public class PersonaAppService(
+        ICommandProducer producer,
+        IMapper mapper,
+        IRepository<Persona> repository) : IPersonaAppService
     {
-        private readonly IRepository<Persona> repository;
-        private readonly ICommandProducer producer;
-        private readonly IMapper mapper;
-
-        public PersonaAppService(
-            ICommandProducer producer,
-            IMapper mapper,
-            IRepository<Persona> repository)
-        {
-            this.repository = repository;
-            this.producer = producer;
-            this.mapper = mapper;
-        }
+        private readonly IRepository<Persona> repository = repository;
+        private readonly ICommandProducer producer = producer;
+        private readonly IMapper mapper = mapper;
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()
         {

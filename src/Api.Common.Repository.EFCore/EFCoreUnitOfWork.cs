@@ -4,15 +4,9 @@ using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore
 {
-    public class EFCoreUnitOfWork : IUnitOfWork
+    public class EFCoreUnitOfWork(DbContext context) : IUnitOfWork
     {
-        private readonly DbContext context;
-
-        public EFCoreUnitOfWork(DbContext context)
-        {
-            this.context = context;
-        }
-
+        private readonly DbContext context = context;
 
         public async Task Commit()
         {

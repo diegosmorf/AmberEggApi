@@ -4,14 +4,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi.Controllers
 {
-    public class HealthCheckController : BaseController
+    public class HealthCheckController(IPersonaAppService appService) : BaseController
     {
-        private readonly IPersonaAppService appService;
-
-        public HealthCheckController(IPersonaAppService appService)
-        {
-            this.appService = appService;
-        }
+        private readonly IPersonaAppService appService = appService;
 
         [HttpGet]
         public async Task<IActionResult> Get()

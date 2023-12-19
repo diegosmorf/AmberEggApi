@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
-    public class PersonaControllerFactory
+    public class PersonaControllerFactory(PersonaController controller)
     {
-        private readonly PersonaController controller;
-
-        public PersonaControllerFactory(PersonaController controller)
-        {
-            this.controller = controller;
-        }
+        private readonly PersonaController controller = controller;
 
         public async Task<PersonaViewModel> Create()
         {
@@ -29,8 +24,8 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
         {
             var response = await controller.Create(command) as CreatedResult;
-            var viewmodel = response.Value as PersonaViewModel;
-            return viewmodel;
+            var viewModel = response.Value as PersonaViewModel;
+            return viewModel;
         }
 
         public async Task Delete(Guid id)
@@ -47,8 +42,8 @@ namespace AmberEggApi.Domain.Tests.Factories
                 return null;
             }
 
-            var viewmodel = response.Value as PersonaViewModel;
-            return viewmodel;
+            var viewModel = response.Value as PersonaViewModel;
+            return viewModel;
         }
 
         public async Task<NoContentResult> GetNotExistent()
@@ -69,22 +64,22 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<IEnumerable<PersonaViewModel>> GetAll()
         {
             var response = await controller.Get() as OkObjectResult;
-            var viewmodel = response.Value as IEnumerable<PersonaViewModel>;
-            return viewmodel;
+            var viewModel = response.Value as IEnumerable<PersonaViewModel>;
+            return viewModel;
         }
 
         public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name)
         {
             var response = await controller.Get(name) as OkObjectResult;
-            var viewmodel = response.Value as IEnumerable<PersonaViewModel>;
-            return viewmodel;
+            var viewModel = response.Value as IEnumerable<PersonaViewModel>;
+            return viewModel;
         }
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
         {
             var response = await controller.Update(command.Id, command) as OkObjectResult;
-            var viewmodel = response.Value as PersonaViewModel;
-            return viewmodel;
+            var viewModel = response.Value as PersonaViewModel;
+            return viewModel;
         }
     }
 }

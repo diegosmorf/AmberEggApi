@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.EventHandlers
 {
-    public class PersonaDeletedEventHandler : IEventHandler<PersonaDeletedEvent>
+    public class PersonaDeletedEventHandler(IRepository<PersonaQueryModel> repository, IUnitOfWork unitOfWork) : IEventHandler<PersonaDeletedEvent>
     {
-        private readonly IRepository<PersonaQueryModel> repository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public PersonaDeletedEventHandler(IRepository<PersonaQueryModel> repository, IUnitOfWork unitOfWork)
-        {
-            this.repository = repository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IRepository<PersonaQueryModel> repository = repository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task Handle(PersonaDeletedEvent @event)
         {

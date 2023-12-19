@@ -27,12 +27,12 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         public async Task WhenCreate_Then_ICanFindItById()
         {
             //act
-            var objCreate = await factory.Create();
-            var objGet = await repository.SearchById(objCreate.Id);
+            var resultCreate = await factory.Create();
+            var resultGet = await repository.SearchById(resultCreate.Id);
 
             //assert
-            objGet.Id.Should().Be(objCreate.Id);
-            objGet.Name.Should().Be(objCreate.Name);
+            resultGet.Id.Should().Be(resultCreate.Id);
+            resultGet.Name.Should().Be(resultCreate.Name);
         }
 
         [Test]
@@ -43,17 +43,17 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
 
             //act
-            var objCreate = await factory.Create();
+            var resultCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
-                objCreate.Id,
+                resultCreate.Id,
                 expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
-            var objGet = await repository.Search(x => x.Id == objCreate.Id);
+            var resultGet = await repository.Search(x => x.Id == resultCreate.Id);
 
             //assert
-            objGet.Id.Should().Be(responseUpdate.Id);
-            objGet.Name.Should().Be(responseUpdate.Name);
+            resultGet.Id.Should().Be(responseUpdate.Id);
+            resultGet.Name.Should().Be(responseUpdate.Name);
         }
 
         [Test]
@@ -64,18 +64,18 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
                 $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
 
             //act
-            var objCreate = await factory.Create();
+            var resultCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
-                objCreate.Id,
+                resultCreate.Id,
                 expectedNameAfterUpdate);
 
             await factory.Update(commandUpdate);
-            await repository.Delete(objCreate.Id);
+            await repository.Delete(resultCreate.Id);
 
-            var objGet = await repository.SearchById(objCreate.Id);
+            var resultGet = await repository.SearchById(resultCreate.Id);
 
             //assert
-            objGet.Should().BeNull();
+            resultGet.Should().BeNull();
         }
 
         [Test]

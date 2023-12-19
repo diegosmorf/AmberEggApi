@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Bus
 {
-    public class InMemoryCommandConsumer : ICommandConsumer
+    public class InMemoryCommandConsumer(IComponentContext container) : ICommandConsumer
     {
-        private readonly IComponentContext container;
-
-        public InMemoryCommandConsumer(IComponentContext container)
-        {
-            this.container = container;
-        }
+        private readonly IComponentContext container = container;
 
         public async Task<TEntity> Receive<TCommand, TEntity>(TCommand command)
             where TCommand : ICommand where TEntity : IAggregateRoot
@@ -37,7 +32,7 @@ namespace AmberEggApi.Infrastructure.Bus
                 var methodInfo = type.GetMethod(methodName);
 
                 var handler = container.Resolve(type);
-                methodInfo?.Invoke(handler, new object[] { @event });
+                methodInfo?.Invoke(handler, [@event]);
             }
         }
     }

@@ -8,16 +8,10 @@ using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCore.Tests.Factories
 {
-    public class PersonaRepositoryFactory
+    public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork)
     {
-        private readonly IRepository<Persona> repository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork)
-        {
-            this.repository = repository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IRepository<Persona> repository = repository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Persona> Create()
         {

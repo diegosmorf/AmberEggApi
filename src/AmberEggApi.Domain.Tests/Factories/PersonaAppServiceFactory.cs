@@ -9,14 +9,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
-    public class PersonaAppServiceFactory
+    public class PersonaAppServiceFactory(IPersonaAppService appService)
     {
-        private readonly IPersonaAppService appService;
-
-        public PersonaAppServiceFactory(IPersonaAppService appService)
-        {
-            this.appService = appService;
-        }
+        private readonly IPersonaAppService appService = appService;
 
         public async Task<PersonaViewModel> Create()
         {

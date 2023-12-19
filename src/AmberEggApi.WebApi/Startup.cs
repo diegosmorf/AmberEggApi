@@ -19,7 +19,7 @@ namespace AmberEggApi.WebApi
     {
         private readonly IConfiguration configuration;
 
-        private readonly ConsoleLogger looger = new();
+        private readonly ConsoleLogger logger = new();
 
         public Startup(IWebHostEnvironment environment)
         {
@@ -30,14 +30,14 @@ namespace AmberEggApi.WebApi
                 .AddEnvironmentVariables()
                 .Build();
 
-            looger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
-            looger.Information($"Environment: {environment.EnvironmentName}");
+            logger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
+            logger.Information($"Environment: {environment.EnvironmentName}");
 
             if (environment.IsDevelopment())
             {
                 foreach (var item in configuration.AsEnumerable())
                 {
-                    looger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
+                    logger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
                 }
             }
         }
@@ -79,8 +79,6 @@ namespace AmberEggApi.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.UseMiddleware<LoggerMiddleware>();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -98,7 +96,7 @@ namespace AmberEggApi.WebApi
 
         private void UpdateDatabaseUsingEfCore(IApplicationBuilder app)
         {
-            looger.Information("Starting: Database Migration");
+            logger.Information("Starting: Database Migration");
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
@@ -109,7 +107,7 @@ namespace AmberEggApi.WebApi
                     .Migrate();
             }
 
-            looger.Information("Ending: Database Migration");
+            logger.Information("Ending: Database Migration");
         }
     }
 }

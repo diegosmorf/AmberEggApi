@@ -1,5 +1,5 @@
-# AmberEggApi - .NET 7 Open API Template
-This is a starting point (TEMPLATE) for Clean Architecture with .NET 7. [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) is just the latest in a series of names for the same loosely-coupled, dependency-inverted architecture. You will also find it named [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture), [ports-and-adapters](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html), or [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
+# AmberEggApi - .NET 8 Open API Template
+This is a starting point (TEMPLATE) for Clean Architecture with .NET 8. [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) is just the latest in a series of names for the same loosely-coupled, dependency-inverted architecture. You will also find it named [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture), [ports-and-adapters](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html), or [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
 
 ## Summary
 This project AmberEggApi cover concepts about:  
@@ -11,22 +11,21 @@ This project AmberEggApi cover concepts about:
 ## .Net Version
 .NET 7.0
 
-## 3rd Party Nuget Packages 
+## 3rd Party NuGet Packages 
 - Autofac
 - AutoMapper
-- FluentAssertiong
+- FluentAssertions
 - NUnit
-- Swagger (Swashbuckle) 
+- Swagger 
 
 ## Repository
-- Entity Framework + InMmemory
-- Entity Framework Data Migration
+- Entity Framework + InMemory + Data Migration
  
 ## Development Tools
  - Visual Studio Code
  - GIT Bash
  - GitHub(Repos, Actions)
- - MSSQL Server Management Studio 18 
+ - MSSQL Server Management Studio 
  - Swagger Editor  
 
 ## How to clone this project
@@ -38,7 +37,7 @@ cd repo
 git clone https://github.com/diegosmorf/AmberEggApi.git
 ```
 
-### Cloning the strucuture using your namespace
+### Cloning the structure using your namespace
 ```
 powershell .\clone-to-your-namespace.ps1 "Your.Namespace"
 cd ..\Your.Namespace
@@ -56,7 +55,7 @@ dotnet run --p AmberEggApi.WebApi
 you can access this API via browser: http://localhost:5200/swagger
 
 ## 0 - Core
-Api.Common.Cqrs.Core is a basic set of interfaces for building a command and event driven CQRS application. 
+Api.Common.CQRS.Core is a basic set of interfaces for building a command and event driven CQRS application. 
 
 - Commands are created and dispatched by the application, 
 - They are received by command handlers which apply behaviors on the domain model
@@ -76,7 +75,7 @@ Some of the basic premises of CQRS are modeled by these interfaces either explic
 - Domain commands and handlers should only affect a single aggregate root instance in the domain model - more complex operations should be handled by sagas
 
 ## 2 - Application Service
-This project will expose domain features to external world (e.g.: apis, apps, windows services, desktop apps) and it is responsible for business rules as well.
+This project will expose domain features to external world (e.g.: API, Apps, Windows Services, Desktop apps) and it is responsible for business rules as well.
 
 ## 3 - Infrastructure
 

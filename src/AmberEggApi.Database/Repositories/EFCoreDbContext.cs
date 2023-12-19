@@ -3,13 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AmberEggApi.Database.Repositories
 {
-    public class EfCoreDbContext : DbContext
+    public class EfCoreDbContext(DbContextOptions<EfCoreDbContext> options) : DbContext(options)
     {
-        public EfCoreDbContext(DbContextOptions<EfCoreDbContext> options)
-            : base(options)
-        {
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //domain

@@ -8,7 +8,7 @@ namespace Api.Common.Repository.Entities
     {
         protected AggregateRoot()
         {
-            AppliedEvents = new List<IEvent>();
+            AppliedEvents = [];
         }
 
         public int Version { get; set; }

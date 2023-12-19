@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: pipeline-build-main
+name: build-test-api
 
 on:
   workflow_dispatch
@@ -10,17 +10,43 @@ jobs:
   build:
     runs-on: ubuntu-latest    
     steps:
+    
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x        
-    - name: Restore dependencies
+        dotnet-version: 8.0.x        
+   
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: .\.sonar\scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+
+    - name: Install project dependencies
       run: dotnet restore
-      working-directory: src
+
+    - name: Test and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftathiago_esbc" /o:"ftathiago" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
     - name: Build
-      run: dotnet build
-      working-directory: src
-    - name: Test 
-      run: dotnet test
-      working-directory: src
+      run: dotnet build --configuration Release --no-restore

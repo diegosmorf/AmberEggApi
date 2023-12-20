@@ -1,6 +1,8 @@
-﻿namespace AmberEggApi.WebApi.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace AmberEggApi.WebApi.Controllers
 {
-    //[Authorize("Bearer")]
+    [Authorize("Bearer")]
     public class BaseAuthorizedController : BaseController
     {
     }

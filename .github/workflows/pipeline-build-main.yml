@@ -7,7 +7,7 @@ on:
   workflow_dispatch
 
 jobs:
-  prepare:
+  buildTest:
     runs-on: ubuntu-latest    
     steps:
     
@@ -32,9 +32,6 @@ jobs:
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
         
-  test:
-    runs-on: ubuntu-latest    
-    steps:
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
@@ -49,9 +46,7 @@ jobs:
         dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
       working-directory: src
-  build:
-    runs-on: ubuntu-latest    
-    steps:
+  
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src

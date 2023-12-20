@@ -22,6 +22,7 @@ jobs:
       uses: actions/setup-java@v4.0.0
       with:        
         java-version: 17
+        distribution: temurin
         
     - name: Setup SonarCloud Scanner      
       run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner

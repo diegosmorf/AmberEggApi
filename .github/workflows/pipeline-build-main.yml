@@ -33,16 +33,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin 
-          /k:"${{ secrets.PROJECT_KEY }}" 
-          /o:"${{ secrets.SONAR_ORGANIZATION }}" 
-          /d:sonar.host.url="https://sonarcloud.io 
-          /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml"
-          /d:sonar.cs.opencover.reportsPaths="opencover.xml" `
-          /d:sonar.coverage.exclusions="**/*Test.cs, *Tests/**"
-          
-        dotnet build --no-incremental      
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.host.url="https://sonarcloud.io /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml" /d:sonar.cs.opencover.reportsPaths="opencover.xml" /d:sonar.coverage.exclusions="**/*Test.cs, *Tests/**"          
         
+        dotnet build --no-incremental              
         dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
         ./.sonar/scanner/dotnet-sonarscanner end
       working-directory: src

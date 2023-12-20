@@ -7,7 +7,7 @@ on:
   workflow_dispatch
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest    
     steps:
     
@@ -31,28 +31,27 @@ jobs:
         path: .\.sonar\scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
-
+        
+  test:
+    runs-on: ubuntu-latest    
+    steps:
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
       working-directory: src
 
-    - name: Install project dependencies
-      run: dotnet restore
-      working-directory: src
-
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
+    - name: Test and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        projectBaseDir: src
-        args: >
-          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-          -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}          
-          -Dsonar.verbose=true
-
+      run: |
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      working-directory: src
+  build:
+    runs-on: ubuntu-latest    
+    steps:
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src

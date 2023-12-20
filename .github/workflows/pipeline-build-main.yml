@@ -33,26 +33,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}      
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin `
-          /k:"${{ secrets.PROJECT_KEY }}" `
-          /o:"${{ secrets.SONAR_ORGANIZATION }}" `
-          /d:sonar.host.url="https://sonarcloud.io" `
-          /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx ` 
-          /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml `   
-          /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" `          `
-          /d:sonar.coverage.exclusions="**/*Test.cs,*Tests/**" 
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths=TestResults/*.trx /d:sonar.cs.opencover.reportsPaths=TestResults/*/coverage.opencover.xml /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"           /d:sonar.coverage.exclusions="**/*Test.cs,*Tests/**" 
 
-        dotnet build --no-incremental              
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-
-        dotnet test  `
-          --collect:"Code Coverage" `           
-          --results-directory TestResults/ `          
-          --logger "trx;LogFileName=unittests.trx" `  
-          --no-build `
-          --no-restore `
-          --configuration release `
-          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        dotnet build --no-incremental                      
+        dotnet test  --collect:"Code Coverage" --results-directory TestResults/ --logger "trx;LogFileName=unittests.trx" --no-build --no-restore --configuration release           
 
         ./.sonar/scanner/dotnet-sonarscanner end
       working-directory: src

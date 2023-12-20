@@ -50,10 +50,7 @@ jobs:
         projectBaseDir: src
         args: >
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-          -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}
-          -Dsonar.sources=lib/
-          -Dsonar.test.exclusions=tests/**
-          -Dsonar.tests=tests/
+          -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}          
           -Dsonar.verbose=true
 
     - name: Build

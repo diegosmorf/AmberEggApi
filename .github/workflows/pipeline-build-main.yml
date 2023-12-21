@@ -16,7 +16,7 @@ jobs:
         dotnet-version: 8.0.x       
      
     - name: Setup DotNet Coverage   
-      run: dotnet tool install --global dotnet-coverage 
+      run: dotnet tool install dotnet-coverage 
       working-directory: src
 
     - name: Test and analyze

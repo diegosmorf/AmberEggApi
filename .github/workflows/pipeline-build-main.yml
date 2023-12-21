@@ -1,7 +1,4 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: build-test-api
+name: api-build-test-sonar
 
 on:
   workflow_dispatch
@@ -16,20 +13,21 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x     
+        dotnet-version: 8.0.x       
+     
+    - name: Setup DotNet Coverage   
+      run: dotnet tool install --global dotnet-coverage 
+      working-directory: src
 
-    - name: SonarScanner 
-      uses: highbyte/sonarscan-dotnet@2.0
+    - name: Test and analyze
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        # The key of the SonarQube project
-        sonarProjectKey: ${{ secrets.PROJECT_KEY }}                
-        sonarProjectName: AmberEggApi
-        sonarOrganization: ${{ secrets.SONAR_ORGANIZATION }}        
-        dotnetBuildArguments: ./src        
-        dotnetTestArguments: ./src --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover        
-        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
-        
- 
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}      
+      run: |
+        dotnet sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+        dotnet restore
+        dotnet build --configuration Release --no-restore
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      working-directory: src

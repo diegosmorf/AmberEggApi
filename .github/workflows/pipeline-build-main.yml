@@ -24,7 +24,7 @@ jobs:
         java-version: 17
         distribution: temurin
 
-    - name: Restor
+    - name: Restore
       run: dotnet restore
       working-directory: src
 
@@ -37,12 +37,11 @@ jobs:
       working-directory: src
 
     - name: Analyze with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+      uses: chill-viking/dotnet-sonar-scanner@v2          
       with:
-        projectBaseDir: src  
-        args: >
-          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-          -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}
+        sonar-project-key: ${{ secrets.PROJECT_KEY }}
+        sonar-org-key: ${{ secrets.SONAR_ORGANIZATION }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        sonar-token: ${{ secrets.SONAR_TOKEN }}
+        working-directory: src
+        checkout: false

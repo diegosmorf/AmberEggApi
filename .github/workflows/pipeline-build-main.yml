@@ -26,6 +26,7 @@ jobs:
       with:
         # The key of the SonarQube project
         sonarProjectKey: ${{ secrets.PROJECT_KEY }}                
+        sonarProjectName: AmberEggApi
         sonarOrganization: ${{ secrets.SONAR_ORGANIZATION }}        
         dotnetBuildArguments: ./src        
         dotnetTestArguments: ./src --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover        

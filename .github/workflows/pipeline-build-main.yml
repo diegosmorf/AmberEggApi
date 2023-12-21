@@ -16,30 +16,33 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x       
+        dotnet-version: 8.0.x     
 
     - name: Setup Java
       uses: actions/setup-java@v4.0.0
       with:        
         java-version: 17
         distribution: temurin
-        
-    - name: Setup SonarCloud Scanner      
-      run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+
+    - name: Restor
+      run: dotnet restore
       working-directory: src
 
-    - name: Test and analyze
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.cs.opencover.reportsPaths="opencover.xml" /d:sonar.coverage.exclusions="**/*Test.cs,*Tests/**"          
-        
-        dotnet build --no-incremental              
-        dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
-        ./.sonar/scanner/dotnet-sonarscanner end
-      working-directory: src
-  
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src
+
+    - name: Test
+      run: dotnet test --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx
+      working-directory: src
+
+    - name: Analyze with SonarCloud
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+      with:
+        projectBaseDir: src  
+        args: >
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+          -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}

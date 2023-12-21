@@ -18,30 +18,17 @@ jobs:
       with:
         dotnet-version: 8.0.x     
 
-    - name: Setup Java
-      uses: actions/setup-java@v4.0.0
-      with:        
-        java-version: 17
-        distribution: temurin
-
-    - name: Restore
-      run: dotnet restore
-      working-directory: src
-
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-      working-directory: src
-
-    - name: Test
-      run: dotnet test --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx
-      working-directory: src
-
-    - name: Analyze with SonarCloud
-      uses: chill-viking/dotnet-sonar-scanner@v2          
+    - name: SonarScanner 
+      uses: highbyte/sonarscan-dotnet@2.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        sonar-project-key: ${{ secrets.PROJECT_KEY }}
-        sonar-org-key: ${{ secrets.SONAR_ORGANIZATION }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
-        working-directory: src
-        checkout: false
+        # The key of the SonarQube project
+        sonarProjectKey: ${{ secrets.PROJECT_KEY }}                
+        sonarOrganization: ${{ secrets.SONAR_ORGANIZATION }}        
+        dotnetBuildArguments: ./src        
+        dotnetTestArguments: ./src --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover        
+        sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx"
+        
+ 

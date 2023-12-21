@@ -9,7 +9,7 @@ This project AmberEggApi cover concepts about:
  - [SOLID Principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29)
  
 ## .Net Version
-.NET 7.0
+- [.NET 8.0](https://dotnet.microsoft.com/pt-br/download)
 
 ## 3rd Party NuGet Packages 
 - Autofac

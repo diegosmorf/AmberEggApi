@@ -16,10 +16,24 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x       
+        dotnet-version: 8.0.x     
+
+    - name: Setup Java
+      uses: actions/setup-java@v4.0.0
+      with:        
+        java-version: 17
+        distribution: temurin
+
+    - name: Restor
+      run: dotnet restore
+      working-directory: src
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: src
 
     - name: Test
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+      run: dotnet test --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --logger trx
       working-directory: src
 
     - name: Analyze with SonarCloud
@@ -35,6 +49,4 @@ jobs:
           -Dsonar.cs.opencover.reportPaths=coverage.xml
           -Dsonar.verbose=true
   
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-      working-directory: src
+    

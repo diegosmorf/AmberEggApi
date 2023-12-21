@@ -16,7 +16,7 @@ jobs:
         dotnet-version: 8.0.x       
      
     - name: Setup DotNet Coverage   
-      run: dotnet tool install dotnet-coverage 
+      run: dotnet tool update dotnet-coverage --tool-path ./
       working-directory: src
 
     - name: Test and analyze
@@ -29,5 +29,5 @@ jobs:
         dotnet build --configuration Release --no-restore
         dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
 
-        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
       working-directory: src

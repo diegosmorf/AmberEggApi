@@ -1,7 +1,10 @@
-name: api-build-test-sonar
+name: AmberEggApi Build Test Sonar
 
 on:
   workflow_dispatch
+  push:
+    branches: 
+      - main
 
 jobs:
   buildTest:

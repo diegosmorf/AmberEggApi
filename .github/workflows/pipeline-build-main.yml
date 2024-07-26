@@ -21,7 +21,7 @@ jobs:
         distribution: temurin
         
     - name: Setup SonarCloud Scanner      
-      run: dotnet tool install --global dotnet-coverage --tool-path ./.sonar/scanner
+      run: dotnet tool install --global dotnet-coverage
       working-directory: src
     - name: Build
       run: |          

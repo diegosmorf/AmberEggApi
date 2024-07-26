@@ -1,15 +1,20 @@
 # AmberEggApi - .NET 8 Open API Template
-This is a starting point (TEMPLATE) for Clean Architecture with .NET 8. [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html) is just the latest in a series of names for the same loosely-coupled, dependency-inverted architecture. You will also find it named [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture), [ports-and-adapters](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html), or [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
+
+AmberEggApi is community project to accelerate development of  Clean Architecture APIs using .NET 8. 
 
 ## Summary
 This project AmberEggApi cover concepts about:  
+ - [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+ - [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture)
+ - [Onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
  - [CQRS](http://www.codeproject.com/Articles/555855/Introduction-to-CQRS)
  - [Dependency Injection](http://en.wikipedia.org/wiki/Dependency_injection)
  - [Loose Coupling](http://en.wikipedia.org/wiki/Loose_coupling)
- - [SOLID Principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29)
+ - [SOLID Principles](http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29) 
+ - [Ports-and-adapters](http://www.dossier-andreas.net/software_architecture/ports_and_adapters.html)
  
 ## .Net Version
-- [.NET 8.0](https://dotnet.microsoft.com/pt-br/download)
+- [.NET 8.0](https://dotnet.microsoft.com/en-us/download)
 
 ## 3rd Party NuGet Packages 
 - Autofac
@@ -37,7 +42,7 @@ cd repo
 git clone https://github.com/diegosmorf/AmberEggApi.git
 ```
 
-### Cloning the structure using your namespace
+### Rename the structure using your namespace
 ```
 powershell .\clone-to-your-namespace.ps1 "Your.Namespace"
 cd ..\Your.Namespace

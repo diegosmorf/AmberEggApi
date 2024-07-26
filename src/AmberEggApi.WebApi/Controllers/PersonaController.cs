@@ -32,6 +32,11 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.Get(id);
 
             if (result == null)
@@ -45,6 +50,11 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("name/{name}")]
         public async Task<IActionResult> Get([FromRoute] string name)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.GetListByName(name);
 
             if (!result.Any())
@@ -58,6 +68,11 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePersonaCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.Create(command);
             return Created(result.Id.ToString(), result);
         }
@@ -65,6 +80,11 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await appService.Delete(new DeletePersonaCommand(id));
             return NoContent();
         }
@@ -72,6 +92,11 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePersonaCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.Get(id);
 
             if (result == null)

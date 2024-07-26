@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.Common.Repository.Exceptions
-{    
+{
     public class ModelException : Exception
     {
         public ModelException(string message, IEnumerable<ValidationResult> errors) : base(message)
@@ -15,7 +15,7 @@ namespace Api.Common.Repository.Exceptions
             : base(message, innerException)
         {
         }
-        
+
         public IEnumerable<ValidationResult> Errors { get; protected set; }
     }
 }

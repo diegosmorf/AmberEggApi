@@ -1,3 +1,6 @@
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9250/badge)](https://www.bestpractices.dev/projects/9250)
+[![AmberEggApi Build Test Sonar](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml/badge.svg)](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml)
+
 # AmberEggApi - .NET 8 Open API Template
 
 AmberEggApi is community project to accelerate development of  Clean Architecture APIs using .NET 8. 

@@ -24,7 +24,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         }
 
         [Test]
-        public async Task WhenCreate_Then_ICanFindItById()
+        public async Task WhenCreate_Then_FindItById()
         {
             //act
             var resultCreate = await factory.Create();
@@ -36,7 +36,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         }
 
         [Test]
-        public async Task WhenCreateAndUpdate_Then_ICanFindItById()
+        public async Task WhenCreateAndUpdate_Then_FindItById()
         {
             //arrange
             var expectedNameAfterUpdate =

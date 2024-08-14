@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi.Controllers
 {
-    public class PersonaController : BaseController
+    public class PersonaController(IPersonaAppService appService) : BaseController
     {
-        private readonly IPersonaAppService appService;
-
-        public PersonaController(IPersonaAppService appService)
-        {
-            this.appService = appService;
-        }
-
         [HttpGet]
         public async Task<IActionResult> Get()
         {

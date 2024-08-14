@@ -22,7 +22,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         }
 
         [Test]
-        public async Task WhenCreate_Then_ICanFindItById()
+        public async Task WhenCreate_Then_FindItById()
         {
             //act
             var responseCreate = await factory.Create();
@@ -34,7 +34,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         }
 
         [Test]
-        public async Task WhenCreateAndUpdate_Then_ICanFindItById()
+        public async Task WhenCreateAndUpdate_Then_FindItById()
         {
             //arrange
             var expectedNameAfterUpdate =

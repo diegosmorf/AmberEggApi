@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>		
+		<TargetFramework>net8.0</TargetFramework>		
 		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
 		<ProjectGuid>{5479439B-0A47-4184-92F6-3FF2D03EEF23}</ProjectGuid>
 	</PropertyGroup>

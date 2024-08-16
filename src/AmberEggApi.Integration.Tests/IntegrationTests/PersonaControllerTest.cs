@@ -127,5 +127,5 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             responseGetAfterDelete.Should().BeNull();
         }
 
-    } 
+    }
 }

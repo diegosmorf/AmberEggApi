@@ -3,9 +3,7 @@ using AmberEggApi.Domain.Commands;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -32,6 +30,29 @@ namespace AmberEggApi.Integration.Tests.Factories
             viewModel.Name.Should().Be(name);
 
             return viewModel;
+        }
+
+        public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
+        {
+            // Act
+            var response = await CreateRequest(command);
+
+            // Assert
+            var apiResponse = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
+
+            response.StatusCode.Should().Be(HttpStatusCode.Created);
+
+            return apiResponse;
+        }
+
+        public async Task<HttpResponseMessage> CreateRequest(CreatePersonaCommand command)
+        {
+            // Arrange
+            var requestBody =
+                new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
+
+            // Act
+            return await client.PostAsync(url, requestBody);
         }
 
         public async Task Delete(Guid id)
@@ -75,33 +96,10 @@ namespace AmberEggApi.Integration.Tests.Factories
             return responseModel;
         }
 
-        public async Task<HttpResponseMessage> CreateRequest(CreatePersonaCommand command)
-        {
-            // Arrange
-            var requestBody =
-                new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
-
-            // Act
-            return await client.PostAsync(url, requestBody);
-        }
-
-        public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
-        {
-            // Act
-            var response = await CreateRequest(command);
-
-            // Assert
-            var apiResponse = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
-
-            response.StatusCode.Should().Be(HttpStatusCode.Created);
-
-            return apiResponse;
-        }
-
         public async Task<HttpResponseMessage> UpdateRequest(PersonaViewModel viewModel)
         {
             // Arrange
-            
+
             var command = new UpdatePersonaCommand(viewModel.Id, viewModel.Name);
             var requestBody =
                 new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
@@ -131,8 +129,7 @@ namespace AmberEggApi.Integration.Tests.Factories
 
             return viewModelResponse;
         }
-
-        internal async Task DeleteAll()
+        public async Task DeleteAll()
         {
             var viewModelGetAll = await GetAll();
 

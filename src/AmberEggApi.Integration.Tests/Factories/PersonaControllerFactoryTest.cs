@@ -55,13 +55,9 @@ namespace AmberEggApi.Integration.Tests.Factories
             return await client.PostAsync(url, requestBody);
         }
 
-        public async Task Delete(Guid id)
+        public async Task<HttpResponseMessage> Delete(Guid id)
         {
-            // Act
-            var response = await client.DeleteAsync($"{url}/{id}");
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            return await client.DeleteAsync($"{url}/{id}");            
         }
 
         public async Task<PersonaViewModel> Get(Guid id)

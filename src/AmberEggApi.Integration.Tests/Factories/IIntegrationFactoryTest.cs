@@ -11,7 +11,7 @@ namespace AmberEggApi.Integration.Tests.Factories
     {
         Task<PersonaViewModel> Create();
         Task<PersonaViewModel> Create(CreatePersonaCommand command);
-        Task Delete(Guid id);
+        Task<HttpResponseMessage> Delete(Guid id);
         Task<PersonaViewModel> Get(Guid id);
         Task<IEnumerable<PersonaViewModel>> GetAll();
         Task<HttpResponseMessage> UpdateRequest(PersonaViewModel viewModel);

@@ -1,8 +1,10 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
 using AmberEggApi.Integration.Tests.Factories;
+using Azure;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -81,15 +83,38 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         }
 
         [Test]
+        public async Task WhenCreateAndUpdateInvalidId_Then_BadRequest()
+        {
+            // Act
+            var viewModelCreate = await factory.Create();
+            viewModelCreate.Id = Guid.Empty;
+            var response = await factory.UpdateRequest(viewModelCreate);
+            // Assert            
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task WhenCreateAndDeleteInvalidId_Then_BadRequest()
+        {
+            // Act
+            var viewModelCreate = await factory.Create();
+            viewModelCreate.Id = Guid.Empty;
+            var response = await factory.Delete(viewModelCreate.Id);
+            // Assert            
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
         public async Task WhenCreateAndDelete_Then_Deleted()
         {
             // Act
             var viewModelCreate = await factory.Create();
-            await factory.Delete(viewModelCreate.Id);
+            var responseDelete = await factory.Delete(viewModelCreate.Id);
 
             var responseGet = await factory.Get(viewModelCreate.Id);
 
             // Assert
+            responseDelete.StatusCode.Should().Be(HttpStatusCode.NoContent);
             responseGet.Should().BeNull();
         }
 
@@ -117,10 +142,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
 
             var viewModelGet = await factory.Get(viewModelCreate.Id);
 
-            await factory.Delete(viewModelCreate.Id);
+            var responseDelete = await factory.Delete(viewModelCreate.Id);
             var responseGetAfterDelete = await factory.Get(viewModelCreate.Id);
 
             // Assert
+            responseDelete.StatusCode.Should().Be(HttpStatusCode.NoContent);
             viewModelGet.Id.Should().Be(viewModelUpdate.Id);
             viewModelGet.Name.Should().Be(viewModelUpdate.Name);
 

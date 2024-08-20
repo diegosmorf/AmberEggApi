@@ -73,19 +73,27 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Guid.Empty == id)
             {
                 return BadRequest(ModelState);
             }
 
+            var result = await appService.Get(id);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
+
             await appService.Delete(new DeletePersonaCommand(id));
+
             return NoContent();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePersonaCommand command)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Guid.Empty == id ||  Guid.Empty == command.Id)
             {
                 return BadRequest(ModelState);
             }

@@ -35,12 +35,41 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         }
 
         [Test]
+        public async Task WhenCreate_Then_FindItByName()
+        {
+            // Act
+            var viewModelCreate = await factory.Create();
+            var listGetName = await factory.Get(viewModelCreate.Name);
+            var viewModelGet = listGetName.FirstOrDefault();
+
+            // Assert
+            listGetName.Should().NotBeNull();
+            listGetName.Count().Should().Be(1);
+            viewModelGet.Should().BeOfType<PersonaViewModel>();
+            viewModelGet.Id.Should().NotBeEmpty();
+            viewModelGet.Id.Should().Be(viewModelCreate.Id);
+            viewModelGet.Name.Should().Be(viewModelCreate.Name);
+        }
+
+        [Test]
+        public async Task When_FindItByName_Empty_Then_BadRequest()
+        {
+            // Act
+            await factory.Create();
+            var response = await factory.GetRequest(string.Empty);            
+
+            // Assert
+            response.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
         public async Task WhenCreate_Then_GetAll()
         {
             // Act
             var viewModelCreate = await factory.Create();
-            var viewModelGetAll = await factory.GetAll();
-            var viewModelGet = viewModelGetAll.FirstOrDefault(x => x.Id == viewModelCreate.Id);
+            var listGetAll = await factory.GetAll();
+            var viewModelGet = listGetAll.FirstOrDefault(x => x.Id == viewModelCreate.Id);
 
             // Assert            
             viewModelGet.Should().BeOfType<PersonaViewModel>();
@@ -97,11 +126,20 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         public async Task WhenCreateAndDeleteInvalidId_Then_BadRequest()
         {
             // Act
-            var viewModelCreate = await factory.Create();
-            viewModelCreate.Id = Guid.Empty;
-            var response = await factory.Delete(viewModelCreate.Id);
+            await factory.Create();            
+            var response = await factory.Delete(Guid.Empty);
             // Assert            
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Test]
+        public async Task WhenCreateAndDeleteNewId_Then_BadRequest()
+        {
+            // Act
+            await factory.Create();
+            var response = await factory.Delete(Guid.NewGuid());
+            // Assert            
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
         [Test]

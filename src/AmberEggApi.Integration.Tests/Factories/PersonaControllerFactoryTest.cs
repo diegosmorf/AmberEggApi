@@ -60,25 +60,42 @@ namespace AmberEggApi.Integration.Tests.Factories
             return await client.DeleteAsync($"{url}/{id}");            
         }
 
+        public async Task<HttpResponseMessage> GetRequest(Guid id)
+        {            
+            return await client.GetAsync($"{url}/{id}");            
+        }
+
+        public async Task<HttpResponseMessage> GetRequest(string name)
+        {            
+            return await client.GetAsync($"{url}/name/{name}");
+        }
+
         public async Task<PersonaViewModel> Get(Guid id)
         {
-            await Task.Delay(2);
-            // Act
             var response = await client.GetAsync($"{url}/{id}");
+            
+            if (response.StatusCode == HttpStatusCode.NoContent)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<IEnumerable<PersonaViewModel>> Get(string name)
+        {
+            var response = await client.GetAsync($"{url}/name/{name}");
 
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 return null;
             }
 
-            var responseModel = JsonConvert.DeserializeObject<PersonaViewModel>(await response.Content.ReadAsStringAsync());
-
-            return responseModel;
-        }
+            return JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(await response.Content.ReadAsStringAsync());
+        }        
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()
         {
-            await Task.Delay(2);
             // Act
             var response = await client.GetAsync($"{url}");
 
@@ -95,7 +112,6 @@ namespace AmberEggApi.Integration.Tests.Factories
         public async Task<HttpResponseMessage> UpdateRequest(PersonaViewModel viewModel)
         {
             // Arrange
-
             var command = new UpdatePersonaCommand(viewModel.Id, viewModel.Name);
             var requestBody =
                 new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");

@@ -43,7 +43,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("name/{name}")]
         public async Task<IActionResult> Get([FromRoute] string name)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrEmpty(name))
             {
                 return BadRequest(ModelState);
             }

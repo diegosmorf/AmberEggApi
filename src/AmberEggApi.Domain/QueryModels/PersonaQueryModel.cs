@@ -6,7 +6,7 @@ namespace AmberEggApi.Domain.QueryModels
     public class PersonaQueryModel : BaseQueryModel
     {
         [MinLength(2)]
-        [MaxLength(255)]
+        [MaxLength(20)]
         [Required]
         public string Name { get; private set; }
 

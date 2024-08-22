@@ -15,7 +15,7 @@ namespace AmberEggApi.Domain.Commands
         [Required] public Guid Id { get; }
 
         [MinLength(2)]
-        [MaxLength(255)]
+        [MaxLength(20)]
         [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
     }

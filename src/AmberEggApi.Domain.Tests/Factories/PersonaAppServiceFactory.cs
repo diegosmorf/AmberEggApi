@@ -22,13 +22,13 @@ namespace AmberEggApi.Domain.Tests.Factories
 
         public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
         {
-            //arrange
+            // arrange
             const int expectedNumberOfErrors = 0;
 
-            //act
+            // act
             var response = await appService.Create(command);
 
-            //assert
+            // assert
             command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
             response.Id.Should().NotBe(Guid.Empty);
             response.Name.Should().Be(command.Name);
@@ -59,13 +59,13 @@ namespace AmberEggApi.Domain.Tests.Factories
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
         {
-            //arrange
+            // arrange
             const int expectedNumberOfErrors = 0;
 
-            //act
+            // act
             var response = await appService.Update(command);
 
-            //assert
+            // assert
             command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
             response.Id.Should().Be(command.Id);
             response.Name.Should().Be(command.Name);

@@ -1,7 +1,8 @@
 # AmberEggApi - .NET 8 Open API Template
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9250/badge)](https://www.bestpractices.dev/projects/9250)
-[![AmberEggApi Build Test Sonar](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml/badge.svg)](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml)
+[![AmberEggApi Build Test](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml/badge.svg)](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml)
+[![SonarCloud - Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegosmorf_AmberEggApi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegosmorf_AmberEggApi)
 
 AmberEggApi is community project to accelerate development of  Clean Architecture APIs using .NET 8.
 

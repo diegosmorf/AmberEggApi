@@ -26,11 +26,11 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         [Test]
         public async Task WhenCreate_Then_FindItById()
         {
-            //act
+            // act
             var resultCreate = await factory.Create();
             var resultGet = await repository.SearchById(resultCreate.Id);
 
-            //assert
+            // assert
             resultGet.Id.Should().Be(resultCreate.Id);
             resultGet.Name.Should().Be(resultCreate.Name);
         }
@@ -38,11 +38,11 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdate_Then_FindItById()
         {
-            //arrange
+            // arrange
             var expectedNameAfterUpdate =
                 $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
 
-            //act
+            // act
             var resultCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
                 resultCreate.Id,
@@ -51,7 +51,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             var responseUpdate = await factory.Update(commandUpdate);
             var resultGet = await repository.Search(x => x.Id == resultCreate.Id);
 
-            //assert
+            // assert
             resultGet.Id.Should().Be(responseUpdate.Id);
             resultGet.Name.Should().Be(responseUpdate.Name);
         }
@@ -59,11 +59,11 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success()
         {
-            //arrange
+            // arrange
             var expectedNameAfterUpdate =
                 $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
 
-            //act
+            // act
             var resultCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
                 resultCreate.Id,
@@ -74,18 +74,18 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
 
             var resultGet = await repository.SearchById(resultCreate.Id);
 
-            //assert
+            // assert
             resultGet.Should().BeNull();
         }
 
         [Test]
         public async Task WhenCreateMultiples_Then_DeleteMultiples()
         {
-            //arrange
+            // arrange
             var expectedInserted = 4;
             var finalResult = 0;
 
-            //act
+            // act
             await factory.DeleteAll();
             await factory.Create();
             await factory.Create();
@@ -95,7 +95,7 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             var currentInserted = (await repository.SearchList(x => x.Name.Contains("Test"))).Count();
             await factory.DeleteAll();
             var currentResult = (await repository.ListAll()).Count();
-            //assert
+            // assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);
         }
@@ -103,24 +103,24 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
         [Test]
         public async Task WhenUpdateMultiples_Then_KeepMultiples()
         {
-            //arrange
+            // arrange
             var expectedInserted = 4;
             var finalResult = 4;
-            var name = "Persona Test";
+            var name = "Persona-Test";
 
-            //act
+            // act
             await factory.DeleteAll();
-            var company1 = await factory.Create();
-            var company2 = await factory.Create();
-            var company3 = await factory.Create();
-            var company4 = await factory.Create();
+            var persona1 = await factory.Create();
+            var persona2 = await factory.Create();
+            var persona3 = await factory.Create();
+            var persona4 = await factory.Create();
 
-            var list = new[] { company1, company2, company3, company4 };
+            var list = new[] { persona1, persona2, persona3, persona4 };
             var currentInserted = (await factory.GetListByName(name)).Count();
             await repository.Update(list);
             var currentResult = (await factory.GetListByName(name)).Count();
 
-            //assert
+            // assert
             expectedInserted.Should().Be(currentInserted);
             finalResult.Should().Be(currentResult);
         }

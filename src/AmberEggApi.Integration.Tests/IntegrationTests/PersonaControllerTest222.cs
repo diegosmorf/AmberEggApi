@@ -1,25 +1,29 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
-using AmberEggApi.Integration.Tests.Factories;
+using AmberEggApi.Domain.Commands;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Integration.Tests.IntegrationTests
 {
-    public class PersonaControllerTest
+    public class PersonaControllerTest222
     {
-        private readonly PersonaControllerFactoryTest factory;
+        private readonly HttpClient client;
+        private const string url = "/api/v1/Persona";
         private int index = 1;
 
-        public PersonaControllerTest()
+        public PersonaControllerTest222()
         {
-            factory = new PersonaControllerFactoryTest(BaseIntegrationTest.Client);
+            client = BaseIntegrationTest.Client;
         }
-
+        
         [TestCase("")]  
         [TestCase(null)]
         [TestCase(" ")]      
@@ -28,7 +32,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         public async Task When_Empty_Create_Then_BadRequest(string name)
         {
             // act
-            var response = await factory.Create(name);
+            var response = await Create(name);
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
@@ -43,8 +47,8 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act            
-            var response = await factory.Create(expectedName);
-            var viewModel = await factory.GetViewModel<PersonaViewModel>(response);
+            var response = await Create(expectedName);
+            var viewModel = await GetViewModel<PersonaViewModel>(response);
             // assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
             viewModel.Should().BeOfType<PersonaViewModel>();
@@ -63,11 +67,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create(expectedName);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);
+            var responseCreate = await Create(expectedName);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);
 
-            var responseGet = await factory.Get(viewModelCreate.Id);
-            var viewModelGet = await factory.GetViewModel<PersonaViewModel>(responseGet);
+            var responseGet = await Get(viewModelCreate.Id);
+            var viewModelGet = await GetViewModel<PersonaViewModel>(responseGet);
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);
             responseGet.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -90,11 +94,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create(expectedName);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);
+            var responseCreate = await Create(expectedName);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);
 
-            var responseGet = await factory.GetAll();
-            var viewModelGet = (await factory.GetViewModel<IEnumerable<PersonaViewModel>>(responseGet)).FirstOrDefault(x=> x.Id == viewModelCreate.Id);
+            var responseGet = await GetAll();
+            var viewModelGet = (await GetViewModel<IEnumerable<PersonaViewModel>>(responseGet)).FirstOrDefault(x=> x.Id == viewModelCreate.Id);
 
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -112,8 +116,8 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
         public async Task When_EmptyDatabase_GetAll_Then_NoContent()
         {
             // act            
-            await factory.DeleteAll();
-            var response = await factory.GetAll();            
+            await DeleteAll();
+            var response = await GetAll();            
 
             // assert            
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -129,11 +133,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create(expectedName);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);
+            var responseCreate = await Create(expectedName);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);
 
-            var responseGet = await factory.Get(viewModelCreate.Name);
-            var viewModelGet = (await factory.GetViewModel<IEnumerable<PersonaViewModel>>(responseGet)).FirstOrDefault();
+            var responseGet = await Get(viewModelCreate.Name);
+            var viewModelGet = (await GetViewModel<IEnumerable<PersonaViewModel>>(responseGet)).FirstOrDefault();
 
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -154,12 +158,12 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create(expectedName);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
-            var responseUpdate = await factory.Update(viewModelCreate.Id,  $"{expectedName}-v2");
-            var viewModelUpdate = await factory.GetViewModel<PersonaViewModel>(responseUpdate);
-            var responseGet = await factory.Get(viewModelCreate.Id);
-            var viewModelGet = await factory.GetViewModel<PersonaViewModel>(responseGet);
+            var responseCreate = await Create(expectedName);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseUpdate = await Update(viewModelCreate.Id,  $"{expectedName}-v2");
+            var viewModelUpdate = await GetViewModel<PersonaViewModel>(responseUpdate);
+            var responseGet = await Get(viewModelCreate.Id);
+            var viewModelGet = await GetViewModel<PersonaViewModel>(responseGet);
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);
             responseGet.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -178,11 +182,11 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create(expectedName);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
-            var responseUpdate = await factory.Update(viewModelCreate.Id,  $"{expectedName}-v2");            
-            var responseDelete = await factory.Delete(viewModelCreate.Id);
-            var responseGet = await factory.Get(viewModelCreate.Id);
+            var responseCreate = await Create(expectedName);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseUpdate = await Update(viewModelCreate.Id,  $"{expectedName}-v2");            
+            var responseDelete = await Delete(viewModelCreate.Id);
+            var responseGet = await Get(viewModelCreate.Id);
             
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
@@ -200,9 +204,9 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var name = $"Persona-Test-{index++}";
             // act
-            var responseCreate = await factory.Create(name);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
-            var responseUpdate = await factory.Update(viewModelCreate.Id, invalidName);            
+            var responseCreate = await Create(name);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseUpdate = await Update(viewModelCreate.Id, invalidName);            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -217,9 +221,9 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var name = $"Persona-Test-{index++}";
             // act
-            var responseCreate = await factory.Create(name);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
-            var responseUpdate = await factory.Update(Guid.Empty, name);            
+            var responseCreate = await Create(name);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseUpdate = await Update(Guid.Empty, name);            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -234,15 +238,71 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             // arrange
             var name = $"Persona-Test-{index++}";
             // act
-            var responseCreate = await factory.Create(name);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
-            var responseUpdate = await factory.Update(Guid.NewGuid(), name);            
+            var responseCreate = await Create(name);
+            var viewModelCreate = await GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseUpdate = await Update(Guid.NewGuid(), name);            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
             viewModelCreate.Should().BeOfType<PersonaViewModel>();
             viewModelCreate.Id.Should().NotBeEmpty();
             viewModelCreate.Name.Should().NotBeNullOrEmpty();                                            
+        }
+
+        private async Task<HttpResponseMessage> Create(string name)
+        {
+            var requestBody = ParseToJson(new CreatePersonaCommand(name));
+            return await client.PostAsync(url, requestBody);
+        }
+
+        private static async Task<TViewModel> GetViewModel<TViewModel>(HttpResponseMessage response)
+        {
+            return JsonConvert.DeserializeObject<TViewModel>(await response.Content.ReadAsStringAsync());
+        }
+
+        private static StringContent ParseToJson(object command)
+        {
+            return new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
+        }
+        private async Task<HttpResponseMessage> Get(Guid id)
+        {
+            return await client.GetAsync($"{url}/{id}");
+        }
+
+        private async Task<HttpResponseMessage> GetAll()
+        {            
+            return await client.GetAsync($"{url}");
+        }
+
+        private async Task<HttpResponseMessage> Get(string name)
+        {
+            return await client.GetAsync($"{url}/name/{name}");
+        }
+
+        private async Task<HttpResponseMessage> Delete(Guid id)
+        {
+            return await client.DeleteAsync($"{url}/{id}");            
+        }
+
+        public async Task<HttpResponseMessage> Update(Guid id, string name)
+        {
+            var requestBody = ParseToJson(new UpdatePersonaCommand(id,name));            
+            return await client.PutAsync($"{url}/{id}", requestBody);            
+        }
+
+        private async Task DeleteAll()
+        {
+            var responseGet = await GetAll();
+
+            if(responseGet.StatusCode == HttpStatusCode.OK)
+            {
+                var listViewGet = await GetViewModel<IEnumerable<PersonaViewModel>>(responseGet);
+
+                foreach (var viewModel in listViewGet)
+                {
+                    await Delete(viewModel.Id);
+                }
+            }
         }
     }
 }

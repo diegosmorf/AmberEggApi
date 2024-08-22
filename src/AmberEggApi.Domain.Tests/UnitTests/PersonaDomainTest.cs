@@ -14,6 +14,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
     public class PersonaDomainTest
     {
         private readonly PersonaAppServiceFactory factory;
+        private int index = 1;
 
         public PersonaDomainTest()
         {
@@ -23,11 +24,11 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreate_Then_FindItById()
         {
-            //act
+            // act
             var responseCreate = await factory.Create();
             var responseSearchById = await factory.Get(responseCreate.Id);
 
-            //assert
+            // assert
             responseSearchById.Id.Should().Be(responseCreate.Id);
             responseSearchById.Name.Should().Be(responseCreate.Name);
         }
@@ -35,11 +36,10 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdate_Then_FindItById()
         {
-            //arrange
-            var expectedNameAfterUpdate =
-                $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
+            // arrange
+            var expectedNameAfterUpdate = $"Persona-Test-{index++}";
 
-            //act
+            // act
             var responseCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
                 responseCreate.Id,
@@ -48,7 +48,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var responseUpdate = await factory.Update(commandUpdate);
             var responseSearchById = await factory.Get(responseCreate.Id);
 
-            //assert
+            // assert
             responseSearchById.Id.Should().Be(responseUpdate.Id);
             responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
@@ -56,46 +56,30 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success()
         {
-            //arrange
-            var expectedNameAfterUpdate =
-                $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
-
-            //act
+            // arrange
+            var expectedNameAfterUpdate = $"Persona-Test-{index++}";
+            // act
             var responseCreate = await factory.Create();
-            var commandUpdate = new UpdatePersonaCommand(
-                responseCreate.Id,
-                expectedNameAfterUpdate);
-
+            var commandUpdate = new UpdatePersonaCommand(responseCreate.Id, expectedNameAfterUpdate);
             await factory.Update(commandUpdate);
             await factory.Delete(responseCreate.Id);
-
             var responseSearchById = await factory.Get(responseCreate.Id);
-
-            //assert
+            // assert
             responseSearchById.Should().BeNull();
         }
 
         [Test]
         public void WhenCreateNotValidEntity_Then_Error()
         {
-            //arrange
+            // arrange
             var expectedNumberOfErrors = 1;
-
             var name = string.Empty;
             var command = new CreatePersonaCommand(name);
-
-            //act
+            // act
             Func<Task> action = async () => { await factory.Create(command); };
-
-            //assert
-            action.Should()
-                .ThrowAsync<ModelException>()
-                .Where(x => x.Errors.Count() == expectedNumberOfErrors);
-
-            action.Should()
-                .ThrowAsync<ModelException>()
-                .WithMessage(
-                    "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.");
+            // assert
+            action.Should().ThrowAsync<ModelException>().Where(x => x.Errors.Count() == expectedNumberOfErrors);
+            action.Should().ThrowAsync<ModelException>().WithMessage("This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.");
         }
     }
 }

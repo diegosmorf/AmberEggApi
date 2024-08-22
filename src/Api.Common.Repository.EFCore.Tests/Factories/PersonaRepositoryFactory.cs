@@ -15,7 +15,7 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
         public async Task<Persona> Create()
         {
-            var name = "Persona Test";
+            var name = "Persona-Test";
             var command = new CreatePersonaCommand(name);
 
             return await Create(command);
@@ -24,21 +24,21 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
         public async Task<Persona> Create(CreatePersonaCommand command)
         {
             var datetime = DateTime.Now;
-            var company = new Persona();
-            company.Create(command);
+            var persona = new Persona();
+            persona.Create(command);
 
-            //act
-            await repository.Insert(company);
+            // act
+            await repository.Insert(persona);
             await unitOfWork.Commit();
 
-            //assert
-            company.Id.Should().NotBe(Guid.Empty);
-            company.Name.Should().Be(command.Name);
-            company.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
-            company.ModifiedDate.Should().BeNull();
-            company.ToString().Should().Be($"Type:{company.GetType().Name} - Id:{company.Id}");
+            // assert
+            persona.Id.Should().NotBe(Guid.Empty);
+            persona.Name.Should().Be(command.Name);
+            persona.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
+            persona.ModifiedDate.Should().BeNull();
+            persona.ToString().Should().Be($"Type:{persona.GetType().Name} - Id:{persona.Id}");
 
-            return company;
+            return persona;
         }
 
 
@@ -98,18 +98,18 @@ namespace Api.Common.Repository.EFCore.Tests.Factories
 
         public async Task<Persona> Update(UpdatePersonaCommand command)
         {
-            var company = await Get(command.Id);
-            company.Update(command);
+            var persona = await Get(command.Id);
+            persona.Update(command);
 
-            //act
-            await repository.Update(company);
+            // act
+            await repository.Update(persona);
             await unitOfWork.Commit();
 
-            //assert
-            company.Id.Should().Be(command.Id);
-            company.Name.Should().Be(command.Name);
+            // assert
+            persona.Id.Should().Be(command.Id);
+            persona.Name.Should().Be(command.Name);
 
-            return company;
+            return persona;
         }
     }
 }

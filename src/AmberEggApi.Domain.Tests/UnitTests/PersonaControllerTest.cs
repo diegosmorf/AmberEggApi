@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
-    [TestFixture]
     public class PersonaControllerTest
     {
         private readonly PersonaControllerFactory factory;
+        private int index = 0;
 
         public PersonaControllerTest()
         {
@@ -24,11 +24,11 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreate_Then_FindItById()
         {
-            //act
+            // act
             var responseCreate = await factory.Create();
             var responseSearchById = await factory.Get(responseCreate.Id);
 
-            //assert
+            // assert
             responseSearchById.Id.Should().Be(responseCreate.Id);
             responseSearchById.Name.Should().Be(responseCreate.Name);
         }
@@ -36,11 +36,10 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdate_Then_FindItById()
         {
-            //arrange
-            var expectedNameAfterUpdate =
-                $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
+            // arrange
+            var expectedNameAfterUpdate = $"Persona-{index++}";
 
-            //act
+            // act
             var responseCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
                 responseCreate.Id,
@@ -49,7 +48,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var responseUpdate = await factory.Update(commandUpdate);
             var responseSearchById = await factory.Get(responseCreate.Id);
 
-            //assert
+            // assert
             responseSearchById.Id.Should().Be(responseUpdate.Id);
             responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
@@ -57,11 +56,10 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [Test]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success()
         {
-            //arrange
-            var expectedNameAfterUpdate =
-                $"AfterUpdate-Persona-Test-{DateTime.UtcNow.ToLongTimeString()}";
+            // arrange
+            var expectedNameAfterUpdate = $"Persona-{index++}";
 
-            //act
+            // act
             var responseCreate = await factory.Create();
             var commandUpdate = new UpdatePersonaCommand(
                 responseCreate.Id,
@@ -72,23 +70,23 @@ namespace AmberEggApi.Domain.Tests.UnitTests
 
             var responseSearchById = await factory.Get(responseCreate.Id);
 
-            //assert
+            // assert
             responseSearchById.Should().BeNull();
         }
 
         [Test]
         public void WhenCreateNotValidEntity_Then_Error()
         {
-            //arrange
+            // arrange
             var expectedNumberOfErrors = 1;
 
             var name = string.Empty;
             var command = new CreatePersonaCommand(name);
 
-            //act
+            // act
             Func<Task> action = async () => { await factory.Create(command); };
 
-            //assert
+            // assert
             action.Should()
                 .ThrowAsync<ModelException>()
                 .Where(x => x.Errors.Count() == expectedNumberOfErrors);
@@ -104,7 +102,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             var response = await factory.GetNotExistent();
 
-            //assert
+            // assert
             response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
@@ -113,7 +111,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             var response = await factory.GetByNameNotExistent();
 
-            //assert
+            // assert
             response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
@@ -122,7 +120,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         {
             var response = await factory.UpdateNotExistent();
 
-            //assert
+            // assert
             response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
     }

@@ -8,7 +8,7 @@ namespace AmberEggApi.Domain.Models
     public class Persona : AggregateRoot
     {
         [MinLength(2)]
-        [MaxLength(255)]
+        [MaxLength(20)]
         [Required]
         public string Name { get; private set; }
 

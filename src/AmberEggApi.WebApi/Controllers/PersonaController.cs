@@ -1,5 +1,6 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.Domain.Commands;
+using Api.Common.Repository.Validations;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }
@@ -43,7 +44,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("name/{name}")]
         public async Task<IActionResult> Get([FromRoute] string name)
         {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(name))
+            if (!ModelState.IsValid || string.IsNullOrEmpty(name))  
             {
                 return BadRequest(ModelState);
             }
@@ -61,7 +62,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePersonaCommand command)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrEmpty(command.Name))
             {
                 return BadRequest(ModelState);
             }
@@ -73,7 +74,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid || Guid.Empty == id)
+            if (!ModelState.IsValid || id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }
@@ -93,7 +94,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePersonaCommand command)
         {
-            if (!ModelState.IsValid || Guid.Empty == id ||  Guid.Empty == command.Id)
+            if (!ModelState.IsValid || command.Id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }

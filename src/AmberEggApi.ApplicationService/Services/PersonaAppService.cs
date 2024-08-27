@@ -12,10 +12,7 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.ApplicationService.Services
 {
-    public class PersonaAppService(
-        ICommandProducer producer,
-        IMapper mapper,
-        IRepository<Persona> repository) : IPersonaAppService
+    public class PersonaAppService(ICommandProducer producer, IMapper mapper, IRepository<Persona> repository) : IPersonaAppService
     {
         private readonly IRepository<Persona> repository = repository;
         private readonly ICommandProducer producer = producer;
@@ -30,6 +27,9 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name)
         {
+            if(string.IsNullOrEmpty(name))
+                return [];
+
             var list = await repository.SearchList(x => x.Name.Contains(name));
 
             return mapper.Map<IEnumerable<PersonaViewModel>>(list).OrderBy(x => x.Name);
@@ -37,6 +37,9 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<PersonaViewModel> Get(Guid id)
         {
+            if(Guid.Empty == id)
+                return null;
+
             var instance = await repository.SearchById(id);
 
             return mapper.Map<PersonaViewModel>(instance);
@@ -52,6 +55,9 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
         {
+            if(Guid.Empty == command.Id)
+                return null;
+
             //send command to broker
             var result = await producer.Send<UpdatePersonaCommand, Persona>(command);
 
@@ -60,6 +66,9 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task Delete(DeletePersonaCommand commandDelete)
         {
+            if(Guid.Empty == commandDelete.Id)
+                return;
+
             //send command to broker
             await producer.Send<DeletePersonaCommand, Persona>(commandDelete);
         }

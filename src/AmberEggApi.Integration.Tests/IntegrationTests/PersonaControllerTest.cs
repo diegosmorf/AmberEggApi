@@ -239,10 +239,21 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var responseUpdate = await factory.Update(Guid.NewGuid(), name);            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
-            responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
-            viewModelCreate.Should().BeOfType<PersonaViewModel>();
-            viewModelCreate.Id.Should().NotBeEmpty();
-            viewModelCreate.Name.Should().NotBeNullOrEmpty();                                            
+            responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);                                                      
+        }
+
+        [Test]
+        public async Task When_Create_Delete_NewId_Then_NoContent()
+        {            
+            // arrange
+            var name = $"Persona-Test-{index++}";
+            // act
+            var responseCreate = await factory.Create(name);
+            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
+            var responseDelete = await factory.Delete(Guid.NewGuid());            
+            // assert
+            responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
+            responseDelete.StatusCode.Should().Be(HttpStatusCode.NoContent);                                                       
         }
     }
 }

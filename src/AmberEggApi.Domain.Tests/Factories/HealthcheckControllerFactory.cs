@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.Factories
 {
-    public class HealthcheckControllerFactory(HealthCheckController controller)
+    public class HealthCheckControllerFactory(HealthCheckController controller)
     {
         private readonly HealthCheckController controller = controller;
 

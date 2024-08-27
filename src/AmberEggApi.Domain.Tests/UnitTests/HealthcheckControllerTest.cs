@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 namespace AmberEggApi.Domain.Tests.UnitTests
 {
     [TestFixture]
-    public class HealthcheckControllerTest
+    public class HealthCheckControllerTest
     {
-        private readonly HealthcheckControllerFactory factory;
+        private readonly HealthCheckControllerFactory factory;
 
-        public HealthcheckControllerTest()
+        public HealthCheckControllerTest()
         {
-            factory = SetupTests.Container.Resolve<HealthcheckControllerFactory>();
+            factory = SetupTests.Container.Resolve<HealthCheckControllerFactory>();
         }
 
         [Test]

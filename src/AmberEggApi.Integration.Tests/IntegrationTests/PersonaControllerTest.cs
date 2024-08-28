@@ -235,7 +235,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var name = $"Persona-Test-{index++}";
             // act
             var responseCreate = await factory.Create(name);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
+            await factory.GetViewModel<PersonaViewModel>(responseCreate);            
             var responseUpdate = await factory.Update(Guid.NewGuid(), name);            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            
@@ -249,7 +249,7 @@ namespace AmberEggApi.Integration.Tests.IntegrationTests
             var name = $"Persona-Test-{index++}";
             // act
             var responseCreate = await factory.Create(name);
-            var viewModelCreate = await factory.GetViewModel<PersonaViewModel>(responseCreate);            
+            await factory.GetViewModel<PersonaViewModel>(responseCreate);            
             var responseDelete = await factory.Delete(Guid.NewGuid());            
             // assert
             responseCreate.StatusCode.Should().Be(HttpStatusCode.Created);            

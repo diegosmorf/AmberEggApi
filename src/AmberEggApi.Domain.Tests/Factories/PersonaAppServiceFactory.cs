@@ -13,9 +13,8 @@ namespace AmberEggApi.Domain.Tests.Factories
     {
         private readonly IPersonaAppService appService = appService;
 
-        public async Task<PersonaViewModel> Create()
-        {
-            var name = "Persona 0001";
+        public async Task<PersonaViewModel> Create(string name)
+        {            
             var command = new CreatePersonaCommand(name);
             return await Create(command);
         }

@@ -14,9 +14,8 @@ namespace AmberEggApi.Domain.Tests.Factories
     {
         private readonly PersonaController controller = controller;
 
-        public async Task<PersonaViewModel> Create()
-        {
-            var name = "Persona 0001";
+        public async Task<PersonaViewModel> Create(string name)
+        {            
             var command = new CreatePersonaCommand(name);
             return await Create(command);
         }
@@ -58,7 +57,7 @@ namespace AmberEggApi.Domain.Tests.Factories
         public async Task<NoContentResult> UpdateNotExistent()
         {
             var id = Guid.NewGuid();
-            return await controller.Update(id, new UpdatePersonaCommand(id, "")) as NoContentResult;
+            return await controller.Update(new UpdatePersonaCommand(id, "")) as NoContentResult;
         }
 
         public async Task<IEnumerable<PersonaViewModel>> GetAll()
@@ -77,7 +76,7 @@ namespace AmberEggApi.Domain.Tests.Factories
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
         {
-            var response = await controller.Update(command.Id, command) as OkObjectResult;
+            var response = await controller.Update(command) as OkObjectResult;
             var viewModel = response.Value as PersonaViewModel;
             return viewModel;
         }

@@ -91,15 +91,15 @@ namespace AmberEggApi.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatePersonaCommand command)
+        [HttpPut()]
+        public async Task<IActionResult> Update([FromBody] UpdatePersonaCommand command)
         {
             if (!ModelState.IsValid || command.Id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await appService.Get(id);
+            var result = await appService.Get(command.Id);
 
             if (result == null)
             {

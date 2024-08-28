@@ -28,6 +28,11 @@ namespace AmberEggApi.Integration.Tests.Factories
         {
             return new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
         }
+        public async Task<HttpResponseMessage> Get(string name)
+        {
+            return await client.GetAsync($"{url}/name/{name}");
+        }
+
         public async Task<HttpResponseMessage> Get(Guid id)
         {
             return await client.GetAsync($"{url}/{id}");
@@ -36,10 +41,7 @@ namespace AmberEggApi.Integration.Tests.Factories
         {            
             return await client.GetAsync($"{url}");
         }
-        public async Task<HttpResponseMessage> Get(string name)
-        {
-            return await client.GetAsync($"{url}/name/{name}");
-        }
+        
         public async Task<HttpResponseMessage> Delete(Guid id)
         {
             return await client.DeleteAsync($"{url}/{id}");            
@@ -47,7 +49,7 @@ namespace AmberEggApi.Integration.Tests.Factories
         public async Task<HttpResponseMessage> Update(Guid id, string name)
         {
             var requestBody = ParseToJson(new UpdatePersonaCommand(id,name));            
-            return await client.PutAsync($"{url}/{id}", requestBody);            
+            return await client.PutAsync($"{url}", requestBody);            
         }
         public async Task DeleteAll()
         {

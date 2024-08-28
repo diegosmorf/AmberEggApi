@@ -14,18 +14,24 @@ namespace AmberEggApi.Domain.Tests.UnitTests
     public class PersonaControllerTest
     {
         private readonly PersonaControllerFactory factory;
-        private int index = 0;
+        private int index = 1;
 
         public PersonaControllerTest()
         {
             factory = SetupTests.Container.Resolve<PersonaControllerFactory>();
         }
 
-        [Test]
-        public async Task WhenCreate_Then_FindItById()
+        [TestCase("P")]
+        [TestCase("Persona-Test 1")]
+        [TestCase("Persona-Test 10")]
+        [TestCase("Persona-Test 100")]
+        [TestCase("Persona-Test 1000")]
+        public async Task WhenCreate_Then_FindItById(string name)
         {
+            // arrange
+            var expectedName = $"{name}-{index++}";
             // act
-            var responseCreate = await factory.Create();
+            var responseCreate = await factory.Create(expectedName);
             var responseSearchById = await factory.Get(responseCreate.Id);
 
             // assert
@@ -33,14 +39,19 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             responseSearchById.Name.Should().Be(responseCreate.Name);
         }
 
-        [Test]
-        public async Task WhenCreateAndUpdate_Then_FindItById()
+        [TestCase("P")]
+        [TestCase("Test")]
+        [TestCase("Persona")]
+        [TestCase("Persona-Test")]
+        [TestCase("Persona-Test 1")]
+        public async Task WhenCreateAndUpdate_Then_FindItById(string name)
         {
             // arrange
-            var expectedNameAfterUpdate = $"Persona-{index++}";
+            var expectedName = $"{name}-{index++}";
+            var expectedNameAfterUpdate = $"{expectedName}-v2";
 
             // act
-            var responseCreate = await factory.Create();
+            var responseCreate = await factory.Create(expectedName);
             var commandUpdate = new UpdatePersonaCommand(
                 responseCreate.Id,
                 expectedNameAfterUpdate);
@@ -53,14 +64,19 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
 
-        [Test]
-        public async Task WhenCreateAndUpdateAndDelete_Then_Success()
+        [TestCase("P")]
+        [TestCase("Test")]
+        [TestCase("Persona")]
+        [TestCase("Persona-Test")]
+        [TestCase("Persona-Test 1")]
+        public async Task WhenCreateAndUpdateAndDelete_Then_Success(string name)
         {
             // arrange
-            var expectedNameAfterUpdate = $"Persona-{index++}";
+            var expectedName = $"{name}-{index++}";
+            var expectedNameAfterUpdate = $"{expectedName}-v2";
 
             // act
-            var responseCreate = await factory.Create();
+            var responseCreate = await factory.Create(expectedName);
             var commandUpdate = new UpdatePersonaCommand(
                 responseCreate.Id,
                 expectedNameAfterUpdate);
@@ -74,13 +90,16 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             responseSearchById.Should().BeNull();
         }
 
-        [Test]
-        public void WhenCreateNotValidEntity_Then_Error()
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase(" ")]
+        [TestCase("1")]
+        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        public void WhenCreateNotValidEntity_Then_Error(string name)
         {
             // arrange
             var expectedNumberOfErrors = 1;
-
-            var name = string.Empty;
+            var expectedMessage = "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.";
             var command = new CreatePersonaCommand(name);
 
             // act
@@ -91,10 +110,10 @@ namespace AmberEggApi.Domain.Tests.UnitTests
                 .ThrowAsync<ModelException>()
                 .Where(x => x.Errors.Count() == expectedNumberOfErrors);
 
+            
             action.Should()
                 .ThrowAsync<ModelException>()
-                .WithMessage(
-                    "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.");
+                .WithMessage(expectedMessage);
         }
 
         [Test]

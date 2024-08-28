@@ -2,10 +2,12 @@
 using AmberEggApi.Domain.Tests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
+using Azure;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.Tests.UnitTests
@@ -28,9 +30,8 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [TestCase("Persona-Test 1000")]
         public async Task WhenCreate_Then_FindItById(string name)
         {
-            // arrange
+            // arrange            
             var expectedName = $"{name}-{index++}";
-
             // act
             var responseCreate = await factory.Create(expectedName);
             var responseSearchById = await factory.Get(responseCreate.Id);
@@ -51,7 +52,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var expectedNameAfterUpdate = $"{expectedName}-v2";
             // act
             var responseCreate = await factory.Create(expectedName);
-            var commandUpdate = new UpdatePersonaCommand(responseCreate.Id,expectedNameAfterUpdate);
+            var commandUpdate = new UpdatePersonaCommand(responseCreate.Id, expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
             var responseSearchById = await factory.Get(responseCreate.Id);
@@ -93,9 +94,64 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var command = new CreatePersonaCommand(name);
             // act
             Func<Task> action = async () => { await factory.Create(command); };
-            // assert
-            action.Should().ThrowAsync<ModelException>().Where(x => x.Errors.Count() == expectedNumberOfErrors);            
+
+            // assert            
+            action.Should().ThrowAsync<ModelException>().Where(x => x.Errors.Count() == expectedNumberOfErrors);
             action.Should().ThrowAsync<ModelException>().WithMessage(expectedMessage);
+        }
+
+        [Test]
+        public async Task WhenGetNewGuid_Then_Null()
+        {
+            var viewModel = await factory.Get(Guid.NewGuid());
+            // assert
+            viewModel.Should().BeNull();
+        }
+
+        [Test]
+        public async Task WhenGetEmptyGuid_Then_Null()
+        {
+            var viewModel = await factory.Get(Guid.Empty);
+            // assert
+            viewModel.Should().BeNull();
+        }
+
+        [Test]
+        public async Task WhenGetListByNameEmptyString_Then_NotFound()
+        {
+            var expectedNumber = 0;
+            //act
+            var viewModel = await factory.GetListByName("");
+            // assert
+            viewModel.Count().Should().Be(expectedNumber);
+        }
+
+        [Test]
+        public async Task WhenGetListByNameNewGuidString_Then_NotFound()
+        {
+            var expectedNumber = 0;
+            //act
+            var viewModel = await factory.GetListByName(Guid.NewGuid().ToString());
+            // assert
+            viewModel.Count().Should().Be(expectedNumber);
+        }        
+
+        [Test]
+        public async Task WhenUpdateNewGuid_Then_Null()
+        {
+            var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.NewGuid(), "123"));
+
+            // assert
+            viewModel.Should().BeNull();
+        }
+
+        [Test]
+        public async Task WhenUpdateEmptyGuid_Then_Null()
+        {
+            var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.Empty, "123"));
+
+            // assert
+            viewModel.Should().BeNull();
         }
     }
 }

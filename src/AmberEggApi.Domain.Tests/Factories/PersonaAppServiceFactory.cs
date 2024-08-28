@@ -3,6 +3,7 @@ using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
 using Api.Common.Repository.Validations;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,31 +15,18 @@ namespace AmberEggApi.Domain.Tests.Factories
         private readonly IPersonaAppService appService = appService;
 
         public async Task<PersonaViewModel> Create(string name)
-        {            
-            var command = new CreatePersonaCommand(name);
-            return await Create(command);
+        {   
+            return await Create(new CreatePersonaCommand(name));
         }
 
         public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
-        {
-            // arrange
-            const int expectedNumberOfErrors = 0;
-
-            // act
-            var response = await appService.Create(command);
-
-            // assert
-            command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
-            response.Id.Should().NotBe(Guid.Empty);
-            response.Name.Should().Be(command.Name);
-
-            return response;
+        {            
+            return await appService.Create(command);                     
         }
 
         public async Task Delete(Guid id)
-        {
-            var commandDelete = new DeletePersonaCommand(id);
-            await appService.Delete(commandDelete);
+        {            
+            await appService.Delete(new DeletePersonaCommand(id));
         }
 
         public async Task<PersonaViewModel> Get(Guid id)
@@ -57,19 +45,8 @@ namespace AmberEggApi.Domain.Tests.Factories
         }
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
-        {
-            // arrange
-            const int expectedNumberOfErrors = 0;
-
-            // act
-            var response = await appService.Update(command);
-
-            // assert
-            command.ValidateModelAnnotations().Count.Should().Be(expectedNumberOfErrors);
-            response.Id.Should().Be(command.Id);
-            response.Name.Should().Be(command.Name);
-
-            return response;
-        }
+        {            
+            return await appService.Update(command);            
+        }        
     }
 }

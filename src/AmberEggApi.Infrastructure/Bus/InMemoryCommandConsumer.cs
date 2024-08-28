@@ -18,7 +18,11 @@ namespace AmberEggApi.Infrastructure.Bus
             var handler = container.Resolve<ICommandHandler<TCommand, TEntity>>();
             var instance = await handler.Handle(command);
 
-            PublishEvents(instance.AppliedEvents);
+            if(instance != null)
+            {
+                PublishEvents(instance.AppliedEvents);
+            }
+            
             return instance;
         }
 

@@ -1,4 +1,5 @@
 ﻿using Api.Common.Cqrs.Core.Commands;
+using Api.Common.Repository.Validations;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,11 +13,14 @@ namespace AmberEggApi.Domain.Commands
             Name = name;
         }
 
-        [Required] public Guid Id { get; }
+        [Required]
+        [NotEmpty]
+        public Guid Id { get; }
 
         [MinLength(2)]
         [MaxLength(20)]
-        [Required(AllowEmptyStrings = false)]
+        [Required]
+        [NotEmpty]
         public string Name { get; set; }
     }
 }

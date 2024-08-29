@@ -26,7 +26,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid || id == Guid.Empty)
+            if (!ModelState.IsValid) // || id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }
@@ -44,7 +44,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpGet("name/{name}")]
         public async Task<IActionResult> Get([FromRoute] string name)
         {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(name))  
+            if (!ModelState.IsValid) // || string.IsNullOrEmpty(name))  
             {
                 return BadRequest(ModelState);
             }
@@ -62,7 +62,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePersonaCommand command)
         {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(command.Name))
+            if (!ModelState.IsValid) // || string.IsNullOrEmpty(command.Name))
             {
                 return BadRequest(ModelState);
             }
@@ -74,7 +74,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (!ModelState.IsValid || id == Guid.Empty)
+            if (!ModelState.IsValid) // || id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }
@@ -94,7 +94,7 @@ namespace AmberEggApi.WebApi.Controllers
         [HttpPut()]
         public async Task<IActionResult> Update([FromBody] UpdatePersonaCommand command)
         {
-            if (!ModelState.IsValid || command.Id == Guid.Empty)
+            if (!ModelState.IsValid) // || command.Id == Guid.Empty)
             {
                 return BadRequest(ModelState);
             }

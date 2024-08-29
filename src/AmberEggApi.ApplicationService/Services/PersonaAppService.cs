@@ -27,7 +27,7 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name)
         {
-            if(string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length <=2)
                 return [];
 
             var list = await repository.SearchList(x => x.Name.Contains(name));
@@ -37,9 +37,6 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<PersonaViewModel> Get(Guid id)
         {
-            if(Guid.Empty == id)
-                return null;
-
             var instance = await repository.SearchById(id);
 
             return mapper.Map<PersonaViewModel>(instance);
@@ -55,7 +52,9 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
         {
-            if(Guid.Empty == command.Id)
+            var instance = await repository.SearchById(command.Id);
+
+            if (instance == null)
                 return null;
 
             //send command to broker
@@ -64,13 +63,15 @@ namespace AmberEggApi.ApplicationService.Services
             return mapper.Map<PersonaViewModel>(result);
         }
 
-        public async Task Delete(DeletePersonaCommand commandDelete)
+        public async Task Delete(DeletePersonaCommand command)
         {
-            if(Guid.Empty == commandDelete.Id)
+            var instance = await repository.SearchById(command.Id);
+
+            if (instance == null)
                 return;
 
             //send command to broker
-            await producer.Send<DeletePersonaCommand, Persona>(commandDelete);
+            await producer.Send<DeletePersonaCommand, Persona>(command);
         }
     }
 }

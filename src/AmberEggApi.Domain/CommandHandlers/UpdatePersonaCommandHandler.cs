@@ -6,18 +6,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.CommandHandlers
 {
-    public class UpdatePersonaCommandHandler :
+    public class UpdatePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork) :
         ICommandHandler<UpdatePersonaCommand, Persona>
     {
-        private readonly IRepository<Persona> repository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public UpdatePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork)
-        {
-            this.repository = repository;
-            this.unitOfWork = unitOfWork;
-        }
-
         public async Task<Persona> Handle(UpdatePersonaCommand command)
         {
             //Domain

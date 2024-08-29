@@ -243,6 +243,24 @@ namespace AmberEggApi.IntegrationTests.Tests
         }
 
         [Test]
+        public async Task When_Delete_NewId_Then_NoContent()
+        {
+            // act
+            var responseUpdate = await factory.Delete(Guid.NewGuid());
+            // assert            
+            responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Test]
+        public async Task When_Delete_EmptyId_Then_NoContent()
+        {
+            // act
+            var responseUpdate = await factory.Delete(Guid.Empty);
+            // assert            
+            responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Test]
         public async Task When_Create_Delete_NewId_Then_NoContent()
         {
             // arrange

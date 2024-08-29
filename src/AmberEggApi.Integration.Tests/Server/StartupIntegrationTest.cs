@@ -8,10 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace AmberEggApi.Integration.Tests.Server
+namespace AmberEggApi.IntegrationTests.Server
 {
     public class StartupIntegrationTest
     {
+        protected StartupIntegrationTest()
+        {
+        }
+
         public static void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration

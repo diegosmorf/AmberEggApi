@@ -1,4 +1,4 @@
-﻿using AmberEggApi.Integration.Tests.Server;
+﻿using AmberEggApi.IntegrationTests.Server;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -7,7 +7,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace AmberEggApi.Integration.Tests.IntegrationTests
+namespace AmberEggApi.IntegrationTests.Tests
 {
     [SetUpFixture]
     internal class BaseIntegrationTest

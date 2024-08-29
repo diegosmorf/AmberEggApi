@@ -15,7 +15,7 @@ namespace AmberEggApi.Domain.Tests.Factories
         private readonly PersonaController controller = controller;
 
         public async Task<PersonaViewModel> Create(string name)
-        {            
+        {
             var command = new CreatePersonaCommand(name);
             return await Create(command);
         }

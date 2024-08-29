@@ -2,12 +2,11 @@
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Domain.Tests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
-using Api.Common.Repository.EFCore.Tests.InjectionModules;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace Api.Common.Repository.EFCore.Tests.UnitTests
+namespace AmberEggApi.DomainTests.Tests
 {
     [SetUpFixture]
     public class SetupTests
@@ -23,10 +22,9 @@ namespace Api.Common.Repository.EFCore.Tests.UnitTests
             builder.RegisterModule(new IoCModuleInfrastructure());
             builder.RegisterModule(new IoCModuleAutoMapper());
             builder.RegisterModule(new IoCModuleDomainTest());
-            builder.RegisterModule(new IoCModuleDatabaseTest());
 
             var opt = new DbContextOptionsBuilder<EfCoreDbContext>();
-            opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-EFCore-Db");
+            opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
 
             builder.RegisterInstance(new EfCoreDbContext(opt.Options)).As<DbContext>();
 

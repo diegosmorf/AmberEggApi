@@ -8,23 +8,23 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Integration.Tests.Factories
+namespace AmberEggApi.IntegrationTests.Factories
 {
     public class PersonaControllerFactoryTest(HttpClient client)
     {
         private const string url = "/api/v1/Persona";
-        
+
         public async Task<HttpResponseMessage> Create(string name)
         {
             var requestBody = ParseToJson(new CreatePersonaCommand(name));
             return await client.PostAsync(url, requestBody);
         }
 
-        public async Task<TViewModel> GetViewModel<TViewModel>(HttpResponseMessage response)
+        public static async Task<TViewModel> GetViewModel<TViewModel>(HttpResponseMessage response)
         {
             return JsonConvert.DeserializeObject<TViewModel>(await response.Content.ReadAsStringAsync());
         }
-        public StringContent ParseToJson(object command)
+        public static StringContent ParseToJson(object command)
         {
             return new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json");
         }
@@ -38,24 +38,24 @@ namespace AmberEggApi.Integration.Tests.Factories
             return await client.GetAsync($"{url}/{id}");
         }
         public async Task<HttpResponseMessage> GetAll()
-        {            
+        {
             return await client.GetAsync($"{url}");
         }
-        
+
         public async Task<HttpResponseMessage> Delete(Guid id)
         {
-            return await client.DeleteAsync($"{url}/{id}");            
+            return await client.DeleteAsync($"{url}/{id}");
         }
         public async Task<HttpResponseMessage> Update(Guid id, string name)
         {
-            var requestBody = ParseToJson(new UpdatePersonaCommand(id,name));            
-            return await client.PutAsync($"{url}", requestBody);            
+            var requestBody = ParseToJson(new UpdatePersonaCommand(id, name));
+            return await client.PutAsync($"{url}", requestBody);
         }
         public async Task DeleteAll()
         {
             var responseGet = await GetAll();
 
-            if(responseGet.StatusCode == HttpStatusCode.OK)
+            if (responseGet.StatusCode == HttpStatusCode.OK)
             {
                 var listViewGet = await GetViewModel<IEnumerable<PersonaViewModel>>(responseGet);
 
@@ -64,6 +64,6 @@ namespace AmberEggApi.Integration.Tests.Factories
                     await Delete(viewModel.Id);
                 }
             }
-        }    
+        }
     }
 }

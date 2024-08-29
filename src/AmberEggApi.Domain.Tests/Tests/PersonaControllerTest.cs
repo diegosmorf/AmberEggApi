@@ -2,7 +2,6 @@
 using AmberEggApi.Domain.Tests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
-using Azure;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
@@ -10,17 +9,16 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Domain.Tests.UnitTests
+namespace AmberEggApi.DomainTests.Tests
 {
-    [TestFixture]
-    public class PersonaDomainTest
+    public class PersonaControllerTest
     {
-        private readonly PersonaAppServiceFactory factory;
+        private readonly PersonaControllerFactory factory;
         private int index = 1;
 
-        public PersonaDomainTest()
+        public PersonaControllerTest()
         {
-            factory = SetupTests.Container.Resolve<PersonaAppServiceFactory>();
+            factory = SetupTests.Container.Resolve<PersonaControllerFactory>();
         }
 
         [TestCase("P")]
@@ -30,7 +28,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         [TestCase("Persona-Test 1000")]
         public async Task WhenCreate_Then_FindItById(string name)
         {
-            // arrange            
+            // arrange
             var expectedName = $"{name}-{index++}";
             // act
             var responseCreate = await factory.Create(expectedName);
@@ -42,6 +40,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         }
 
         [TestCase("P")]
+        [TestCase("Test")]
         [TestCase("Persona")]
         [TestCase("Persona-Test")]
         [TestCase("Persona-Test 1")]
@@ -50,9 +49,12 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             // arrange
             var expectedName = $"{name}-{index++}";
             var expectedNameAfterUpdate = $"{expectedName}-v2";
+
             // act
             var responseCreate = await factory.Create(expectedName);
-            var commandUpdate = new UpdatePersonaCommand(responseCreate.Id, expectedNameAfterUpdate);
+            var commandUpdate = new UpdatePersonaCommand(
+                responseCreate.Id,
+                expectedNameAfterUpdate);
 
             var responseUpdate = await factory.Update(commandUpdate);
             var responseSearchById = await factory.Get(responseCreate.Id);
@@ -63,6 +65,7 @@ namespace AmberEggApi.Domain.Tests.UnitTests
         }
 
         [TestCase("P")]
+        [TestCase("Test")]
         [TestCase("Persona")]
         [TestCase("Persona-Test")]
         [TestCase("Persona-Test 1")]
@@ -71,12 +74,18 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             // arrange
             var expectedName = $"{name}-{index++}";
             var expectedNameAfterUpdate = $"{expectedName}-v2";
+
             // act
             var responseCreate = await factory.Create(expectedName);
-            var commandUpdate = new UpdatePersonaCommand(responseCreate.Id, expectedNameAfterUpdate);
+            var commandUpdate = new UpdatePersonaCommand(
+                responseCreate.Id,
+                expectedNameAfterUpdate);
+
             await factory.Update(commandUpdate);
             await factory.Delete(responseCreate.Id);
+
             var responseSearchById = await factory.Get(responseCreate.Id);
+
             // assert
             responseSearchById.Should().BeNull();
         }
@@ -92,66 +101,46 @@ namespace AmberEggApi.Domain.Tests.UnitTests
             var expectedNumberOfErrors = 1;
             var expectedMessage = "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.";
             var command = new CreatePersonaCommand(name);
+
             // act
             Func<Task> action = async () => { await factory.Create(command); };
 
-            // assert            
-            action.Should().ThrowAsync<ModelException>().Where(x => x.Errors.Count() == expectedNumberOfErrors);
-            action.Should().ThrowAsync<ModelException>().WithMessage(expectedMessage);
+            // assert
+            action.Should()
+                .ThrowAsync<ModelException>()
+                .Where(x => x.Errors.Count() == expectedNumberOfErrors);
+
+
+            action.Should()
+                .ThrowAsync<ModelException>()
+                .WithMessage(expectedMessage);
         }
 
         [Test]
-        public async Task WhenGetNewGuid_Then_Null()
+        public async Task WhenGetNotExistent_Then_NotFound()
         {
-            var viewModel = await factory.Get(Guid.NewGuid());
+            var response = await factory.GetNotExistent();
+
             // assert
-            viewModel.Should().BeNull();
+            response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Test]
-        public async Task WhenGetEmptyGuid_Then_Null()
+        public async Task WhenGetNameNotExistent_Then_NotFound()
         {
-            var viewModel = await factory.Get(Guid.Empty);
+            var response = await factory.GetByNameNotExistent();
+
             // assert
-            viewModel.Should().BeNull();
+            response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
         [Test]
-        public async Task WhenGetListByNameEmptyString_Then_NotFound()
+        public async Task WhenUpdateNotExistent_Then_NotFound()
         {
-            var expectedNumber = 0;
-            //act
-            var viewModel = await factory.GetListByName("");
-            // assert
-            viewModel.Count().Should().Be(expectedNumber);
-        }
-
-        [Test]
-        public async Task WhenGetListByNameNewGuidString_Then_NotFound()
-        {
-            var expectedNumber = 0;
-            //act
-            var viewModel = await factory.GetListByName(Guid.NewGuid().ToString());
-            // assert
-            viewModel.Count().Should().Be(expectedNumber);
-        }        
-
-        [Test]
-        public async Task WhenUpdateNewGuid_Then_Null()
-        {
-            var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.NewGuid(), "123"));
+            var response = await factory.UpdateNotExistent();
 
             // assert
-            viewModel.Should().BeNull();
-        }
-
-        [Test]
-        public async Task WhenUpdateEmptyGuid_Then_Null()
-        {
-            var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.Empty, "123"));
-
-            // assert
-            viewModel.Should().BeNull();
+            response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
     }
 }

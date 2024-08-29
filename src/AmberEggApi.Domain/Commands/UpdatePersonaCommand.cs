@@ -5,22 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Commands
 {
-    public class UpdatePersonaCommand : Command
+    public class UpdatePersonaCommand(Guid id, string name) : Command
     {
-        public UpdatePersonaCommand(Guid id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
         [Required]
         [NotEmpty]
-        public Guid Id { get; }
+        public Guid Id { get; } = id;
 
         [MinLength(2)]
         [MaxLength(20)]
         [Required]
         [NotEmpty]
-        public string Name { get; set; }
+        public string Name { get; set; } = name;
     }
 }

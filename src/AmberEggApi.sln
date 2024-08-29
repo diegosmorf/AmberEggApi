@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.ApplicationServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Infrastructure", "AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj", "{95FAC297-9C32-4E6E-8AA8-DB2BD7E2FA3C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Domain.Tests", "AmberEggApi.Domain.Tests\AmberEggApi.Domain.Tests.csproj", "{90F5788F-89A2-4593-B433-3628315A8146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.DomainTests", "AmberEggApi.Domain.Tests\AmberEggApi.DomainTests.csproj", "{90F5788F-89A2-4593-B433-3628315A8146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Integration.Tests", "AmberEggApi.Integration.Tests\AmberEggApi.Integration.Tests.csproj", "{FC165537-4C96-4829-8203-221C020C48CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.IntegrationTests", "AmberEggApi.Integration.Tests\AmberEggApi.IntegrationTests.csproj", "{FC165537-4C96-4829-8203-221C020C48CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.WebApi", "AmberEggApi.WebApi\AmberEggApi.WebApi.csproj", "{336892E1-9089-4C60-8B92-455B1088C5D2}"
 EndProject
@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Database", "Amb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCore", "Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj", "{949EA0A5-5AA1-442C-9EA7-2A9663942977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCore.Tests", "Api.Common.Repository.EFCore.Tests\Api.Common.Repository.EFCore.Tests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCoreTests", "Api.Common.Repository.EFCore.Tests\Api.Common.Repository.EFCoreTests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

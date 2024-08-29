@@ -10,7 +10,7 @@ namespace AmberEggApi.ApplicationService.Interfaces
     {
         Task<IEnumerable<PersonaViewModel>> GetAll();
 
-        Task Delete(DeletePersonaCommand commandDelete);
+        Task Delete(DeletePersonaCommand command);
 
         Task<PersonaViewModel> Get(Guid id);
 

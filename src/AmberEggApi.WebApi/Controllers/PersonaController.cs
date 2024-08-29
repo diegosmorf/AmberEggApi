@@ -1,6 +1,5 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.Domain.Commands;
-using Api.Common.Repository.Validations;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;

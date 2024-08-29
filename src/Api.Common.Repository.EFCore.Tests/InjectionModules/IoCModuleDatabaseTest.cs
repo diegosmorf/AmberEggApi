@@ -2,7 +2,7 @@
 using System.Reflection;
 using Module = Autofac.Module;
 
-namespace Api.Common.Repository.EFCore.Tests.InjectionModules
+namespace Api.Common.Repository.EFCoreTests.InjectionModules
 {
     public class IoCModuleDatabaseTest : Module
     {
@@ -13,7 +13,7 @@ namespace Api.Common.Repository.EFCore.Tests.InjectionModules
             builder
                 .RegisterAssemblyTypes(assemblyToScan)
                 .Where(c => c.IsClass
-                            && c.IsInNamespace("Api.Common.Repository.EFCore.Tests.Factories")).AsSelf();
+                            && c.IsInNamespace("Api.Common.Repository.EFCoreTests.Factories")).AsSelf();
 
         }
     }

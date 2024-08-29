@@ -1,6 +1,6 @@
 ﻿using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-using Api.Common.Repository.EFCore.Tests.Factories;
+using Api.Common.Repository.EFCoreTests.Factories;
 using Api.Common.Repository.Repositories;
 using Autofac;
 using FluentAssertions;
@@ -9,9 +9,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Common.Repository.EFCore.Tests.UnitTests
+namespace Api.Common.Repository.EFCoreTests.Tests
 {
-    [TestFixture]
+
     public class PersonaDomainTest
     {
         private readonly IRepository<Persona> repository;

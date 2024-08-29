@@ -17,17 +17,13 @@ namespace Api.Common.Repository.Validations
                 return true;
             }
 
-            switch (value)
+            return value switch
             {
-                case Guid guid:
-                    return guid != Guid.Empty;
-                case String text:
-                    return !string.IsNullOrEmpty(text);
-                case int number:
-                    return number != 0;
-                default:
-                    return true;
-            }
+                Guid guid => guid != Guid.Empty,
+                String text => !string.IsNullOrEmpty(text),
+                int number => number != 0,
+                _ => true,
+            };
         }
     }
 }

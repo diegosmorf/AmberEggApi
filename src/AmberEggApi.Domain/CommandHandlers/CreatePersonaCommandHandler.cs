@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.CommandHandlers
 {
-    public class CreatePersonaCommandHandler :
+    public class CreatePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork) :
         ICommandHandler<CreatePersonaCommand, Persona>
     {
-        private readonly IRepository<Persona> repository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public CreatePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork)
-        {
-            this.repository = repository;
-            this.unitOfWork = unitOfWork;
-        }
+        private readonly IRepository<Persona> repository = repository;
+        private readonly IUnitOfWork unitOfWork = unitOfWork;
 
         public async Task<Persona> Handle(CreatePersonaCommand command)
         {

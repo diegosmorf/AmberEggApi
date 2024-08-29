@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Api.Common.Repository.EFCore.Tests.Factories
+namespace Api.Common.Repository.EFCoreTests.Factories
 {
     public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork)
     {

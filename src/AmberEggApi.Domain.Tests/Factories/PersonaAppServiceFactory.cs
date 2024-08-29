@@ -1,9 +1,6 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
-using Api.Common.Repository.Validations;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,17 +12,17 @@ namespace AmberEggApi.Domain.Tests.Factories
         private readonly IPersonaAppService appService = appService;
 
         public async Task<PersonaViewModel> Create(string name)
-        {   
+        {
             return await Create(new CreatePersonaCommand(name));
         }
 
         public async Task<PersonaViewModel> Create(CreatePersonaCommand command)
-        {            
-            return await appService.Create(command);                     
+        {
+            return await appService.Create(command);
         }
 
         public async Task Delete(Guid id)
-        {            
+        {
             await appService.Delete(new DeletePersonaCommand(id));
         }
 
@@ -45,8 +42,8 @@ namespace AmberEggApi.Domain.Tests.Factories
         }
 
         public async Task<PersonaViewModel> Update(UpdatePersonaCommand command)
-        {            
-            return await appService.Update(command);            
-        }        
+        {
+            return await appService.Update(command);
+        }
     }
 }

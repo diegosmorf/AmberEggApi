@@ -5,15 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Commands
 {
-    public class DeletePersonaCommand : Command
+    public class DeletePersonaCommand(Guid id) : Command
     {
-        public DeletePersonaCommand(Guid id)
-        {
-            Id = id;
-        }
-
         [NotEmpty]
-        [Required] 
-        public Guid Id { get; set; }
+        [Required]
+        public Guid Id { get; set; } = id;
     }
 }

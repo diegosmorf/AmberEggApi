@@ -27,7 +27,7 @@ namespace AmberEggApi.ApplicationService.Services
 
         public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length <=2)
+            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length <= 2)
                 return [];
 
             var list = await repository.SearchList(x => x.Name.Contains(name));

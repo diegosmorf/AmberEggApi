@@ -13,11 +13,9 @@ namespace Api.Common.Repository.EFCoreTests.Factories
         private readonly IRepository<Persona> repository = repository;
         private readonly IUnitOfWork unitOfWork = unitOfWork;
 
-        public async Task<Persona> Create()
-        {
-            var name = "Persona-Test";
+        public async Task<Persona> Create(string name)
+        {            
             var command = new CreatePersonaCommand(name);
-
             return await Create(command);
         }
 

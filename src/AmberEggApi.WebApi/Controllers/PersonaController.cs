@@ -43,7 +43,7 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpGet("name/{name}")]
-        public async Task<IActionResult> Get([FromRoute,Required, NotEmpty] string name)
+        public async Task<IActionResult> Get([FromRoute, Required, NotEmpty, MinLength(2), MaxLength(20)] string name)
         {
             if (!ModelState.IsValid)
             {

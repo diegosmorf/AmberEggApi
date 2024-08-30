@@ -13,12 +13,6 @@ namespace AmberEggApi.Domain.CommandHandlers
         {
             //Domain
             var instance = await repository.SearchById(command.Id);
-
-            if (instance == null)
-            {
-                return null;
-            }
-
             instance.Update(command);
 
             //Persistence

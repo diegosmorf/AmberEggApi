@@ -33,6 +33,19 @@ namespace AmberEggApi.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase(" ")]
+        [TestCase("1")]
+        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        public async Task When_Invalid_GetByName_Then_BadRequest(string name)
+        {
+            // act
+            var response = await factory.Get(name);
+            // assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
         [TestCase("P")]
         [TestCase("Persona-Test 1")]
         [TestCase("Persona-Test 10")]

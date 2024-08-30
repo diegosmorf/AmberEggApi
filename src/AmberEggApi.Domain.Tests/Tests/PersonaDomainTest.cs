@@ -135,7 +135,7 @@ namespace AmberEggApi.DomainTests.Tests
         }
 
         [Test]
-        public async Task WhenUpdateNewGuid_Then_Null()
+        public async Task When_Update_NewGuid_Then_Null()
         {
             var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.NewGuid(), "123"));
 
@@ -144,12 +144,30 @@ namespace AmberEggApi.DomainTests.Tests
         }
 
         [Test]
-        public async Task WhenUpdateEmptyGuid_Then_Null()
+        public async Task When_Update_EmptyGuid_Then_Null()
         {
             var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.Empty, "123"));
 
             // assert
             viewModel.Should().BeNull();
+        }
+
+        [Test]
+        public async Task When_Delete_NewGuid_Then_NotThrowException()
+        {
+            // act
+            Func<Task> action = async () => { await factory.Delete(Guid.NewGuid()); };
+            // assert
+            await action.Should().NotThrowAsync<ModelException>(); 
+        }
+
+        [Test]
+        public async Task When_Delete_EmptyGuid_Then_NotThrowException()
+        {
+            // act
+            Func<Task> action = async () => { await factory.Delete(Guid.Empty); };
+            // assert
+            await action.Should().NotThrowAsync<ModelException>();
         }
     }
 }

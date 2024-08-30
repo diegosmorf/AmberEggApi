@@ -1,7 +1,9 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.Domain.Commands;
+using Api.Common.Repository.Validations;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,8 +25,13 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute, Required, NotEmpty] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.Get(id);
 
             if (result == null)
@@ -36,8 +43,13 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpGet("name/{name}")]
-        public async Task<IActionResult> Get([FromRoute] string name)
+        public async Task<IActionResult> Get([FromRoute,Required, NotEmpty] string name)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.GetListByName(name);
 
             if (!result.Any())
@@ -49,7 +61,7 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreatePersonaCommand command)
+        public async Task<IActionResult> Create([FromBody, Required, NotEmpty] CreatePersonaCommand command)
         {
             if (!ModelState.IsValid)
             {
@@ -61,8 +73,13 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute, Required, NotEmpty] Guid id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await appService.Get(id);
 
             if (result == null)
@@ -76,9 +93,9 @@ namespace AmberEggApi.WebApi.Controllers
         }
 
         [HttpPut()]
-        public async Task<IActionResult> Update([FromBody] UpdatePersonaCommand command)
+        public async Task<IActionResult> Update([FromBody, Required, NotEmpty] UpdatePersonaCommand command)
         {
-            if (!ModelState.IsValid) // || command.Id == Guid.Empty)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }

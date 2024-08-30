@@ -252,12 +252,12 @@ namespace AmberEggApi.IntegrationTests.Tests
         }
 
         [Test]
-        public async Task When_Delete_EmptyId_Then_NoContent()
+        public async Task When_Delete_EmptyId_Then_BadRequest()
         {
             // act
             var responseUpdate = await factory.Delete(Guid.Empty);
             // assert            
-            responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            responseUpdate.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Test]

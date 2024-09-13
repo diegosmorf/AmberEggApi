@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.DomainTests.Tests
 {
-
     public class PersonaDomainTest
     {
         private readonly PersonaAppServiceFactory factory;

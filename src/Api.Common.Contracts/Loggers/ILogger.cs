@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Api.Common.Contracts.Loggers
 {
     public interface ILogger
     {
-        void Debug(string message);
-        void Information(string message);
-        void Error(string message);
-        void Error(Exception ex);
+        Task<LogInfo> Debug(string message);
+        Task<LogInfo> Information(string message);
+        Task<LogInfo> Error(string message);
+        Task<LogInfo> Error(Exception ex);
     }
 }

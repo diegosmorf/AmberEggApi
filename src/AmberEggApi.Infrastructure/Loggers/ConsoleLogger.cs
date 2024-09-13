@@ -1,36 +1,38 @@
 ﻿using Api.Common.Contracts.Loggers;
 using System;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Loggers
 {
     public class ConsoleLogger : ILogger
     {
-        public void Debug(string message)
+        public async Task<LogInfo> Debug(string message)
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            return await WriteMessage(message, LogLevel.Debug, ConsoleColor.White);
         }
 
-        public void Error(string message)
+        public async Task<LogInfo> Error(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            return await WriteMessage(message, LogLevel.Error, ConsoleColor.Red);
         }
 
-        public void Error(Exception ex)
+        public async Task<LogInfo> Error(Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(ex.ToString());
-            Console.ResetColor();
+            return await Error(ex.Message);
         }
 
-        public void Information(string message)
+        public async Task<LogInfo> Information(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            return await WriteMessage(message, LogLevel.Info,  ConsoleColor.Green);
+        }
+
+        private async Task<LogInfo> WriteMessage(string message, LogLevel level, ConsoleColor color)
+        {            
+            Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();
+
+            return await Task.Run(() => new LogInfo { Level = level, Message = message });
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.IntegrationTests.Tests
 {
-    public class ProgramTest 
+    public class ProgramTest
     {
         [Test]
         public async Task WhenStartupHost_Then_Success()
@@ -27,12 +27,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             var client = server.CreateClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
             // Act
             var response = await client.GetAsync("/api/v1/HealthCheck");
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }        
+        }
 
         [Test]
         public async Task WhenStartupHostViaProgram_Then_Success()

@@ -181,7 +181,7 @@ namespace AmberEggApi.DomainTests.Tests
             // act
             Func<Task> action = async () => { await factory.Delete(Guid.NewGuid()); };
             // assert
-            await action.Should().NotThrowAsync<ModelException>(); 
+            await action.Should().NotThrowAsync<ModelException>();
         }
 
         [Test]

@@ -75,7 +75,7 @@ namespace AmberEggApi.WebApi
 
             services.AddMemoryCache();
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

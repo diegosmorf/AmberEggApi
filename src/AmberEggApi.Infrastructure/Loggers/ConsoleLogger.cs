@@ -23,11 +23,11 @@ namespace AmberEggApi.Infrastructure.Loggers
 
         public async Task<LogInfo> Information(string message)
         {
-            return await WriteMessage(message, LogLevel.Info,  ConsoleColor.Green);
+            return await WriteMessage(message, LogLevel.Info, ConsoleColor.Green);
         }
 
         private async Task<LogInfo> WriteMessage(string message, LogLevel level, ConsoleColor color)
-        {            
+        {
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();

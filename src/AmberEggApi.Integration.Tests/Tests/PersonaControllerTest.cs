@@ -271,6 +271,6 @@ namespace AmberEggApi.IntegrationTests.Tests
             var responseUpdate = await factory.Delete(Guid.Empty);
             // assert            
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }        
+        }
     }
 }

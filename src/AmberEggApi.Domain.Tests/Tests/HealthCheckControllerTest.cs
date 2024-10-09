@@ -25,5 +25,5 @@ namespace AmberEggApi.DomainTests.Tests
             // assert
             response.Should().Be(message);
         }
-    }    
+    }
 }

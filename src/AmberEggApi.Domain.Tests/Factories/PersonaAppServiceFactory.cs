@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Domain.Tests.Factories
+namespace AmberEggApi.DomainTests.Factories
 {
     public class PersonaAppServiceFactory(IPersonaAppService appService)
     {

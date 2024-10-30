@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Domain.Commands;
-using AmberEggApi.Domain.Tests.Factories;
+using AmberEggApi.DomainTests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;

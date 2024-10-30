@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Domain.Tests.Factories
+namespace AmberEggApi.DomainTests.Factories
 {
     public class PersonaControllerFactory(PersonaController controller)
     {

@@ -2,7 +2,7 @@
 using System.Reflection;
 using Module = Autofac.Module;
 
-namespace AmberEggApi.Domain.Tests.InjectionModules
+namespace AmberEggApi.DomainTests.InjectionModules
 {
     public class IoCModuleDomainTest : Module
     {

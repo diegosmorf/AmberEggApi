@@ -1,6 +1,6 @@
 ﻿using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
-using AmberEggApi.Domain.Tests.InjectionModules;
+using AmberEggApi.DomainTests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
 using Autofac;
 using Microsoft.EntityFrameworkCore;

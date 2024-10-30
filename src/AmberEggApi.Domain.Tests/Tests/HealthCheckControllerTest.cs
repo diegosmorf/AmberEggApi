@@ -1,4 +1,4 @@
-﻿using AmberEggApi.Domain.Tests.Factories;
+﻿using AmberEggApi.DomainTests.Factories;
 using Autofac;
 using FluentAssertions;
 using NUnit.Framework;

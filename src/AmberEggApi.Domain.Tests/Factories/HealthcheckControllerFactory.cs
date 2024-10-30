@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Domain.Tests.Factories
+namespace AmberEggApi.DomainTests.Factories
 {
     public class HealthCheckControllerFactory(HealthCheckController controller)
     {

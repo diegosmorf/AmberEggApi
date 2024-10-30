@@ -26,7 +26,7 @@ namespace AmberEggApi.Infrastructure.Loggers
             return await WriteMessage(message, LogLevel.Info, ConsoleColor.Green);
         }
 
-        private async Task<LogInfo> WriteMessage(string message, LogLevel level, ConsoleColor color)
+        private static async Task<LogInfo> WriteMessage(string message, LogLevel level, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(message);

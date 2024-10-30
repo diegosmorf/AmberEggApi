@@ -4,13 +4,8 @@ using System;
 
 namespace AmberEggApi.Domain.Events
 {
-    public class PersonaUpdatedEvent : Event
+    public class PersonaUpdatedEvent(Persona persona, Guid commandMessageId) : Event(commandMessageId)
     {
-        public PersonaUpdatedEvent(Persona persona, Guid commandMessageId) : base(commandMessageId)
-        {
-            Persona = persona;
-        }
-
-        public Persona Persona { get; }
+        public Persona Persona { get; } = persona;
     }
 }

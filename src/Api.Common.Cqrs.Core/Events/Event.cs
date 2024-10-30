@@ -3,8 +3,7 @@ using System;
 
 namespace Api.Common.Cqrs.Core.Events
 {
-    public abstract class Event : Message, IEvent
+    public abstract class Event(Guid messageId) : Message(messageId), IEvent
     {
-        protected Event(Guid messageId) : base(messageId) { }
     }
 }

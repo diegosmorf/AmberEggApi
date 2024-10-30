@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi
 {
@@ -30,19 +31,21 @@ namespace AmberEggApi.WebApi
                 .AddEnvironmentVariables()
                 .Build();
 
-            logger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
-            logger.Information($"Environment: {environment.EnvironmentName}");
+            Task.Run(async () => { 
+                await logger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
+                await logger.Information($"Environment: {environment.EnvironmentName}");
 
-            if (environment.IsDevelopment())
-            {
-                foreach (var item in configuration.AsEnumerable())
+                if (environment.IsDevelopment())
                 {
-                    logger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
+                    foreach (var item in configuration.AsEnumerable())
+                    {
+                       await  logger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
+                    }
                 }
-            }
+            }).Wait();
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
+        public static void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration
             builder.RegisterModule(new IoCModuleApplicationService());
@@ -90,23 +93,26 @@ namespace AmberEggApi.WebApi
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            UpdateDatabaseUsingEfCore(app);
+            Task.Run(async () =>
+            {
+                await UpdateDatabaseUsingEfCore(app);
+            }).Wait();
         }
 
-        private void UpdateDatabaseUsingEfCore(IApplicationBuilder app)
+        private async Task UpdateDatabaseUsingEfCore(IApplicationBuilder app)
         {
-            logger.Information("Starting: Database Migration");
+            await logger.Information("Starting: Database Migration");
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope
+                await serviceScope
                     .ServiceProvider
                     .GetRequiredService<EfCoreDbContext>()
                     .Database
-                    .Migrate();
+                    .MigrateAsync();
             }
 
-            logger.Information("Ending: Database Migration");
+            await logger.Information("Ending: Database Migration");
         }
     }
 }

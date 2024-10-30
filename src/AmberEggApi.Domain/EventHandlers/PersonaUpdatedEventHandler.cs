@@ -6,17 +6,8 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.Domain.EventHandlers
 {
-    public class PersonaUpdatedEventHandler : IEventHandler<PersonaUpdatedEvent>
+    public class PersonaUpdatedEventHandler(IRepository<PersonaQueryModel> repository, IUnitOfWork unitOfWork) : IEventHandler<PersonaUpdatedEvent>
     {
-        private readonly IRepository<PersonaQueryModel> repository;
-        private readonly IUnitOfWork unitOfWork;
-
-        public PersonaUpdatedEventHandler(IRepository<PersonaQueryModel> repository, IUnitOfWork unitOfWork)
-        {
-            this.repository = repository;
-            this.unitOfWork = unitOfWork;
-        }
-
         public async Task Handle(PersonaUpdatedEvent @event)
         {
             //Domain Changes

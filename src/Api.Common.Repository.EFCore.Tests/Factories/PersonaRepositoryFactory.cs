@@ -21,7 +21,7 @@ namespace Api.Common.Repository.EFCoreTests.Factories
 
         public async Task<Persona> Create(CreatePersonaCommand command)
         {
-            var datetime = DateTime.Now;
+            var datetime = DateTime.UtcNow;
             var persona = new Persona();
             persona.Create(command);
 

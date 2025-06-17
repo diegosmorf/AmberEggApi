@@ -1,16 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    <ProjectGuid>{95FAC297-9C32-4E6E-8AA8-DB2BD7E2FA3C}</ProjectGuid>
-  </PropertyGroup>
+	<PropertyGroup>    
+	<ProjectGuid>{95FAC297-9C32-4E6E-8AA8-DB2BD7E2FA3C}</ProjectGuid>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
-    <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
-    <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
-    <ProjectReference Include="..\Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac" />
+		<PackageReference Include="AutoMapper"/>
+	</ItemGroup>	
+	
+	<ItemGroup>
+		<ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
+		<ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
+		<ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
+		<ProjectReference Include="..\Api.Common.Cqrs.Core\Api.Common.Cqrs.Core.csproj" />
+		<ProjectReference Include="..\Api.Common.Repository.Contracts.Core\Api.Common.Repository.csproj" />
+		<ProjectReference Include="..\Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj" />
+	</ItemGroup>
 
 </Project>

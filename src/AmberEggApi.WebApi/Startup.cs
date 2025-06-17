@@ -58,9 +58,11 @@ namespace AmberEggApi.WebApi
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddEndpointsApiExplorer();
+            services.AddOpenApiDocument(document =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AmberEggApi", Version = "v1" });
+                document.Title = "AmberEggApi";
+                document.Version = "v1";
             });
 
             services.AddCors(config =>
@@ -84,8 +86,12 @@ namespace AmberEggApi.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AmberEggApi v1"));
+                app.UseOpenApi();
+                app.UseSwaggerUi(settings =>
+                {
+                    settings.Path = "/swagger";
+                    settings.DocumentPath = "/swagger/v1/swagger.json";
+                });
             }
 
             app.UseHttpsRedirection();

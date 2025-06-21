@@ -4,14 +4,14 @@ using Api.Common.Repository.EFCoreTests.Factories;
 using Api.Common.Repository.Repositories;
 using Autofac;
 using FluentAssertions;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Api.Common.Repository.EFCoreTests.Tests
 {
-
+    [Collection("Repository.Tests.Global.Setup")]
     public class PersonaDomainTest
     {
         private readonly IRepository<Persona> repository;
@@ -23,12 +23,13 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             repository = SetupTests.Container.Resolve<IRepository<Persona>>();
             factory = SetupTests.Container.Resolve<PersonaRepositoryFactory>();
         }
-
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task WhenCreate_Then_FindItById(string name)
         {
             // arrange            
@@ -42,10 +43,11 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             resultGet.Name.Should().Be(resultCreate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdate_Then_FindItById(string name)
         {
             // arrange
@@ -64,10 +66,11 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             resultGet.Name.Should().Be(responseUpdate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success(string name)
         {
             // arrange
@@ -89,10 +92,11 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             resultGet.Should().BeNull();
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
         public async Task WhenCreateMultiples_Then_DeleteMultiples(string name)
         {
             // arrange
@@ -115,10 +119,11 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             finalResult.Should().Be(currentResult);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
         public async Task WhenUpdateMultiples_Then_KeepMultiples(string name)
         {
             // arrange

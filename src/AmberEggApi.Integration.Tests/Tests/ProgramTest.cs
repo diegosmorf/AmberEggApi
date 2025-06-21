@@ -4,17 +4,17 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.TestHost;
-using NUnit.Framework;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AmberEggApi.IntegrationTests.Tests
-{
+{    
     public class ProgramTest
     {
-        [Test]
+        [Fact]
         public async Task WhenStartupHost_Then_Success()
         {
             // Arrange            
@@ -34,7 +34,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenStartupHostViaProgram_Then_Success()
         {
             // act

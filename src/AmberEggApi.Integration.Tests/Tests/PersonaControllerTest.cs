@@ -1,15 +1,16 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.IntegrationTests.Factories;
 using FluentAssertions;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AmberEggApi.IntegrationTests.Tests
 {
+    [Collection("Integration.Tests.Global.Setup")]
     public class PersonaControllerTest
     {
         private readonly PersonaControllerFactoryTest factory;
@@ -17,14 +18,15 @@ namespace AmberEggApi.IntegrationTests.Tests
 
         public PersonaControllerTest()
         {
-            factory = new PersonaControllerFactoryTest(BaseIntegrationTest.Client);
+            factory = new PersonaControllerFactoryTest(SetupTests.Client);
         }
 
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase(" ")]
-        [TestCase("1")]
-        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(null)]
+        [InlineData(" ")]
+        [InlineData("1")]
+        [InlineData("Persona-Test-Invalid-Name-1234567890")]
         public async Task When_Empty_Create_Then_BadRequest(string name)
         {
             // act
@@ -33,11 +35,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase(" ")]
-        [TestCase("1")]
-        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(null)]
+        [InlineData(" ")]
+        [InlineData("1")]
+        [InlineData("Persona-Test-Invalid-Name-1234567890")]
         public async Task When_Invalid_GetByName_Then_BadRequest(string name)
         {
             // act
@@ -46,11 +49,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task When_Valid_Create_Then_Success(string name)
         {
             // arrange
@@ -66,11 +70,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModel.Name.Should().Be(expectedName);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task When_Valid_Create_GetById_Then_Success(string name)
         {
             // arrange
@@ -93,11 +98,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelCreate.Name.Should().Be(expectedName);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task When_Valid_Create_GetAll_Then_Success(string name)
         {
             // arrange
@@ -121,7 +127,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelCreate.Name.Should().Be(expectedName);
         }
 
-        [Test]
+        [Fact]
         public async Task When_EmptyDatabase_GetAll_Then_NoContent()
         {
             // act            
@@ -132,11 +138,12 @@ namespace AmberEggApi.IntegrationTests.Tests
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        [Theory()]
+        [InlineData("P2")]
+        [InlineData("Persona-Test 2")]
+        [InlineData("Persona-Test 20")]
+        [InlineData("Persona-Test 200")]
+        [InlineData("Persona-Test 2000")]
         public async Task When_Valid_Create_GetByName_Then_Success(string name)
         {
             // arrange
@@ -160,8 +167,9 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelCreate.Name.Should().Be(expectedName);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
         public async Task When_Valid_Create_Update_Then_Success(string name)
         {
             // arrange
@@ -184,8 +192,9 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelUpdate.Name.Should().Be(viewModelGet.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
         public async Task When_Valid_Create_Update_Delete_Then_Success(string name)
         {
             // arrange
@@ -204,10 +213,11 @@ namespace AmberEggApi.IntegrationTests.Tests
             responseGet.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase(null)]
-        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        [InlineData("Persona-Test-Invalid-Name-1234567890")]
         public async Task When_Invalid_Create_Update_Then_BadRequest(string invalidName)
         {
             // arrange
@@ -224,7 +234,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelCreate.Name.Should().NotBeNullOrEmpty();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Create_Update_EmptyId_Then_BadRequest()
         {
             // arrange
@@ -241,7 +251,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             viewModelCreate.Name.Should().NotBeNullOrEmpty();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Create_Update_NewId_Then_NoContent()
         {
             // arrange
@@ -255,7 +265,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [Test]
+        [Fact]
         public async Task When_Delete_NewId_Then_NoContent()
         {
             // act
@@ -264,7 +274,7 @@ namespace AmberEggApi.IntegrationTests.Tests
             responseUpdate.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
-        [Test]
+        [Fact]
         public async Task When_Delete_EmptyId_Then_BadRequest()
         {
             // act

@@ -10,11 +10,8 @@
 	  <PackageReference Include="Microsoft.AspNetCore.TestHost" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" />
-	  <PackageReference Include="NUnit" />
-	  <PackageReference Include="NUnit.Console" />
-	  <PackageReference Include="NUnit.ConsoleRunner" />
-	  <PackageReference Include="NUnit.Runners" />
-	  <PackageReference Include="NUnit3TestAdapter" />        
+	  <PackageReference Include="xunit" />
+	  <PackageReference Include="xunit.runner.visualstudio"/>       
   </ItemGroup>
 
   <ItemGroup>

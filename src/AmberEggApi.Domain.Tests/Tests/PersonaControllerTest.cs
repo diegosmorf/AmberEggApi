@@ -3,7 +3,7 @@ using AmberEggApi.DomainTests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Linq;
 using System.Net;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.DomainTests.Tests
 {
+    [Collection("Domain.Tests.Global.Setup")]
     public class PersonaControllerTest
     {
         private readonly PersonaControllerFactory factory;
@@ -20,12 +21,13 @@ namespace AmberEggApi.DomainTests.Tests
         {
             factory = SetupTests.Container.Resolve<PersonaControllerFactory>();
         }
-
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task WhenCreate_Then_FindItById(string name)
         {
             // arrange
@@ -39,11 +41,12 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Name.Should().Be(responseCreate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Test")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Test")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdate_Then_FindItById(string name)
         {
             // arrange
@@ -64,11 +67,12 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Test")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Test")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success(string name)
         {
             // arrange
@@ -90,11 +94,12 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Should().BeNull();
         }
 
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase(" ")]
-        [TestCase("1")]
-        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(null)]
+        [InlineData(" ")]
+        [InlineData("1")]
+        [InlineData("Persona-Test-Invalid-Name-1234567890")]
         public void WhenCreateNotValidEntity_Then_Error(string name)
         {
             // arrange
@@ -116,7 +121,7 @@ namespace AmberEggApi.DomainTests.Tests
                 .WithMessage(expectedMessage);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetNotExistent_Then_NotFound()
         {
             var response = await factory.GetNotExistent();
@@ -125,7 +130,7 @@ namespace AmberEggApi.DomainTests.Tests
             response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetNameNotExistent_Then_NotFound()
         {
             var response = await factory.GetByNameNotExistent();
@@ -134,7 +139,7 @@ namespace AmberEggApi.DomainTests.Tests
             response.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenUpdateNotExistent_Then_NotFound()
         {
             var response = await factory.UpdateNotExistent();

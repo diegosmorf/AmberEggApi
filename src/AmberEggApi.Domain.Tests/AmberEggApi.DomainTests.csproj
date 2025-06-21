@@ -11,19 +11,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit.Console" />
-    <PackageReference Include="NUnit.ConsoleRunner" />
-	<PackageReference Include="NUnit.Runners" />
-    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AmberEggApi.ApplicationService\AmberEggApi.ApplicationService.csproj" />
+    <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
     <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />
     <ProjectReference Include="..\AmberEggApi.WebApi\AmberEggApi.WebApi.csproj" />
     <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />

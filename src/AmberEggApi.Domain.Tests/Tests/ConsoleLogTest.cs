@@ -1,19 +1,21 @@
 ﻿using AmberEggApi.Infrastructure.Loggers;
 using Api.Common.Contracts.Loggers;
-using FluentAssertions;
-using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using Xunit;
+using FluentAssertions;
 
 namespace AmberEggApi.DomainTests.Tests
 {
+    [Collection("Domain.Tests.Global.Setup")]
     public class ConsoleLogTest
     {
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("Test")]
-        [TestCase("Test Message")]
-        [TestCase("Test Message 1231231232145654654 78979789 465465456 21321321231")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("Test")]
+        [InlineData("Test Message")]
+        [InlineData("Test Message 1231231232145654654 78979789 465465456 21321321231")]
         public async Task WhenDebug_Then_Success(string expectedMessage)
         {
             // arrange            
@@ -25,11 +27,12 @@ namespace AmberEggApi.DomainTests.Tests
             info.Level.Should().Be(LogLevel.Debug);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("Test")]
-        [TestCase("Test Message")]
-        [TestCase("Test Message 1231231232145654654 78979789 465465456 21321321231")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("Test")]
+        [InlineData("Test Message")]
+        [InlineData("Test Message 1231231232145654654 78979789 465465456 21321321231")]
         public async Task WhenError_Then_Success(string expectedMessage)
         {
             // arrange            
@@ -41,11 +44,12 @@ namespace AmberEggApi.DomainTests.Tests
             info.Level.Should().Be(LogLevel.Error);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("Test")]
-        [TestCase("Test Message")]
-        [TestCase("Test Message 1231231232145654654 78979789 465465456 21321321231")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("Test")]
+        [InlineData("Test Message")]
+        [InlineData("Test Message 1231231232145654654 78979789 465465456 21321321231")]
         public async Task WhenErrorException_Then_Success(string expectedMessage)
         {
             // arrange            
@@ -57,11 +61,12 @@ namespace AmberEggApi.DomainTests.Tests
             info.Level.Should().Be(LogLevel.Error);
         }
 
-        [TestCase("")]
-        [TestCase(" ")]
-        [TestCase("Test")]
-        [TestCase("Test Message")]
-        [TestCase("Test Message 1231231232145654654 78979789 465465456 21321321231")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("Test")]
+        [InlineData("Test Message")]
+        [InlineData("Test Message 1231231232145654654 78979789 465465456 21321321231")]
         public async Task WhenInfo_Then_Success(string expectedMessage)
         {
             // arrange            

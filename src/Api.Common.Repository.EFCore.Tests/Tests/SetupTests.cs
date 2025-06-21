@@ -5,17 +5,16 @@ using AmberEggApi.Infrastructure.InjectionModules;
 using Api.Common.Repository.EFCoreTests.InjectionModules;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
+using System;
 
 namespace Api.Common.Repository.EFCoreTests.Tests
 {
-    [SetUpFixture]
-    public class SetupTests
+    public class SetupTests : IDisposable
     {
         public static IContainer Container { get; protected set; }
+        private bool _disposed = false;
 
-        [OneTimeSetUp]
-        public void RunBeforeAllTests()
+        public SetupTests()
         {
             // Setup IoC Container
             var builder = new ContainerBuilder();
@@ -32,11 +31,23 @@ namespace Api.Common.Repository.EFCoreTests.Tests
 
             Container = builder.Build();
         }
-
-        [OneTimeTearDown]
-        public void RunAfterAllTests()
+            
+        protected virtual void Dispose(bool disposing)
         {
-            Container.Dispose();
+            if (!_disposed && disposing)
+            {
+                Container?.Dispose();
+                _disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+        ~SetupTests()
+        {
+            Dispose(disposing: false);
         }
     }
 }

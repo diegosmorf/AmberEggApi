@@ -3,13 +3,14 @@ using AmberEggApi.DomainTests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.DomainTests.Tests
 {
+    [Collection("Domain.Tests.Global.Setup")]
     public class PersonaDomainTest
     {
         private readonly PersonaAppServiceFactory factory;
@@ -20,11 +21,12 @@ namespace AmberEggApi.DomainTests.Tests
             factory = SetupTests.Container.Resolve<PersonaAppServiceFactory>();
         }
 
-        [TestCase("P")]
-        [TestCase("Persona-Test 1")]
-        [TestCase("Persona-Test 10")]
-        [TestCase("Persona-Test 100")]
-        [TestCase("Persona-Test 1000")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona-Test 1")]
+        [InlineData("Persona-Test 10")]
+        [InlineData("Persona-Test 100")]
+        [InlineData("Persona-Test 1000")]
         public async Task WhenCreate_Then_FindItById(string name)
         {
             // arrange            
@@ -38,10 +40,11 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Name.Should().Be(responseCreate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdate_Then_FindItById(string name)
         {
             // arrange
@@ -59,10 +62,11 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Name.Should().Be(responseUpdate.Name);
         }
 
-        [TestCase("P")]
-        [TestCase("Persona")]
-        [TestCase("Persona-Test")]
-        [TestCase("Persona-Test 1")]
+        [Theory()]
+        [InlineData("P")]
+        [InlineData("Persona")]
+        [InlineData("Persona-Test")]
+        [InlineData("Persona-Test 1")]
         public async Task WhenCreateAndUpdateAndDelete_Then_Success(string name)
         {
             // arrange
@@ -78,11 +82,12 @@ namespace AmberEggApi.DomainTests.Tests
             responseSearchById.Should().BeNull();
         }
 
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase(" ")]
-        [TestCase("1")]
-        [TestCase("Persona-Test-Invalid-Name-1234567890")]
+        [Theory()]
+        [InlineData("")]
+        [InlineData(null)]
+        [InlineData(" ")]
+        [InlineData("1")]
+        [InlineData("Persona-Test-Invalid-Name-1234567890")]
         public void WhenCreateNotValidEntity_Then_Error(string name)
         {
             // arrange
@@ -97,7 +102,7 @@ namespace AmberEggApi.DomainTests.Tests
             action.Should().ThrowAsync<ModelException>().WithMessage(expectedMessage);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetNewGuid_Then_Null()
         {
             var viewModel = await factory.Get(Guid.NewGuid());
@@ -105,7 +110,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetEmptyGuid_Then_Null()
         {
             var viewModel = await factory.Get(Guid.Empty);
@@ -113,7 +118,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetListByNameEmptyString_Then_NotFound()
         {
             var expectedNumber = 0;
@@ -123,7 +128,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Count().Should().Be(expectedNumber);
         }
 
-        [Test]
+        [Fact]
         public async Task WhenGetListByNameNewGuidString_Then_NotFound()
         {
             var expectedNumber = 0;
@@ -133,7 +138,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Count().Should().Be(expectedNumber);
         }
 
-        [Test]
+        [Fact]
         public async Task When_Update_NewGuid_Then_Null()
         {
             // arrange
@@ -144,7 +149,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Update_EmptyGuid_Then_Null()
         {
             var viewModel = await factory.Update(new UpdatePersonaCommand(Guid.Empty, "123"));
@@ -153,7 +158,7 @@ namespace AmberEggApi.DomainTests.Tests
             viewModel.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Update_NewGuid_Then_NotThrowException()
         {
             // arrange
@@ -164,7 +169,7 @@ namespace AmberEggApi.DomainTests.Tests
             await action.Should().NotThrowAsync<ModelException>();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Update_EmptyGuid_Then_NotThrowException()
         {
             // arrange
@@ -175,7 +180,7 @@ namespace AmberEggApi.DomainTests.Tests
             await action.Should().NotThrowAsync<ModelException>();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Delete_NewGuid_Then_NotThrowException()
         {
             // act
@@ -184,7 +189,7 @@ namespace AmberEggApi.DomainTests.Tests
             await action.Should().NotThrowAsync<ModelException>();
         }
 
-        [Test]
+        [Fact]
         public async Task When_Delete_EmptyGuid_Then_NotThrowException()
         {
             // act

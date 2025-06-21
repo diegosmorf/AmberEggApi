@@ -1,11 +1,12 @@
 ﻿using AmberEggApi.DomainTests.Factories;
 using Autofac;
 using FluentAssertions;
-using NUnit.Framework;
+using Xunit;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.DomainTests.Tests
 {
+    [Collection("Domain.Tests.Global.Setup")]
     public class HealthCheckControllerTest
     {
         private readonly HealthCheckControllerFactory factory;
@@ -15,7 +16,7 @@ namespace AmberEggApi.DomainTests.Tests
             factory = SetupTests.Container.Resolve<HealthCheckControllerFactory>();
         }
 
-        [Test]
+        [Fact]
         public async Task WhenCheck_Then_Success()
         {
             // arrange

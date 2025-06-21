@@ -1,7 +1,5 @@
-﻿namespace Api.Common.Contracts.Entities
+﻿namespace Api.Common.Contracts.Entities;
+public interface IEntityWithPrimaryKey<TId>
 {
-    public interface IEntityWithPrimaryKey<TId>
-    {
-        TId Id { get; set; }
-    }
+    TId Id { get; set; }
 }

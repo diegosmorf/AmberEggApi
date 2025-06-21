@@ -31,7 +31,7 @@ namespace Api.Common.Repository.EFCoreTests.Tests
 
             Container = builder.Build();
         }
-            
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed && disposing)

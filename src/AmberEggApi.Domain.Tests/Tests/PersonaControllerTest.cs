@@ -3,11 +3,11 @@ using AmberEggApi.DomainTests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
-using Xunit;
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AmberEggApi.DomainTests.Tests
 {
@@ -21,7 +21,7 @@ namespace AmberEggApi.DomainTests.Tests
         {
             factory = SetupTests.Container.Resolve<PersonaControllerFactory>();
         }
-        
+
         [Theory()]
         [InlineData("P")]
         [InlineData("Persona-Test 1")]

@@ -1,5 +1,4 @@
 ﻿using AmberEggApi.IntegrationTests.Server;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -27,7 +26,7 @@ internal class SetupTests : IDisposable
         Client.DefaultRequestHeaders.Accept.Clear();
         Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
-    
+
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed && disposing)

@@ -1,7 +1,6 @@
 using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.InjectionModules;
-using AmberEggApi.Infrastructure.Loggers;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -10,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace AmberEggApi.WebApi
 {
@@ -19,10 +18,16 @@ namespace AmberEggApi.WebApi
     {
         private readonly IConfiguration configuration;
 
-        private readonly ConsoleLogger logger = new();
+        private readonly ILogger<Startup> logger;
 
         public Startup(IWebHostEnvironment environment)
         {
+            logger = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+                builder.AddDebug();
+            }).CreateLogger<Startup>();
+
             configuration = new ConfigurationBuilder()
                 .SetBasePath(environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -30,18 +35,17 @@ namespace AmberEggApi.WebApi
                 .AddEnvironmentVariables()
                 .Build();
 
-            Task.Run(async () => { 
-                await logger.Information($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
-                await logger.Information($"Environment: {environment.EnvironmentName}");
 
-                if (environment.IsDevelopment())
+            logger.LogInformation("Starting up: {AssemblyName}", Assembly.GetEntryAssembly().GetName());
+            logger.LogInformation("Environment: {Environment}",  environment.EnvironmentName);
+
+            if (environment.IsDevelopment())
+            {
+                foreach (var item in configuration.AsEnumerable())
                 {
-                    foreach (var item in configuration.AsEnumerable())
-                    {
-                       await  logger.Information($"Key:'{item.Key}' - Value: '{item.Value}'");
-                    }
+                    logger.LogInformation("Key:{Key} - Value: {Value}", item.Key, item.Value);
                 }
-            }).Wait();
+            }
         }
 
         public static void ConfigureContainer(ContainerBuilder builder)
@@ -98,26 +102,24 @@ namespace AmberEggApi.WebApi
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            Task.Run(async () =>
-            {
-                await UpdateDatabaseUsingEfCore(app);
-            }).Wait();
+            UpdateDatabaseUsingEfCore(app);
+            
         }
 
-        private async Task UpdateDatabaseUsingEfCore(IApplicationBuilder app)
+        private void UpdateDatabaseUsingEfCore(IApplicationBuilder app)
         {
-            await logger.Information("Starting: Database Migration");
+            logger.LogInformation("Starting: Database Migration");
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                await serviceScope
+                serviceScope
                     .ServiceProvider
                     .GetRequiredService<EfCoreDbContext>()
                     .Database
-                    .MigrateAsync();
+                    .Migrate();
             }
 
-            await logger.Information("Ending: Database Migration");
+            logger.LogInformation("Ending: Database Migration");
         }
     }
 }

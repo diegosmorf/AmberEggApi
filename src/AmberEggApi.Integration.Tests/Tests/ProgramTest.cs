@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace AmberEggApi.IntegrationTests.Tests
-{    
+{
     public class ProgramTest
     {
         [Fact]

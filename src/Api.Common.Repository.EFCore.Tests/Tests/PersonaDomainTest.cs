@@ -23,7 +23,7 @@ namespace Api.Common.Repository.EFCoreTests.Tests
             repository = SetupTests.Container.Resolve<IRepository<Persona>>();
             factory = SetupTests.Container.Resolve<PersonaRepositoryFactory>();
         }
-        
+
         [Theory()]
         [InlineData("P")]
         [InlineData("Persona-Test 1")]

@@ -1,8 +1,8 @@
 ﻿using AmberEggApi.DomainTests.Factories;
 using Autofac;
 using FluentAssertions;
-using Xunit;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AmberEggApi.DomainTests.Tests
 {

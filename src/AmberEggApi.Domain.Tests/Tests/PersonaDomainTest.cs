@@ -3,10 +3,10 @@ using AmberEggApi.DomainTests.Factories;
 using Api.Common.Repository.Exceptions;
 using Autofac;
 using FluentAssertions;
-using Xunit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace AmberEggApi.DomainTests.Tests
 {

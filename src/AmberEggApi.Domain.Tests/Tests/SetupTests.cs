@@ -9,7 +9,7 @@ using System;
 namespace AmberEggApi.DomainTests.Tests
 {
 
-    public class SetupTests: IDisposable
+    public class SetupTests : IDisposable
     {
         public static IContainer Container { get; protected set; }
         protected bool _disposed = false;

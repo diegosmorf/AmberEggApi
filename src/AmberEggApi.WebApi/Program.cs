@@ -12,16 +12,7 @@ namespace AmberEggApi.WebApi
     {
         public static void Main()
         {
-            try
-            {
-                Console.WriteLine($"Starting up: {Assembly.GetEntryAssembly().GetName()}");
-
-                CreteWebHost().Run();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex}");
-            }
+            CreteWebHost().Run();
         }
 
         public static IWebHost CreteWebHost()
@@ -30,8 +21,8 @@ namespace AmberEggApi.WebApi
                     .ConfigureServices(s => s.AddAutofac())
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .ConfigureLogging(logging =>
-                    {                        
-                        logging.AddConsole();                      
+                    {
+                        logging.AddConsole();
                     })
                     .UseStartup<Startup>()
                     .Build();

@@ -1,13 +1,12 @@
-﻿using Api.Common.Cqrs.Core.Commands;
-using Api.Common.Cqrs.Core.Entities;
+﻿using Api.Common.Contracts.Entities;
+using Api.Common.Cqrs.Core.Commands;
 using System.Threading.Tasks;
 
-namespace Api.Common.Cqrs.Core.CommandHandlers
+namespace Api.Common.Cqrs.Core.CommandHandlers;
+
+public interface ICommandHandler<in TCommand, TDomainEntity>
+    where TCommand : ICommand
+    where TDomainEntity : IDomainEntity
 {
-    public interface ICommandHandler<in TCommand, TDomainEntity>
-        where TCommand : ICommand
-        where TDomainEntity : IAggregateRoot
-    {
-        Task<TDomainEntity> Handle(TCommand command);
-    }
+    Task<TDomainEntity> Handle(TCommand command);
 }

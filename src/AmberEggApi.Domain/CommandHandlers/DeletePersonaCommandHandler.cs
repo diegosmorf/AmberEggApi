@@ -13,8 +13,6 @@ namespace AmberEggApi.Domain.CommandHandlers
         {
             //Domain
             var instance = await repository.SearchById(command.Id);
-            instance.Delete(command);
-
             //Persistence
             await repository.Delete(command.Id);
 

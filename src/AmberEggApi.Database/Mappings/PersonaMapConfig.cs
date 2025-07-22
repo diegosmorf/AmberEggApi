@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AmberEggApi.Database.Mappings
+namespace AmberEggApi.Database.Mappings;
+
+public class PersonaMapConfig : IEntityTypeConfiguration<Persona>
 {
-    public class PersonaMapConfig : IEntityTypeConfiguration<Persona>
+    public void Configure(EntityTypeBuilder<Persona> builder)
     {
-        public void Configure(EntityTypeBuilder<Persona> builder)
-        {
-            builder.ToTable("Persona");
-        }
+        builder.ToTable("Persona");
     }
 }

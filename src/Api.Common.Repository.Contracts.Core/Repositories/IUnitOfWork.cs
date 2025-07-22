@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Api.Common.Repository.Repositories
+namespace Api.Common.Repository.Repositories;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        Task Commit();
-    }
+    Task Commit();
 }

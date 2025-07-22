@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace AmberEggApi.IntegrationTests.Tests;
+
 internal class SetupTests : IDisposable
 {
     private static TestServer apiServer;

@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Api.Common.Cqrs.Core.Messages
+namespace Api.Common.Cqrs.Core.Messages;
+
+public interface IMessage
 {
-    public interface IMessage
-    {
-        Guid MessageId { get; }
-        string MessageType { get; }
-        DateTime MessageCreatedDate { get; }
-    }
+    Guid MessageId { get; }
+    string MessageType { get; }
+    DateTime MessageCreatedDate { get; }
 }

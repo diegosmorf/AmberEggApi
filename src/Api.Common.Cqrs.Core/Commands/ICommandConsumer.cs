@@ -1,12 +1,11 @@
-﻿using Api.Common.Cqrs.Core.Entities;
+﻿using Api.Common.Contracts.Entities;
 using System.Threading.Tasks;
 
-namespace Api.Common.Cqrs.Core.Commands
+namespace Api.Common.Cqrs.Core.Commands;
+
+public interface ICommandConsumer
 {
-    public interface ICommandConsumer
-    {
-        Task<TEntity> Receive<TCommand, TEntity>(TCommand command)
-            where TCommand : ICommand
-            where TEntity : IAggregateRoot;
-    }
+    Task<TEntity> Receive<TCommand, TEntity>(TCommand command)
+        where TCommand : ICommand
+        where TEntity : IDomainEntity;
 }

@@ -7,40 +7,39 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Module = Autofac.Module;
 
-namespace AmberEggApi.Infrastructure.InjectionModules
+namespace AmberEggApi.Infrastructure.InjectionModules;
+
+public class IoCModuleInfrastructure : Module
 {
-    public class IoCModuleInfrastructure : Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            // Service Bus
-            builder
-                .RegisterType<InMemoryCommandProducer>()
-                .AsImplementedInterfaces();
+        // Service Bus
+        builder
+            .RegisterType<InMemoryCommandProducer>()
+            .AsImplementedInterfaces();
 
-            builder
-                .RegisterType<InMemoryCommandConsumer>()
-                .AsImplementedInterfaces();
+        builder
+            .RegisterType<InMemoryCommandConsumer>()
+            .AsImplementedInterfaces();
 
-            // Infra - DbContext
-            builder.RegisterType<EfCoreDbContext>().As<DbContext>();
+        // Infra - DbContext
+        builder.RegisterType<EfCoreDbContext>().As<DbContext>();
 
-            // Infra - Unit Of Work            
-            builder
-                .RegisterType<EFCoreUnitOfWork>()
-                .As<IUnitOfWork>();
+        // Infra - Unit Of Work            
+        builder
+            .RegisterType<EFCoreUnitOfWork>()
+            .As<IUnitOfWork>();
 
-            // Infra - Repository
-            builder
-                .RegisterGeneric(typeof(EfCoreRepository<>))
-                .AsImplementedInterfaces();
+        // Infra - Repository
+        builder
+            .RegisterGeneric(typeof(EfCoreRepository<>))
+            .AsImplementedInterfaces();
 
-            //Registering all Infra services
-            var assemblyToScan = Assembly.GetAssembly(typeof(IoCModuleInfrastructure));
-            builder
-                .RegisterAssemblyTypes(assemblyToScan)
-                .Where(c => c.IsClass
-                            && c.IsInNamespace("AmberEggApi.Infrastructure.Services")).AsImplementedInterfaces();
-        }
+        //Registering all Infra services
+        var assemblyToScan = Assembly.GetAssembly(typeof(IoCModuleInfrastructure));
+        builder
+            .RegisterAssemblyTypes(assemblyToScan)
+            .Where(c => c.IsClass
+                        && c.IsInNamespace("AmberEggApi.Infrastructure.Services")).AsImplementedInterfaces();
     }
 }

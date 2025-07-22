@@ -1,14 +1,13 @@
 ﻿using AmberEggApi.Database.Mappings;
 using Microsoft.EntityFrameworkCore;
 
-namespace AmberEggApi.Database.Repositories
+namespace AmberEggApi.Database.Repositories;
+
+public class EfCoreDbContext(DbContextOptions<EfCoreDbContext> options) : DbContext(options)
 {
-    public class EfCoreDbContext(DbContextOptions<EfCoreDbContext> options) : DbContext(options)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //domain
-            modelBuilder.ApplyConfiguration(new PersonaMapConfig());
-        }
+        //domain
+        modelBuilder.ApplyConfiguration(new PersonaMapConfig());
     }
 }

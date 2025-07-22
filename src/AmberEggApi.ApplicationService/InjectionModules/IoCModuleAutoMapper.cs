@@ -12,7 +12,6 @@ namespace AmberEggApi.ApplicationService.InjectionModules
                     context => new MapperConfiguration(cfg =>
                     {
                         cfg.AddProfile(new DomainToViewModelMapping());
-                        cfg.AddProfile(new QueryModelToViewModelMapping());
                     }))
                 .AsSelf().SingleInstance();
 

@@ -2,24 +2,23 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace AmberEggApi.Database.Repositories
+namespace AmberEggApi.Database.Repositories;
+
+public class EfCoreDbContextFactory : IDesignTimeDbContextFactory<EfCoreDbContext>
 {
-    public class EfCoreDbContextFactory : IDesignTimeDbContextFactory<EfCoreDbContext>
+    public EfCoreDbContext CreateDbContext(string[] args)
     {
-        public EfCoreDbContext CreateDbContext(string[] args)
-        {
 
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", false, true)
-                .AddEnvironmentVariables();
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", false, true)
+            .AddEnvironmentVariables();
 
-            var configuration = builder.Build();
+        var configuration = builder.Build();
 
-            var context = new DbContextOptionsBuilder<EfCoreDbContext>();
+        var context = new DbContextOptionsBuilder<EfCoreDbContext>();
 
-            context.UseSqlServer(configuration.GetConnectionString("ApiDbConnection"));
+        context.UseSqlServer(configuration.GetConnectionString("ApiDbConnection"));
 
-            return new EfCoreDbContext(context.Options);
-        }
+        return new EfCoreDbContext(context.Options);
     }
 }

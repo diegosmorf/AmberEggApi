@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace AmberEggApi.WebApi.Controllers
+namespace AmberEggApi.WebApi.Controllers;
+
+[Authorize("Bearer")]
+public class BaseAuthorizedController : BaseController
 {
-    [Authorize("Bearer")]
-    public class BaseAuthorizedController : BaseController
-    {
-    }
 }

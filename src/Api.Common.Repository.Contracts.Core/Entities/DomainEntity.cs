@@ -2,22 +2,23 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Api.Common.Repository.Entities
+namespace Api.Common.Repository.Entities;
+
+public abstract class DomainEntity : IDomainEntity
 {
-    public abstract class DomainEntity : IDomainEntity
+
+    [Key]
+    public Guid Id { get; set; }
+
+    [Required]
+    public DateTime CreateDate { get; set; }
+
+    public DateTime? ModifiedDate { get; set; }
+
+    public int Version { get; set; }
+
+    public override string ToString()
     {
-
-        [Key]
-        public Guid Id { get; set; }
-
-        [Required]
-        public DateTime CreateDate { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        public override string ToString()
-        {
-            return $"Type:{GetType().Name} - Id:{Id}";
-        }
+        return $"Type:{GetType().Name} - Id:{Id}";
     }
 }

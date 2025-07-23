@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: BuildTest
-    runs-on: windows-latest
+    runs-on: linux-latest
     steps:
 
     - uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x       
+        dotnet-version: 9.0.x       
 
     - name: Setup Java
       uses: actions/setup-java@v4

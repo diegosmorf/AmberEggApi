@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.10820.31 main
+VisualStudioVersion = 18.0.10820.31
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Domain", "1 - Domain", "{F430C77E-DDAB-45DA-8D24-A04F577AECBF}"
 EndProject
@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.WebApi", "Amber
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Core", "0 - Core", "{6A607D58-847A-46A5-A600-BD782970CD8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Contracts", "Api.Common.Contracts\Api.Common.Contracts.csproj", "{F2EDD5AF-AE53-4F1A-A921-97E40E88413D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Contracts", "AmberEggApi.Contracts\AmberEggApi.Contracts.csproj", "{F2EDD5AF-AE53-4F1A-A921-97E40E88413D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Database", "AmberEggApi.Database\AmberEggApi.Database.csproj", "{B2300667-54DE-418B-93DB-37A553BD1480}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCore", "Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj", "{949EA0A5-5AA1-442C-9EA7-2A9663942977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Repository.EFCore", "AmberEggApi.Repository.EFCore\AmberEggApi.Repository.EFCore.csproj", "{949EA0A5-5AA1-442C-9EA7-2A9663942977}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Common.Repository.EFCoreTests", "Api.Common.Repository.EFCore.Tests\Api.Common.Repository.EFCoreTests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberEggApi.Repository.EFCoreTests", "AmberEggApi.Repository.EFCore.Tests\AmberEggApi.Repository.EFCoreTests.csproj", "{71EE458E-462D-48D1-B693-DBDE4116835D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,7 +94,7 @@ Global
 		{336892E1-9089-4C60-8B92-455B1088C5D2} = {E0BA980D-A434-40B9-A5E5-224D14438594}
 		{F2EDD5AF-AE53-4F1A-A921-97E40E88413D} = {6A607D58-847A-46A5-A600-BD782970CD8B}
 		{B2300667-54DE-418B-93DB-37A553BD1480} = {FB19DF3C-356A-442F-8E68-C6AA4B45880D}
-		{949EA0A5-5AA1-442C-9EA7-2A9663942977} = {6A607D58-847A-46A5-A600-BD782970CD8B}
+		{949EA0A5-5AA1-442C-9EA7-2A9663942977} = {FB19DF3C-356A-442F-8E68-C6AA4B45880D}
 		{71EE458E-462D-48D1-B693-DBDE4116835D} = {7CC95871-4B70-411F-AB2C-7CCEDBB47E03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

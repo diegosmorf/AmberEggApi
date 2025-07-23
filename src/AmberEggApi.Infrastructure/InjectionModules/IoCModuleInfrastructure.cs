@@ -1,7 +1,7 @@
 ﻿using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.Bus;
-using Api.Common.Repository.EFCore;
-using Api.Common.Repository.Repositories;
+using AmberEggApi.Repository.EFCore;
+using AmberEggApi.Repository.Repositories;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

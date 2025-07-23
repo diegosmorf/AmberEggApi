@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Domain.Commands;
-using Api.Common.Repository.Entities;
+using AmberEggApi.Repository.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Models;

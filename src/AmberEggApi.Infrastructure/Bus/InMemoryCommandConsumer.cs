@@ -1,6 +1,6 @@
-﻿using Api.Common.Contracts.Entities;
-using Api.Common.Cqrs.Core.CommandHandlers;
-using Api.Common.Cqrs.Core.Commands;
+﻿using AmberEggApi.Contracts.Entities;
+using AmberEggApi.Cqrs.Core.CommandHandlers;
+using AmberEggApi.Cqrs.Core.Commands;
 using Autofac;
 using System.Threading.Tasks;
 

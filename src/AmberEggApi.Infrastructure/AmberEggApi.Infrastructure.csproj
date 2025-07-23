@@ -11,9 +11,9 @@
 	
 	<ItemGroup>
 		<ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
-		<ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
+		<ProjectReference Include="..\AmberEggApi.Contracts\AmberEggApi.Contracts.csproj" />
 		<ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
-		<ProjectReference Include="..\Api.Common.Repository.EFCore\Api.Common.Repository.EFCore.csproj" />
+		<ProjectReference Include="..\AmberEggApi.Repository.EFCore\AmberEggApi.Repository.EFCore.csproj" />
 	</ItemGroup>
 
 </Project>

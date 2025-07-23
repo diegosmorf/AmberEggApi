@@ -1,6 +1,6 @@
-﻿using Api.Common.Contracts.Entities;
-using Api.Common.Cqrs.Core.Commands;
-using Api.Common.Repository.Validations;
+﻿using AmberEggApi.Contracts.Entities;
+using AmberEggApi.Cqrs.Core.Commands;
+using AmberEggApi.Repository.Validations;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Bus;

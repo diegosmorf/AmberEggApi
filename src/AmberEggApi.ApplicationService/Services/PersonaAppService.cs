@@ -2,8 +2,8 @@
 using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-using Api.Common.Cqrs.Core.Commands;
-using Api.Common.Repository.Repositories;
+using AmberEggApi.Cqrs.Core.Commands;
+using AmberEggApi.Repository.Repositories;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

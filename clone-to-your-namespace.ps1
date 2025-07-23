@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory = $true)]
-    [string]$newText,
-    [string]$currentText = "AmberEggApi"
+    [string]$newNS,
+    [string]$currentNS = "AmberEggApi"
 )
 
 # Helper function to detect file encoding
@@ -32,15 +32,15 @@ function Get-FileEncoding {
 }
 
 # Validate parameters
-if ($currentText -eq $newText) {
+if ($currentNS -eq $newNS) {
     throw "The newText must be different from the currentText."
 }
 
-Write-Host "Cloning solution template from '$currentText' to '$newText'"
+Write-Host "Cloning solution template from '$currentNS' to '$newNS'"
 
 # Define source and destination paths
 $sourcePath = Get-Location
-$destinationPath = Join-Path -Path $sourcePath.ProviderPath -ChildPath "..\$newText"
+$destinationPath = Join-Path -Path $sourcePath.ProviderPath -ChildPath "..\$newNS"
 
 # Define items to exclude from copy
 $exclude = @(".git", ".vs", "bin", "obj", "clone-to-your-namespace.ps1")
@@ -78,8 +78,8 @@ Set-Location $destinationPath
 
 # Rename directories recursively (from deepest to shallowest)
 Write-Host "Renaming directories..."
-Get-ChildItem -Path . -Recurse -Directory | Where-Object { $_.Name -match $currentText } | Sort-Object -Property { $_.FullName.Length } -Descending | ForEach-Object {
-    $newDirName = $_.Name.Replace($currentText, $newText)
+Get-ChildItem -Path . -Recurse -Directory | Where-Object { $_.Name -match $currentNS } | Sort-Object -Property { $_.FullName.Length } -Descending | ForEach-Object {
+    $newDirName = $_.Name.Replace($currentNS, $newNS)
     $newDirFullName = Join-Path -Path $_.Parent.FullName -ChildPath $newDirName
     Write-Host "Renaming directory '$($_.FullName)' to '$newDirFullName'"
     Rename-Item -Path $_.FullName -NewName $newDirName -Force
@@ -99,15 +99,15 @@ Get-ChildItem -Path . -Recurse -File | ForEach-Object {
     $encoding = Get-FileEncoding $file.FullName
     $content = [System.IO.File]::ReadAllText($file.FullName, $encoding)
 
-    if ($content -match $currentText) {
+    if ($content -match $currentNS) {
         Write-Host "Updating content in '$($file.FullName)'"
-        $newContent = $content.Replace($currentText, $newText)
+        $newContent = $content.Replace($currentNS, $newNS)
         [System.IO.File]::WriteAllText($file.FullName, $newContent, $encoding)
     }
 
     # Rename the file if its name contains the currentText
-    if ($file.Name -match $currentText) {
-        $newFileName = $file.Name.Replace($currentText, $newText)
+    if ($file.Name -match $currentNS) {
+        $newFileName = $file.Name.Replace($currentNS, $newNS)
         $newFileFullName = Join-Path -Path $file.DirectoryName -ChildPath $newFileName
         Write-Host "Renaming file '$($file.FullName)' to '$newFileFullName'"
         Rename-Item -Path $file.FullName -NewName $newFileName -Force

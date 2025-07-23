@@ -1,14 +1,14 @@
-# AmberEggApi - .NET9 Open API Template
+# AmberEggApi Project - .NET9 Clean Architecture API Template
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9250/badge)](https://www.bestpractices.dev/projects/9250)
 [![AmberEggApi Build Test](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml/badge.svg)](https://github.com/diegosmorf/AmberEggApi/actions/workflows/pipeline-build-main.yml)
 [![SonarCloud - Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diegosmorf_AmberEggApi&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diegosmorf_AmberEggApi)
 
-AmberEggApi is community asset to accelerate development of  Clean Architecture APIs using .NET 9.
+AmberEggApi Project is an open-source project (community asset) written in .NET, which target accelerate API development using strong Enterprise patterns.
 
 ## Summary
 
-This project AmberEggApi cover concepts about:  
+This project covers concepts about:  
 
 - [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture)
@@ -23,12 +23,12 @@ This project AmberEggApi cover concepts about:
 
 - [.NET 9.0](https://dotnet.microsoft.com/en-us/download)
 
-## 3rd Party NuGet Packages
+## NuGet Packages Dependencies
 
 - Autofac
 - AutoMapper
 - FluentAssertions
-- NUnit
+- XUnit
 - Swagger
 
 ## Repository
@@ -55,7 +55,7 @@ git clone https://github.com/diegosmorf/AmberEggApi.git
 ### Rename the structure using your namespace
 
 ```Powershell
-powershell .\clone-to-your-namespace.ps1 "Your.Namespace"
+powershell .\clone-to-your-namespace.ps1 -newNS "Your.Namespace"
 cd ..\Your.Namespace
 ```
 
@@ -73,7 +73,7 @@ you can access this API via browser: <http://localhost:5200/swagger>
 
 ## 0 - Core
 
-Api.Common.CQRS.Core is a basic set of interfaces for building a command and event driven CQRS application.
+AmberEggApi.Contracts is a basic set of interfaces for building a command and event driven CQRS application.
 
 - Commands are created and dispatched by the application,
 - They are received by command handlers which apply behaviors on the domain model
@@ -100,6 +100,24 @@ This project will expose domain features to external world (e.g.: API, Apps, Win
 ## 3 - Infrastructure
 
 This project contains implementations of the interfaces defined in the inner layers of the solution. They may be dependent on external libraries or resources. Note that the implementations themselves are internal and should only be used for injection via their implemented interfaces.
+
+
+In the project AmberEggApi.Database, we have migrations for the Entity Framework Core database context (generated automatically by ef cli). 
+
+Installing the EF Core CLI tools:
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+To create a new migration, use the following command in the terminal:
+```bash
+dotnet ef migrations add <MigrationName>
+```
+
+To deploy on local database:
+```bash
+dotnet ef migrations update
+```
 
 ## 4 - Entry Points
 

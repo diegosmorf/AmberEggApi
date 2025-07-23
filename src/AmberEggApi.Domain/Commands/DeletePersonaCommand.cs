@@ -1,4 +1,4 @@
-﻿using Api.Common.Cqrs.Core.Commands;
+﻿using AmberEggApi.Cqrs.Core.Commands;
 using System;
 using System.ComponentModel.DataAnnotations;
 

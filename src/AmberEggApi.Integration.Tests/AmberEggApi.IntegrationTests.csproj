@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api.Common.Contracts\Api.Common.Contracts.csproj" />
+    <ProjectReference Include="..\AmberEggApi.Contracts\AmberEggApi.Contracts.csproj" />
     <ProjectReference Include="..\AmberEggApi.ApplicationService\AmberEggApi.ApplicationService.csproj" />
     <ProjectReference Include="..\AmberEggApi.Database\AmberEggApi.Database.csproj" />
     <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />

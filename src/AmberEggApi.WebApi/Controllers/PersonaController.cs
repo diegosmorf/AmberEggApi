@@ -15,12 +15,7 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     {
         var result = await appService.GetAll();
 
-        if (!result.Any())
-        {
-            return NoContent();
-        }
-
-        return Ok(result);
+        return !result.Any() ? NoContent() : Ok(result);
     }
 
     [HttpGet("{id}")]
@@ -33,12 +28,7 @@ public class PersonaController(IPersonaAppService appService) : BaseController
 
         var result = await appService.Get(id);
 
-        if (result == null)
-        {
-            return NoContent();
-        }
-
-        return Ok(result);
+        return result == null ? NoContent() : Ok(result);
     }
 
     [HttpGet("name/{name}")]
@@ -47,16 +37,11 @@ public class PersonaController(IPersonaAppService appService) : BaseController
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
-        }
+        }        
 
         var result = await appService.GetListByName(name);
 
-        if (!result.Any())
-        {
-            return NoContent();
-        }
-
-        return Ok(result);
+        return !result.Any() ? NoContent() : Ok(result);
     }
 
     [HttpPost]
@@ -74,9 +59,9 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute, Required] Guid id)
     {
-        if (!ModelState.IsValid)
+        if (id == Guid.Empty)
         {
-            return BadRequest(ModelState);
+            return BadRequest("Id parameter is required");
         }
 
         var result = await appService.Get(id);
@@ -99,13 +84,13 @@ public class PersonaController(IPersonaAppService appService) : BaseController
             return BadRequest(ModelState);
         }
 
-        var result = await appService.Get(command.Id);
-
-        if (result == null)
+        if (command.Id == Guid.Empty)
         {
-            return NoContent();
+            return BadRequest("Id parameter is required");
         }
 
-        return Ok(await appService.Update(command));
+        var result = await appService.Get(command.Id);
+
+        return result == null ? NoContent() : Ok(await appService.Update(command));
     }
 }

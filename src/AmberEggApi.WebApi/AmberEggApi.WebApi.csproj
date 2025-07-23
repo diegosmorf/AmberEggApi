@@ -12,7 +12,6 @@
     <ProjectReference Include="..\AmberEggApi.ApplicationService\AmberEggApi.ApplicationService.csproj" />
     <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
     <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />
-    <ProjectReference Include="..\Api.Common.Repository.Contracts.Core\Api.Common.Repository.csproj" />
   </ItemGroup>
 
 </Project>

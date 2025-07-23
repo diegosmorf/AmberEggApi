@@ -2,24 +2,25 @@
 using AmberEggApi.Domain.Models;
 using Api.Common.Cqrs.Core.CommandHandlers;
 using Api.Common.Repository.Repositories;
+using AutoMapper;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Domain.CommandHandlers
+namespace AmberEggApi.Domain.CommandHandlers;
+public class UpdatePersonaCommandHandler(IRepository<Persona> repository, IMapper mapper, IUnitOfWork unitOfWork) :
+    ICommandHandler<UpdatePersonaCommand, Persona>
 {
-    public class UpdatePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork) :
-        ICommandHandler<UpdatePersonaCommand, Persona>
+    private readonly IMapper mapper = mapper;
+    public async Task<Persona> Handle(UpdatePersonaCommand command)
     {
-        public async Task<Persona> Handle(UpdatePersonaCommand command)
-        {
-            //Domain
-            var instance = await repository.SearchById(command.Id);
-            instance.Update(command);
+        //Domain
+        var instance = await repository.SearchById(command.Id);            
+        mapper.Map(command, instance);
+        instance.Update();
 
-            //Persistence
-            await repository.Update(instance);
-            await unitOfWork.Commit();
+        //Persistence
+        await repository.Update(instance);
+        await unitOfWork.Commit();
 
-            return instance;
-        }
+        return instance;
     }
 }

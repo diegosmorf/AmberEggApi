@@ -5,7 +5,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Api.Common.Repository.Contracts.Core\Api.Common.Repository.csproj" />
 		<ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
 	</ItemGroup>
 

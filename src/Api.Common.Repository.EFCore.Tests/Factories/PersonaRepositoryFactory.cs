@@ -1,6 +1,9 @@
 ﻿using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
 using Api.Common.Repository.Repositories;
+
+using AutoMapper;
+
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -8,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace Api.Common.Repository.EFCoreTests.Factories;
 
-public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork)
+public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWork unitOfWork, IMapper mapper)
 {
     private readonly IRepository<Persona> repository = repository;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IMapper mapper = mapper;
 
     public async Task<Persona> Create(string name)
     {
@@ -22,8 +26,8 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
     public async Task<Persona> Create(CreatePersonaCommand command)
     {
         var datetime = DateTime.UtcNow;
-        var persona = new Persona();
-        persona.Create(command);
+        var persona = mapper.Map<Persona>(command);
+        persona.Create();
 
         // act
         await repository.Insert(persona);
@@ -38,8 +42,6 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
 
         return persona;
     }
-
-
     public async Task<Persona> Get(Guid id)
     {
         return await repository.SearchById(id);
@@ -97,7 +99,8 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
     public async Task<Persona> Update(UpdatePersonaCommand command)
     {
         var persona = await Get(command.Id);
-        persona.Update(command);
+        mapper.Map(command, persona);
+        persona.Update();
 
         // act
         await repository.Update(persona);

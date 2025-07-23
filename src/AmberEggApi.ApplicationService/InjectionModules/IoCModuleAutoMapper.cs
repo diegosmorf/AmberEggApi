@@ -2,23 +2,20 @@
 using Autofac;
 using AutoMapper;
 
-namespace AmberEggApi.ApplicationService.InjectionModules
+namespace AmberEggApi.ApplicationService.InjectionModules;
+public class IoCModuleAutoMapper : Module
 {
-    public class IoCModuleAutoMapper : Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.Register(
-                    context => new MapperConfiguration(cfg =>
-                    {
-                        cfg.AddProfile(new DomainToViewModelMapping());
-                    }))
-                .AsSelf().SingleInstance();
+        builder.Register(
+                context => new MapperConfiguration(
+                    cfg => cfg.AddProfile(new DomainMapping()
+                    )))
+            .AsSelf().SingleInstance();
 
-            builder.Register(
-                    c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve))
-                .As<IMapper>()
-                .InstancePerLifetimeScope();
-        }
+        builder.Register(
+                c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve))
+            .As<IMapper>()
+            .InstancePerLifetimeScope();
     }
 }

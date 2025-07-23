@@ -4,8 +4,10 @@ namespace Api.Common.Contracts.Entities;
 
 public interface IDomainEntity
 {
-    Guid Id { get; set; }
-    DateTime CreateDate { get; set; }
-    DateTime? ModifiedDate { get; set; }
-    int Version { get; set; }
+    Guid Id { get; }
+    DateTime CreateDate { get; }
+    DateTime? ModifiedDate { get;}
+    int Version { get; }
+    void Create();
+    void Update();
 }

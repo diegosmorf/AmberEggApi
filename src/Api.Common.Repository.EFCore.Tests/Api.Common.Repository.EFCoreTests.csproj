@@ -11,7 +11,10 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" />
 	  <PackageReference Include="xunit" />
-	  <PackageReference Include="xunit.runner.visualstudio"/>       
+	  <PackageReference Include="xunit.runner.visualstudio">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>       
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +22,6 @@
     <ProjectReference Include="..\AmberEggApi.Domain.Tests\AmberEggApi.DomainTests.csproj" />
     <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
     <ProjectReference Include="..\AmberEggApi.Infrastructure\AmberEggApi.Infrastructure.csproj" />
-    <ProjectReference Include="..\Api.Common.Repository.Contracts.Core\Api.Common.Repository.csproj" />
   </ItemGroup>
 
 </Project>

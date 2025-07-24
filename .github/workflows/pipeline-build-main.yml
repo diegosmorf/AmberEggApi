@@ -36,5 +36,5 @@ jobs:
         projectBaseDir: src
         organization: "${{ secrets.SONAR_ORGANIZATION }}"
         projectKey: "${{ secrets.PROJECT_KEY }}"
-        login: "${{ secrets.SONAR_TOKEN }}"                
+        token: "${{ secrets.SONAR_TOKEN }}"                
         verbose: true          

@@ -30,10 +30,10 @@ jobs:
       with:
         projectBaseDir: src
         args: >
+          -Dsonar.host.url="https://sonarcloud.io"
           -Dsonar.organization="${{ secrets.SONAR_ORGANIZATION }}"
           -Dsonar.projectKey="${{ secrets.PROJECT_KEY }}"
-          -Dsonar.login="${{ secrets.SONAR_TOKEN }}"
-          -Dsonar.python.coverage.reportPaths=coverage.xml          
+          -Dsonar.login="${{ secrets.SONAR_TOKEN }}"                
           -Dsonar.verbose=true
           -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml 
           -Dsonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"      

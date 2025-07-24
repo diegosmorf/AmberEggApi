@@ -25,14 +25,16 @@ jobs:
         java-version: 17
         distribution: temurin
         
-    - name: Setup SonarCloud Scanner      
+    - name: Setup SonarCloud Scanner Tool
       run: dotnet tool install --global dotnet-sonarscanner
       working-directory: src
-               
-    - name: Build
-      run: |          
-          dotnet tool install --global dotnet-coverage
 
+    - name: Setup .NET Coverage Tool
+      run: dotnet tool install --global dotnet-coverage
+      working-directory: src
+               
+    - name: Build and Test Coverage Gathering
+      run: |          
           dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"
           dotnet build --configuration Release
           dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'

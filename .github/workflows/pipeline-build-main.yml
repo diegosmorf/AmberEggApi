@@ -30,20 +30,17 @@ jobs:
     - name: Run tests with coverage
       run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
       working-directory: src
-
-    - uses: SonarSource/sonarcloud-github-action@v5.0.0
+    
+    - name: Setup SonarCloud
+      uses: SonarSource/sonarcloud-github-action@v2
       with:
-        projectBaseDir: src
+          organization: ${{ secrets.SONAR_ORG }}
+          token: ${{ secrets.SONAR_TOKEN }}
 
-    - name: Run SonarCloud analysis
-      uses: codebeltnet/sonarcloud-scan@v2.0.0
-      with:        
-        token: "${{ secrets.SONAR_TOKEN }}"        
-        projectKey: "${{ secrets.PROJECT_KEY }}"        
-        organization: "${{ secrets.SONAR_ORGANIZATION }}"
-        projectBaseDir: src
-        parameters: 
-           -d:sonar.verbose=true
-           -d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-           -d:sonar.exclusions='**/obj/**,**/bin/**'
-           -d:sonar.test.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"   
+    - name: Build and Test Coverage Gathering
+      run: |          
+          dotnet tool install --global dotnet-sonarscanner
+          dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml /d:sonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"
+          dotnet build     
+          dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      working-directory: src

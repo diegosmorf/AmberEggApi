@@ -34,7 +34,11 @@ jobs:
     - uses: SonarSource/sonarcloud-github-action@v5.0.0
       with:
         projectBaseDir: src
-        organization: "${{ secrets.SONAR_ORGANIZATION }}"
-        projectKey: "${{ secrets.PROJECT_KEY }}"
-        token: "${{ secrets.SONAR_TOKEN }}"                
-        verbose: true          
+        args: >
+           -Dsonar.host.url="https://sonarcloud.io"
+           -Dsonar.organization="${{ secrets.SONAR_ORGANIZATION }}"
+           -Dsonar.projectKey="${{ secrets.PROJECT_KEY }}"
+           -Dsonar.login="${{ secrets.SONAR_TOKEN }}"                
+           -Dsonar.verbose=true
+           -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml 
+           -Dsonar.test.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"   

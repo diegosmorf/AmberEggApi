@@ -18,22 +18,23 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x        
-
-    - name: Setup .NET Coverage Tool
-      run: dotnet tool install --global dotnet-coverage      
-
-    - name: Build and Test Coverage Gathering
-      run: dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'          
+   
+    - name: Install dependencies
+      run: dotnet restore
       working-directory: src
 
-    - uses: SonarSource/sonarqube-scan-action@v5.3.0
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release
+      working-directory: src
+
+    - name: Run tests with coverage
+      run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      working-directory: src
+
+    - uses: SonarSource/sonarcloud-github-action@v5.0.0
       with:
         projectBaseDir: src
-        args: >
-          -Dsonar.host.url="https://sonarcloud.io"
-          -Dsonar.organization="${{ secrets.SONAR_ORGANIZATION }}"
-          -Dsonar.projectKey="${{ secrets.PROJECT_KEY }}"
-          -Dsonar.login="${{ secrets.SONAR_TOKEN }}"                
-          -Dsonar.verbose=true
-          -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml 
-          -Dsonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"      
+        organization: "${{ secrets.SONAR_ORGANIZATION }}"
+        projectKey: "${{ secrets.PROJECT_KEY }}"
+        login: "${{ secrets.SONAR_TOKEN }}"                
+        verbose: true          

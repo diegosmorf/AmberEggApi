@@ -17,7 +17,14 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x           
+        dotnet-version: 9.0.x        
+
+    - name: Setup .NET Coverage Tool
+      run: dotnet tool install --global dotnet-coverage      
+
+    - name: Build and Test Coverage Gathering
+      run: dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'          
+      working-directory: src
 
     - uses: SonarSource/sonarqube-scan-action@v5.3.0
       with:

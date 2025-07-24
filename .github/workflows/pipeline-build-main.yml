@@ -34,11 +34,16 @@ jobs:
     - uses: SonarSource/sonarcloud-github-action@v5.0.0
       with:
         projectBaseDir: src
-        args: >
-           -Dsonar.host.url="https://sonarcloud.io"
-           -Dsonar.organization="${{ secrets.SONAR_ORGANIZATION }}"
-           -Dsonar.projectKey="${{ secrets.PROJECT_KEY }}"
-           -Dsonar.login="${{ secrets.SONAR_TOKEN }}"                
-           -Dsonar.verbose=true
-           -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml 
-           -Dsonar.test.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"   
+
+    - name: Run SonarCloud analysis
+      uses: codebeltnet/sonarcloud-scan@v2.0.0
+      with:        
+        token: "${{ secrets.SONAR_TOKEN }}"        
+        projectKey: "${{ secrets.PROJECT_KEY }}"        
+        organization: "${{ secrets.SONAR_ORGANIZATION }}"
+        projectBaseDir: src
+        parameters: 
+           -d:sonar.verbose=true
+           -d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+           -d:sonar.exclusions='**/obj/**,**/bin/**'
+           -d:sonar.test.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"   

@@ -1,4 +1,4 @@
-name: AmberEggApi Build Test Sonar
+name: Build Test Quality
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: BuildTest
+    name: BuildTestQuality
     runs-on: ubuntu-latest
     steps:
 
@@ -17,26 +17,16 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x       
+        dotnet-version: 9.0.x           
 
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:        
-        java-version: 17
-        distribution: temurin
-        
-    - name: Setup SonarCloud Scanner Tool
-      run: dotnet tool install --global dotnet-sonarscanner
-      working-directory: src
-
-    - name: Setup .NET Coverage Tool
-      run: dotnet tool install --global dotnet-coverage
-      working-directory: src
-               
-    - name: Build and Test Coverage Gathering
-      run: |          
-          dotnet-sonarscanner begin /k:"${{ secrets.PROJECT_KEY }}" /o:"${{ secrets.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"
-          dotnet build --configuration Release
-          dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
-          dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      working-directory: src
+    - uses: SonarSource/sonarqube-scan-action@v5.3.0
+      with:
+        projectBaseDir: src
+        args: >
+          -Dsonar.organization="${{ secrets.SONAR_ORGANIZATION }}"
+          -Dsonar.projectKey="${{ secrets.PROJECT_KEY }}"
+          -Dsonar.login="${{ secrets.SONAR_TOKEN }}"
+          -Dsonar.python.coverage.reportPaths=coverage.xml          
+          -Dsonar.verbose=true
+          -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml 
+          -Dsonar.exclusions="**.Database/**,**.Tests/**,**.WebApi*/**"      

@@ -1,6 +1,8 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
+
 using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Contracts.Repositories;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
 using AmberEggApi.Domain.Models;
 using AmberEggApi.Repository.EFCoreTests.Factories;
 
@@ -152,7 +152,6 @@ public class PersonaDomainTest
         expectedInserted.Should().Be(currentInserted);
         finalResult.Should().Be(currentResult);
     }
-
 
     [Theory()]
     [InlineData("P")]

@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace AmberEggApi.Domain.Commands;
+namespace AmberEggApi.Domain.Commands.Persona;
 public class CreatePersonaCommand(string name) : Command
 {
     [MinLength(2)]

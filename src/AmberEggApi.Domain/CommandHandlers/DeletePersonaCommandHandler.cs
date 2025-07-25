@@ -1,8 +1,8 @@
-﻿using AmberEggApi.Domain.Commands;
-using AmberEggApi.Domain.Models;
+﻿using AmberEggApi.Domain.Models;
 using System.Threading.Tasks;
 using AmberEggApi.Contracts.CommandHandlers;
 using AmberEggApi.Contracts.Repositories;
+using AmberEggApi.Domain.Commands.Persona;
 
 namespace AmberEggApi.Domain.CommandHandlers;
 public class DeletePersonaCommandHandler(IRepository<Persona> repository, IUnitOfWork unitOfWork) :

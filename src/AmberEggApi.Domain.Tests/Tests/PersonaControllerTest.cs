@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Contracts.Exceptions;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
 using AmberEggApi.DomainTests.Factories;
 
 using Autofac;
@@ -112,13 +112,12 @@ public class PersonaControllerTest
         var command = new CreatePersonaCommand(name);
 
         // act
-        Func<Task> action = async () => { await factory.Create(command); };
+        Func<Task> action = async () => await factory.Create(command);
 
         // assert
         action.Should()
             .ThrowAsync<ModelException>()
             .Where(x => x.Errors.Count() == expectedNumberOfErrors);
-
 
         action.Should()
             .ThrowAsync<ModelException>()

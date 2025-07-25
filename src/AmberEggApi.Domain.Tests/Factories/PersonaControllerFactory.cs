@@ -1,8 +1,11 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
 using AmberEggApi.WebApi.Controllers;
+
 using FluentAssertions;
+
 using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.Collections.Generic;
 using System.Net;

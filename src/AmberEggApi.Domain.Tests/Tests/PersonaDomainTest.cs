@@ -1,15 +1,8 @@
 ﻿using AmberEggApi.Contracts.Exceptions;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
 using AmberEggApi.DomainTests.Factories;
-
 using Autofac;
-
 using FluentAssertions;
-
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
-
 using System;
 using System.Linq;
 using System.Threading.Tasks;

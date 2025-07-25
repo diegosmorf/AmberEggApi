@@ -1,8 +1,11 @@
 ﻿using AmberEggApi.Contracts.Repositories;
-using AmberEggApi.Domain.Commands;
+using AmberEggApi.Domain.Commands.Persona;
 using AmberEggApi.Domain.Models;
+
 using AutoMapper;
+
 using FluentAssertions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

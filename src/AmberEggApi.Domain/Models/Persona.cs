@@ -1,6 +1,4 @@
 ﻿using AmberEggApi.Contracts.Entities;
-using AmberEggApi.Domain.Commands;
-
 using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Models;

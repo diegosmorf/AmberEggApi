@@ -1,6 +1,6 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
 using AmberEggApi.ApplicationService.ViewModels;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Contracts.Repositories;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
 using AmberEggApi.Repository.EFCoreTests.Factories;
 

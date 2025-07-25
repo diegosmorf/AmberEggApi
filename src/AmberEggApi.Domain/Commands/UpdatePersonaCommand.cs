@@ -3,8 +3,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AmberEggApi.Domain.Commands.Persona;
-public class UpdatePersonaCommand(Guid id, string name) : Command
+namespace AmberEggApi.Domain.Commands;
+public class UpdatePersonaCommand(Guid id, string name) : Command, IUpdateCommand
 {
     [Required]
     public Guid Id { get; } = id;

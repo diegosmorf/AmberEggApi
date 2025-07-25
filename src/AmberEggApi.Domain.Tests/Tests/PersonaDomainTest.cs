@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Contracts.Exceptions;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.DomainTests.Factories;
 using Autofac;
 using FluentAssertions;
@@ -205,9 +205,7 @@ public class PersonaDomainTest
         //arrange
         var command = new CreatePersonaCommand("Test-CreateCommand");
         var id = command.MessageId;
-        var type = command.MessageType;
-        var createdDate = command.MessageCreatedDate;
-        var expectedMessage = $"MessageId:{id} - MessageType:{type} - TimeStamp:{createdDate}";
+        var expectedMessage = $"MessageId:{id}";
 
         // assert
         command.ToString().Should().BeEquivalentTo(expectedMessage);

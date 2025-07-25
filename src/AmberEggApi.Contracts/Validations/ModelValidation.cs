@@ -15,7 +15,8 @@ namespace AmberEggApi.Contracts.Validations
 
             Validator.TryValidateObject(instance, validationContext, result, true);
 
-            if (instance is IValidatableObject parsedInstance) parsedInstance.Validate(validationContext);
+            if (instance is IValidatableObject parsedInstance) 
+                parsedInstance.Validate(validationContext);
 
             return result;
         }

@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.ApplicationService.ViewModels;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
 
 using AutoMapper;

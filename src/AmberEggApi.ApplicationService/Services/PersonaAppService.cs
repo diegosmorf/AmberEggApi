@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AmberEggApi.Contracts.Commands;
 using AmberEggApi.Contracts.Repositories;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 
 namespace AmberEggApi.ApplicationService.Services;
 public class PersonaAppService(ICommandProducer producer, IMapper mapper, IRepository<Persona> repository) : IPersonaAppService

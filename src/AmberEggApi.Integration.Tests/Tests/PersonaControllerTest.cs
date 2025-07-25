@@ -38,9 +38,7 @@ public class PersonaControllerTest
     [Theory()]
     [InlineData("")]
     [InlineData(null)]
-    [InlineData(" ")]
-    [InlineData("1")]
-    [InlineData("Persona-Test-Invalid-Name-1234567890")]
+    [InlineData(" ")]    
     public async Task When_Invalid_GetByName_Then_BadRequest(string name)
     {
         // act

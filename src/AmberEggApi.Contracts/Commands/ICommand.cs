@@ -3,8 +3,16 @@
 namespace AmberEggApi.Contracts.Commands;
 
 public interface ICommand
-{
+{    
     Guid MessageId { get; }
-    string MessageType { get; }
-    DateTime MessageCreatedDate { get; }
+}
+
+public interface IUpdateCommand:ICommand
+{
+    Guid Id { get; }    
+}
+
+public interface IDeleteCommand : ICommand
+{
+    Guid Id { get; }
 }

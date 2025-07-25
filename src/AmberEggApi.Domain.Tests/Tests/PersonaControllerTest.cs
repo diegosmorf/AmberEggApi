@@ -1,5 +1,5 @@
 ﻿using AmberEggApi.Contracts.Exceptions;
-using AmberEggApi.Domain.Commands.Persona;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.DomainTests.Factories;
 
 using Autofac;

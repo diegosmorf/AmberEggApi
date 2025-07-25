@@ -8,15 +8,11 @@ public abstract class Command : ICommand
 
     protected Command(Guid messageId)
     {
-        MessageId = messageId;
-        MessageType = GetType().Name;
-        MessageCreatedDate = DateTime.UtcNow;
-    }
+        this.MessageId = messageId;
+    }    
     public Guid MessageId { get; }
-    public string MessageType { get; }
-    public DateTime MessageCreatedDate { get; }
     public override string ToString()
     {
-        return $"MessageId:{MessageId} - MessageType:{MessageType} - TimeStamp:{MessageCreatedDate}";
+        return $"MessageId:{this.MessageId}";
     }
 }

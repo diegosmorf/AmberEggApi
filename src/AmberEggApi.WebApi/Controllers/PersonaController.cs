@@ -1,10 +1,7 @@
 ﻿using AmberEggApi.ApplicationService.Interfaces;
-using AmberEggApi.Domain.Commands.Persona;
-
+using AmberEggApi.Domain.Commands;
 using Microsoft.AspNetCore.Mvc;
-
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,11 +18,11 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromRoute, Required] Guid id)
+    public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        if (!ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return BadRequest(this.ModelState);
         }
 
         var result = await appService.Get(id);
@@ -34,11 +31,11 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     }
 
     [HttpGet("name/{name}")]
-    public async Task<IActionResult> Get([FromRoute, Required, MinLength(2), MaxLength(20)] string name)
+    public async Task<IActionResult> Get([FromRoute] string name)
     {
-        if (!ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return BadRequest(this.ModelState);
         }        
 
         var result = await appService.GetListByName(name);
@@ -47,11 +44,11 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody, Required] CreatePersonaCommand command)
+    public async Task<IActionResult> Create([FromBody] CreatePersonaCommand command)
     {
-        if (!ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return BadRequest(this.ModelState);
         }
 
         var result = await appService.Create(command);
@@ -59,7 +56,7 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete([FromRoute, Required] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         if (id == Guid.Empty)
         {
@@ -79,11 +76,11 @@ public class PersonaController(IPersonaAppService appService) : BaseController
     }
 
     [HttpPut()]
-    public async Task<IActionResult> Update([FromBody, Required] UpdatePersonaCommand command)
+    public async Task<IActionResult> Update([FromBody] UpdatePersonaCommand command)
     {
-        if (!ModelState.IsValid)
+        if (!this.ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return BadRequest(this.ModelState);
         }
 
         if (command.Id == Guid.Empty)

@@ -1,4 +1,5 @@
-﻿using AmberEggApi.Cqrs.Core.Commands;
+﻿using AmberEggApi.Contracts.Commands;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace AmberEggApi.Domain.Commands;

@@ -1,6 +1,8 @@
-﻿using AmberEggApi.Repository.Entities;
-using AmberEggApi.Repository.Repositories;
+﻿using AmberEggApi.Contracts.Entities;
+using AmberEggApi.Contracts.Repositories;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,12 +1,9 @@
 ﻿using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-
-using AmberEggApi.Cqrs.Core.CommandHandlers;
-using AmberEggApi.Repository.Repositories;
-
 using AutoMapper;
-
 using System.Threading.Tasks;
+using AmberEggApi.Contracts.CommandHandlers;
+using AmberEggApi.Contracts.Repositories;
 
 namespace AmberEggApi.Domain.CommandHandlers;
 public class CreatePersonaCommandHandler(IRepository<Persona> repository, IMapper mapper, IUnitOfWork unitOfWork) :
@@ -20,14 +17,10 @@ public class CreatePersonaCommandHandler(IRepository<Persona> repository, IMappe
     {
         //Domain
         var instance = mapper.Map<Persona>(command);
-        instance.Create();
-
         //Persistence
         await repository.Insert(instance);
-
         //Commit
         await unitOfWork.Commit();
-
         return instance;
     }
 }

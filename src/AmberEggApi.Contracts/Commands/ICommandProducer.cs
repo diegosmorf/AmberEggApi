@@ -1,7 +1,8 @@
 ﻿using AmberEggApi.Contracts.Entities;
+
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Cqrs.Core.Commands;
+namespace AmberEggApi.Contracts.Commands;
 
 public interface ICommandProducer
 {

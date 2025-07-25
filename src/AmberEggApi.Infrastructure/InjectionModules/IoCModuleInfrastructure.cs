@@ -1,10 +1,14 @@
-﻿using AmberEggApi.Database.Repositories;
+﻿using AmberEggApi.Contracts.Repositories;
+using AmberEggApi.Database.Repositories;
 using AmberEggApi.Infrastructure.Bus;
 using AmberEggApi.Repository.EFCore;
-using AmberEggApi.Repository.Repositories;
+
 using Autofac;
+
 using Microsoft.EntityFrameworkCore;
+
 using System.Reflection;
+
 using Module = Autofac.Module;
 
 namespace AmberEggApi.Infrastructure.InjectionModules;

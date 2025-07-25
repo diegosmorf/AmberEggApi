@@ -1,7 +1,9 @@
-﻿using AmberEggApi.Contracts.Entities;
-using AmberEggApi.Cqrs.Core.CommandHandlers;
-using AmberEggApi.Cqrs.Core.Commands;
+﻿using AmberEggApi.Contracts.CommandHandlers;
+using AmberEggApi.Contracts.Commands;
+using AmberEggApi.Contracts.Entities;
+
 using Autofac;
+
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Infrastructure.Bus;

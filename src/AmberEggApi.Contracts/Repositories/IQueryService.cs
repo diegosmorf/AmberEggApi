@@ -1,10 +1,11 @@
 using AmberEggApi.Contracts.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Repository.Repositories;
+namespace AmberEggApi.Contracts.Repositories;
 
 public interface IQueryService<TEntity> where TEntity : IDomainEntity
 {

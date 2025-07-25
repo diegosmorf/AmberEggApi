@@ -1,8 +1,7 @@
-﻿using AmberEggApi.Contracts.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AmberEggApi.Repository.Entities;
+namespace AmberEggApi.Contracts.Entities;
 
 public abstract class DomainEntity : IDomainEntity
 {

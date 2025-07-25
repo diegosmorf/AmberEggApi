@@ -1,10 +1,10 @@
-﻿using AmberEggApi.Cqrs.Core.Commands;
-using AmberEggApi.Repository.Exceptions;
+﻿using AmberEggApi.Contracts.Commands;
+using AmberEggApi.Contracts.Exceptions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace AmberEggApi.Repository.Validations
+namespace AmberEggApi.Contracts.Validations
 {
     public static class ModelValidation
     {

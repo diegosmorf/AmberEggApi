@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AmberEggApi.Cqrs.Core.Commands;
+namespace AmberEggApi.Contracts.Commands;
 
 public interface ICommand
 {

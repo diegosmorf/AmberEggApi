@@ -1,12 +1,11 @@
-﻿using AmberEggApi.Domain.Commands;
+﻿using AmberEggApi.Contracts.Repositories;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-using AmberEggApi.Repository.Repositories;
-
 using AutoMapper;
-
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Repository.EFCoreTests.Factories;
@@ -26,22 +25,44 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
     public async Task<Persona> Create(CreatePersonaCommand command)
     {
         var datetime = DateTime.UtcNow;
-        var persona = mapper.Map<Persona>(command);
-        persona.Create();
-
+        var entity = mapper.Map<Persona>(command);
         // act
-        await repository.Insert(persona);
+        await repository.Insert(entity);
+        await unitOfWork.Commit();
+        // assert
+        AssertEntityCommand(datetime, entity, command);
+        return entity;
+    }
+
+    public async Task<IEnumerable<Persona>> Create(IEnumerable<CreatePersonaCommand> commands)
+    {
+        var datetime = DateTime.UtcNow;
+        var entities = mapper.Map<IEnumerable<Persona>>(commands);
+        // act
+        await repository.Insert(entities);
         await unitOfWork.Commit();
 
         // assert
-        persona.Id.Should().NotBe(Guid.Empty);
-        persona.Name.Should().Be(command.Name);
-        persona.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
-        persona.ModifiedDate.Should().BeNull();
-        persona.ToString().Should().Be($"Type:{persona.GetType().Name} - Id:{persona.Id}");
+        foreach (var entity in entities)
+        {
+            var command = commands.FirstOrDefault(x => x.Name == entity.Name);
+            AssertEntityCommand(datetime, entity, command);
+        }
 
-        return persona;
+        return entities;
     }
+
+    private static void AssertEntityCommand(DateTime datetime, Persona entity, CreatePersonaCommand command)
+    {
+        entity.Should().NotBeNull();
+        entity.Id.Should().NotBe(Guid.Empty);
+        entity.Name.Should().Be(command.Name);
+        entity.CreateDate.ToShortDateString().Should().Be(datetime.ToShortDateString());
+        entity.ModifiedDate.Should().BeNull();
+        entity.ModifiedDate?.ToShortDateString().Should().Be(datetime.ToShortDateString());
+        entity.ToString().Should().Be($"Type:{entity.GetType().Name} - Id:{entity.Id}");
+    }
+
     public async Task<Persona> Get(Guid id)
     {
         return await repository.SearchById(id);
@@ -100,12 +121,9 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
     {
         var persona = await Get(command.Id);
         mapper.Map(command, persona);
-        persona.Update();
-
         // act
         await repository.Update(persona);
         await unitOfWork.Commit();
-
         // assert
         persona.Id.Should().Be(command.Id);
         persona.Name.Should().Be(command.Name);

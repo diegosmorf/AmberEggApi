@@ -1,12 +1,16 @@
-﻿using AmberEggApi.Domain.Commands;
+﻿using AmberEggApi.Contracts.Exceptions;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.DomainTests.Factories;
-using AmberEggApi.Repository.Exceptions;
+
 using Autofac;
+
 using FluentAssertions;
+
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace AmberEggApi.DomainTests.Tests;

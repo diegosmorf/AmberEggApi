@@ -1,6 +1,6 @@
 using AmberEggApi.Contracts.Entities;
 
-namespace AmberEggApi.Repository.Repositories;
+namespace AmberEggApi.Contracts.Repositories;
 
 public interface IRepository<TEntity> :
     IPersistenceService<TEntity>,

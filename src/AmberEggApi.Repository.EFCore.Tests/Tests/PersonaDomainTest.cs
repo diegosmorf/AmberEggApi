@@ -1,12 +1,16 @@
-﻿using AmberEggApi.Domain.Commands;
+﻿using AmberEggApi.Contracts.Repositories;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
 using AmberEggApi.Repository.EFCoreTests.Factories;
-using AmberEggApi.Repository.Repositories;
+
 using Autofac;
+
 using FluentAssertions;
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace AmberEggApi.Repository.EFCoreTests.Tests;
@@ -118,6 +122,37 @@ public class PersonaDomainTest
         expectedInserted.Should().Be(currentInserted);
         finalResult.Should().Be(currentResult);
     }
+
+    [Theory()]
+    [InlineData("P")]
+    [InlineData("Persona-Test")]
+    [InlineData("Persona-Test 1")]
+    [InlineData("Persona-Test 10")]
+    public async Task WhenCreateList_Then_DeleteMultiples(string name)
+    {
+        // arrange
+        var expectedName = $"{name}-{index++}";
+        var expectedInserted = 4;
+        var listToCreate = new[]
+        {
+            new CreatePersonaCommand(expectedName),
+            new CreatePersonaCommand(expectedName),
+            new CreatePersonaCommand(expectedName),
+            new CreatePersonaCommand(expectedName)
+        };
+        var finalResult = 0;
+
+        // act
+        await factory.DeleteAll();
+        await factory.Create(listToCreate);
+        var currentInserted = (await repository.SearchList(x => x.Name.Contains(expectedName))).Count();
+        await factory.DeleteAll();
+        var currentResult = (await repository.ListAll()).Count();
+        // assert
+        expectedInserted.Should().Be(currentInserted);
+        finalResult.Should().Be(currentResult);
+    }
+
 
     [Theory()]
     [InlineData("P")]

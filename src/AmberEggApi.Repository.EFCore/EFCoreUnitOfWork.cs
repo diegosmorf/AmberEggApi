@@ -1,5 +1,7 @@
-﻿using AmberEggApi.Repository.Repositories;
+﻿using AmberEggApi.Contracts.Repositories;
+
 using Microsoft.EntityFrameworkCore;
+
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Repository.EFCore

@@ -2,13 +2,13 @@
 using AmberEggApi.ApplicationService.ViewModels;
 using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-using AmberEggApi.Cqrs.Core.Commands;
-using AmberEggApi.Repository.Repositories;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AmberEggApi.Contracts.Commands;
+using AmberEggApi.Contracts.Repositories;
 
 namespace AmberEggApi.ApplicationService.Services;
 public class PersonaAppService(ICommandProducer producer, IMapper mapper, IRepository<Persona> repository) : IPersonaAppService

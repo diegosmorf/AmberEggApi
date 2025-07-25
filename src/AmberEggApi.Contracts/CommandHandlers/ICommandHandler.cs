@@ -1,8 +1,9 @@
-﻿using AmberEggApi.Contracts.Entities;
-using AmberEggApi.Cqrs.Core.Commands;
+﻿using AmberEggApi.Contracts.Commands;
+using AmberEggApi.Contracts.Entities;
+
 using System.Threading.Tasks;
 
-namespace AmberEggApi.Cqrs.Core.CommandHandlers;
+namespace AmberEggApi.Contracts.CommandHandlers;
 
 public interface ICommandHandler<in TCommand, TDomainEntity>
     where TCommand : ICommand

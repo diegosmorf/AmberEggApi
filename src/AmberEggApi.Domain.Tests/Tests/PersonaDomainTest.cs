@@ -1,11 +1,19 @@
-﻿using AmberEggApi.Domain.Commands;
+﻿using AmberEggApi.Contracts.Exceptions;
+using AmberEggApi.Domain.Commands;
 using AmberEggApi.DomainTests.Factories;
-using AmberEggApi.Repository.Exceptions;
+
 using Autofac;
+
 using FluentAssertions;
+
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace AmberEggApi.DomainTests.Tests;
@@ -196,5 +204,19 @@ public class PersonaDomainTest
         Func<Task> action = async () => { await factory.Delete(Guid.Empty); };
         // assert
         await action.Should().NotThrowAsync<ModelException>();
+    }
+
+    [Fact]
+    public void When_CreateCommand_Then_ToStringDescribeMessage()
+    {
+        //arrange
+        var command = new CreatePersonaCommand("Test-CreateCommand");
+        var id = command.MessageId;
+        var type = command.MessageType;
+        var createdDate = command.MessageCreatedDate;
+        var expectedMessage = $"MessageId:{id} - MessageType:{type} - TimeStamp:{createdDate}";
+
+        // assert
+        command.ToString().Should().BeEquivalentTo(expectedMessage);
     }
 }

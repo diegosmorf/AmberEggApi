@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace AmberEggApi.ApplicationService.QueryHandlers;
 
 public class GenericQueryHandler<TDomainEntity, TViewlModel>(IMapper mapper, IRepository<TDomainEntity> repository) :
-    IQueryHandler<TDomainEntity, TViewlModel>
+    IQueryHandler<TViewlModel>
         where TDomainEntity : class, IDomainEntity, new()
         where TViewlModel : class, IViewModel, new()
 {

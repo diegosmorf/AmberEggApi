@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace AmberEggApi.ApplicationService.Contracts;
 
-public interface IQueryHandler<TDomainEntity, TViewlModel>
-    where TDomainEntity : class, IDomainEntity
+public interface IQueryHandler<TViewlModel>    
     where TViewlModel : class, IViewModel
 {
     Task<IEnumerable<TViewlModel>> GetAll(CancellationToken cancellationToken);
     Task<TViewlModel> Get(Guid id, CancellationToken cancellationToken);   
-
 }

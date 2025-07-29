@@ -43,7 +43,7 @@ public class EfCoreRepository<TEntity> : IRepository<TEntity> where TEntity : Do
 
     public async Task<TEntity> SearchById(Guid id, CancellationToken cancellationToken)
     {
-        return await dbSet.FindAsync(id, cancellationToken);
+        return await dbSet.FindAsync(keyValues: [id], cancellationToken: cancellationToken);
     }
 
     public async Task<IEnumerable<TEntity>> SearchList(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)

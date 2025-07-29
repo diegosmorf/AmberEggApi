@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AmberEggApi.ApplicationService.Contracts;
 
 public interface IPersonaQueryHandler:    
-    IQueryHandler<Persona, PersonaViewModel>        
+    IQueryHandler<PersonaViewModel>        
 {
     Task<IEnumerable<PersonaViewModel>> GetListByName(string name, CancellationToken cancellationToken);
 }

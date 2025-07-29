@@ -41,7 +41,7 @@ public class ObjectMapper : IMapper
     }
 
     // Helper: maps public properties with the same name from source to target
-    private void MapProperties<TSourceModel, TTargetModel>(TSourceModel source, TTargetModel target)
+    private static void MapProperties<TSourceModel, TTargetModel>(TSourceModel source, TTargetModel target)
         where TSourceModel : class
         where TTargetModel : class
     {

@@ -10,13 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.ApplicationService.QueryHandlers;
-public class PersonaQueryHandler : 
-    GenericQueryHandler<Persona, PersonaViewModel>, IPersonaQueryHandler
+public class PersonaQueryHandler(IMapper mapper, IRepository<Persona> repository) : 
+    GenericQueryHandler<Persona, PersonaViewModel>(mapper, repository), IPersonaQueryHandler
 {
-    public PersonaQueryHandler(IMapper mapper, IRepository<Persona> repository):base(mapper, repository)
-    {        
-    }
-
     public async Task<IEnumerable<PersonaViewModel>> GetListByName(string name, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name) || name.Length <= 2)

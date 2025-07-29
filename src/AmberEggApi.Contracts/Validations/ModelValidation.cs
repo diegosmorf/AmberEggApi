@@ -19,7 +19,7 @@ public static class ModelValidation
         if (command is IValidatableObject parsedInstance)
             parsedInstance.Validate(validationContext);
 
-        if (result.Any())
+        if (result.Count > 0)
         {
             var errors = string.Join(", ", result.Select(x => x.ErrorMessage));
             throw new DomainModelException(

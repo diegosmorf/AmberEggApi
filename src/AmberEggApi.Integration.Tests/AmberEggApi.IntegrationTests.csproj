@@ -13,6 +13,7 @@
  </ItemGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Autofac.Extensions.DependencyInjection" />
 	  <PackageReference Include="FluentAssertions" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
 	  <PackageReference Include="Microsoft.AspNetCore.TestHost" />

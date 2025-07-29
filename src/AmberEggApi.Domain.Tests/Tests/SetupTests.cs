@@ -4,6 +4,8 @@ using AmberEggApi.DomainTests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
 using System;
 
 namespace AmberEggApi.DomainTests.Tests;
@@ -15,11 +17,10 @@ public class SetupTests : IDisposable
 
     public SetupTests()
     {
-        // Setup IoC Container
+        // Setup IoC Container        
         var builder = new ContainerBuilder();
         builder.RegisterModule(new IoCModuleApplicationService());
-        builder.RegisterModule(new IoCModuleInfrastructure());
-        builder.RegisterModule(new IoCModuleAutoMapper());
+        builder.RegisterModule(new IoCModuleInfrastructure());        
         builder.RegisterModule(new IoCModuleDomainTest());
 
         var opt = new DbContextOptionsBuilder<EfCoreDbContext>();

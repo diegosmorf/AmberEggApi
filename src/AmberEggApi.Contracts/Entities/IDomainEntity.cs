@@ -11,3 +11,4 @@ public interface IDomainEntity
     void Create();
     void Update();
 }
+

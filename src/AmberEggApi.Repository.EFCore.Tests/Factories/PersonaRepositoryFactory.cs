@@ -1,14 +1,13 @@
-﻿using AmberEggApi.Contracts.Repositories;
+﻿using AmberEggApi.ApplicationService.Mapping;
+using AmberEggApi.Contracts.Repositories;
 using AmberEggApi.Domain.Commands;
 using AmberEggApi.Domain.Models;
-
-using AutoMapper;
-
 using FluentAssertions;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Repository.EFCoreTests.Factories;
@@ -19,31 +18,31 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
 
-    public async Task<Persona> Create(string name)
+    public async Task<Persona> Create(string name, CancellationToken cancellationToken)
     {
         var command = new CreatePersonaCommand(name);
-        return await Create(command);
+        return await Create(command, cancellationToken);
     }
 
-    public async Task<Persona> Create(CreatePersonaCommand command)
+    public async Task<Persona> Create(CreatePersonaCommand command, CancellationToken cancellationToken)
     {
         var datetime = DateTime.UtcNow;
-        var entity = mapper.Map<Persona>(command);
+        var entity = mapper.Map<CreatePersonaCommand, Persona>(command);
         // act
-        await repository.Insert(entity);
-        await unitOfWork.Commit();
+        await repository.Insert(entity, cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
         // assert
         AssertEntityCommand(datetime, entity, command);
         return entity;
     }
 
-    public async Task<IEnumerable<Persona>> Create(IEnumerable<CreatePersonaCommand> commands)
+    public async Task<IEnumerable<Persona>> Create(IEnumerable<CreatePersonaCommand> commands, CancellationToken cancellationToken)
     {
         var datetime = DateTime.UtcNow;
-        var entities = mapper.Map<IEnumerable<Persona>>(commands);
+        var entities = mapper.MapList<CreatePersonaCommand, Persona>(commands);
         // act
-        await repository.Insert(entities);
-        await unitOfWork.Commit();
+        await repository.Insert(entities, cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
 
         // assert
         foreach (var entity in entities)
@@ -66,67 +65,67 @@ public class PersonaRepositoryFactory(IRepository<Persona> repository, IUnitOfWo
         entity.ToString().Should().Be($"Type:{entity.GetType().Name} - Id:{entity.Id}");
     }
 
-    public async Task<Persona> Get(Guid id)
+    public async Task<Persona> Get(Guid id, CancellationToken cancellationToken)
     {
-        return await repository.SearchById(id);
+        return await repository.SearchById(id, cancellationToken);
     }
 
-    public async Task<IEnumerable<Persona>> GetAll()
+    public async Task<IEnumerable<Persona>> GetAll(CancellationToken cancellationToken)
     {
-        return await repository.ListAll();
+        return await repository.ListAll(cancellationToken);
     }
 
-    public async Task<IEnumerable<Persona>> GetList(string name)
+    public async Task<IEnumerable<Persona>> GetList(string name, CancellationToken cancellationToken)
     {
-        return await repository.SearchList(x => x.Name == name);
+        return await repository.SearchList(x => x.Name == name, cancellationToken);
     }
 
-    public async Task<IEnumerable<Persona>> GetListByName(string name)
+    public async Task<IEnumerable<Persona>> GetListByName(string name, CancellationToken cancellationToken)
     {
-        return await repository.SearchList(x => x.Name == name);
+        return await repository.SearchList(x => x.Name == name, cancellationToken);
     }
 
-    public async Task DeleteAll()
+    public async Task DeleteAll(CancellationToken cancellationToken)
     {
-        var list = await repository.ListAll();
+        var list = await repository.ListAll(cancellationToken);
 
         foreach (var item in list)
         {
-            await repository.Delete(item.Id);
+            await repository.Delete(item.Id, cancellationToken);
         }
 
-        await unitOfWork.Commit();
+        await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
-        await repository.Delete(id);
-        await unitOfWork.Commit();
+        await repository.Delete(id, cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task Delete(IEnumerable<Guid> list)
+    public async Task Delete(IEnumerable<Guid> list, CancellationToken cancellationToken)
     {
         foreach (var id in list)
         {
-            await repository.Delete(id);
+            await repository.Delete(id, cancellationToken);
         }
 
-        await unitOfWork.Commit();
+        await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task Update(IEnumerable<Persona> list)
+    public async Task Update(IEnumerable<Persona> list, CancellationToken cancellationToken)
     {
-        await repository.Update(list);
-        await unitOfWork.Commit();
+        await repository.Update(list,cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
     }
 
-    public async Task<Persona> Update(UpdatePersonaCommand command)
+    public async Task<Persona> Update(UpdatePersonaCommand command, CancellationToken cancellationToken)
     {
-        var persona = await Get(command.Id);
-        mapper.Map(command, persona);
+        var persona = await Get(command.Id, cancellationToken);
+        mapper.Map<UpdatePersonaCommand, Persona>(command, persona);
         // act
-        await repository.Update(persona);
-        await unitOfWork.Commit();
+        await repository.Update(persona, cancellationToken);
+        await unitOfWork.Commit(cancellationToken);
         // assert
         persona.Id.Should().Be(command.Id);
         persona.Name.Should().Be(command.Name);

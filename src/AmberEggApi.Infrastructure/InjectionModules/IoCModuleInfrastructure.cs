@@ -1,6 +1,5 @@
 ﻿using AmberEggApi.Contracts.Repositories;
 using AmberEggApi.Database.Repositories;
-using AmberEggApi.Infrastructure.Bus;
 using AmberEggApi.Repository.EFCore;
 
 using Autofac;
@@ -17,15 +16,6 @@ public class IoCModuleInfrastructure : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        // Service Bus
-        builder
-            .RegisterType<InMemoryCommandProducer>()
-            .AsImplementedInterfaces();
-
-        builder
-            .RegisterType<InMemoryCommandConsumer>()
-            .AsImplementedInterfaces();
-
         // Infra - DbContext
         builder.RegisterType<EfCoreDbContext>().As<DbContext>();
 

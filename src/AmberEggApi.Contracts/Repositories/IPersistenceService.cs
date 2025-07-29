@@ -1,21 +1,21 @@
 using AmberEggApi.Contracts.Entities;
-
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Contracts.Repositories
 {
     public interface IPersistenceService<in TEntity> where TEntity : IDomainEntity
     {
-        Task Insert(TEntity instance);
+        Task Insert(TEntity instance, CancellationToken cancellationToken);
 
-        Task Insert(IEnumerable<TEntity> instances);
+        Task Insert(IEnumerable<TEntity> instances, CancellationToken cancellationToken);
 
-        Task Delete(Guid id);
+        Task Delete(Guid id, CancellationToken cancellationToken);
 
-        Task Update(TEntity instance);
+        Task Update(TEntity instance, CancellationToken cancellationToken);
 
-        Task Update(IEnumerable<TEntity> instances);
+        Task Update(IEnumerable<TEntity> instances, CancellationToken cancellationToken);
     }
 }

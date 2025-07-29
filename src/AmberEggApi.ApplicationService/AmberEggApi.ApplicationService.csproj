@@ -5,8 +5,9 @@
   </PropertyGroup>  
 
   <ItemGroup>   
-    <PackageReference Include="Autofac" />
-    <PackageReference Include="AutoMapper"/>
+    <PackageReference Include="Autofac" />   
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="TinyMapper" />
   </ItemGroup>
 
   <ItemGroup>

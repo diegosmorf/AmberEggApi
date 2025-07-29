@@ -3,8 +3,11 @@ using AmberEggApi.Database.Repositories;
 using AmberEggApi.DomainTests.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
 using AmberEggApi.Repository.EFCoreTests.InjectionModules;
+
 using Autofac;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
 
 namespace AmberEggApi.Repository.EFCoreTests.Tests;
@@ -16,11 +19,10 @@ public class SetupTests : IDisposable
 
     public SetupTests()
     {
-        // Setup IoC Container
+        // Setup IoC Container        
         var builder = new ContainerBuilder();
         builder.RegisterModule(new IoCModuleApplicationService());
-        builder.RegisterModule(new IoCModuleInfrastructure());
-        builder.RegisterModule(new IoCModuleAutoMapper());
+        builder.RegisterModule(new IoCModuleInfrastructure());        
         builder.RegisterModule(new IoCModuleDomainTest());
         builder.RegisterModule(new IoCModuleDatabaseTest());
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Repository.EFCore;
@@ -24,65 +25,65 @@ public class EfCoreRepository<TEntity> : IRepository<TEntity> where TEntity : Do
         dbSet = this.context.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<TEntity>> ListAll()
+    public async Task<IEnumerable<TEntity>> ListAll(CancellationToken cancellationToken)
     {
-        return await dbSet.ToArrayAsync();
+        return await dbSet.ToArrayAsync(cancellationToken);
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
-        await DeleteInstance(id);
-        await context.SaveChangesAsync();
+        await DeleteInstance(id, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<TEntity> Search(Expression<Func<TEntity, bool>> expression)
+    public async Task<TEntity> Search(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
     {
-        return await dbSet.FirstOrDefaultAsync(expression);
+        return await dbSet.FirstOrDefaultAsync(expression, cancellationToken);
     }
 
-    public async Task<TEntity> SearchById(Guid id)
+    public async Task<TEntity> SearchById(Guid id, CancellationToken cancellationToken)
     {
-        return await dbSet.FindAsync(id);
+        return await dbSet.FindAsync(id, cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> SearchList(Expression<Func<TEntity, bool>> expression)
+    public async Task<IEnumerable<TEntity>> SearchList(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
     {
-        return await dbSet.Where(expression).ToArrayAsync();
+        return await dbSet.Where(expression).ToArrayAsync(cancellationToken);
     }
 
-    public async Task Insert(TEntity instance)
+    public async Task Insert(TEntity instance, CancellationToken cancellationToken)
     {
-        await InsertInstance(instance);
-        await context.SaveChangesAsync();
+        await InsertInstance(instance, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Insert(IEnumerable<TEntity> instances)
+    public async Task Insert(IEnumerable<TEntity> instances, CancellationToken cancellationToken)
     {
         foreach (var instance in instances)
         {
-            await InsertInstance(instance);
+            await InsertInstance(instance, cancellationToken);
         }
 
         if (instances.Any())
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
     }
 
-    private async Task InsertInstance(TEntity instance)
+    private async Task InsertInstance(TEntity instance, CancellationToken cancellationToken)
     {
         instance.Create();            
 
-        await dbSet.AddAsync(instance);
+        await dbSet.AddAsync(instance, cancellationToken);
     }
 
-    public async Task Update(TEntity instance)
+    public async Task Update(TEntity instance, CancellationToken cancellationToken)
     {   
         UpdateInstance(instance);
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(IEnumerable<TEntity> instances)
+    public async Task Update(IEnumerable<TEntity> instances, CancellationToken cancellationToken)
     {
         foreach (var instance in instances)
         {
@@ -91,13 +92,13 @@ public class EfCoreRepository<TEntity> : IRepository<TEntity> where TEntity : Do
 
         if (instances.Any())
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
     }
 
-    private async Task DeleteInstance(Guid id)
+    private async Task DeleteInstance(Guid id, CancellationToken cancellationToken)
     {
-        var instance = await SearchById(id);
+        var instance = await SearchById(id, cancellationToken);
 
         if (instance != null)
             DeleteInstance(instance);

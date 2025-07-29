@@ -106,8 +106,7 @@ public class PersonaControllerTest
     [InlineData("Persona-Test-Invalid-Name-1234567890")]
     public void WhenCreateNotValidEntity_Then_Error(string name)
     {
-        // arrange
-        var expectedNumberOfErrors = 1;
+        // arrange        
         var expectedMessage = "This object instance is not valid based on DataAnnotation definitions. See more details on Errors list.";
         var command = new CreatePersonaCommand(name);
 
@@ -116,11 +115,7 @@ public class PersonaControllerTest
 
         // assert
         action.Should()
-            .ThrowAsync<ModelException>()
-            .Where(x => x.Errors.Count() == expectedNumberOfErrors);
-
-        action.Should()
-            .ThrowAsync<ModelException>()
+            .ThrowAsync<DomainModelException>()
             .WithMessage(expectedMessage);
     }
 

@@ -6,7 +6,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Autofac" />
-		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" />
 	</ItemGroup>	
 	
 	<ItemGroup>

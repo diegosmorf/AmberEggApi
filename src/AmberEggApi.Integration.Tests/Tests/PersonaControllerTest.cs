@@ -44,7 +44,7 @@ public class PersonaControllerTest
         // act
         var response = await factory.Get(name);
         // assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
     [Theory()]

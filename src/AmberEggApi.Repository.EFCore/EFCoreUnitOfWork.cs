@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AmberEggApi.Repository.EFCore
@@ -10,9 +11,9 @@ namespace AmberEggApi.Repository.EFCore
     {
         private readonly DbContext context = context;
 
-        public async Task Commit()
+        public async Task Commit(CancellationToken cancellationToken)
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -9,7 +9,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" />		
+		<PackageReference Include="Autofac" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" />		
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools">

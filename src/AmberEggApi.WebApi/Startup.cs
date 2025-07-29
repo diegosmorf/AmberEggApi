@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace AmberEggApi.WebApi;
 
@@ -24,8 +25,7 @@ public class Startup(IWebHostEnvironment environment)
     {
         // IoC Container Module Registration
         builder.RegisterModule(new IoCModuleApplicationService());
-        builder.RegisterModule(new IoCModuleInfrastructure());
-        builder.RegisterModule(new IoCModuleAutoMapper());
+        builder.RegisterModule(new IoCModuleInfrastructure());        
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.

@@ -1,35 +1,37 @@
 <Project>
   <PropertyGroup>
-	<TargetFramework>net9.0</TargetFramework>		
-	<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <TargetFramework>net9.0</TargetFramework>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
-  <ItemGroup>   
+  <ItemGroup>
+    <PackageVersion Include="AgileObjects.AgileMapper" Version="1.8.1" />
     <PackageVersion Include="Autofac" Version="8.3.0" />
-	<PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageVersion Include="AutoMapper" Version="14.0.0" />
-    <PackageVersion Include="FluentAssertions" Version="8.3.0" />
+    <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageVersion Include="AutoMapper" Version="15.0.1" />
+    <PackageVersion Include="FluentAssertions" Version="8.5.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="9.0.6" />	
-	<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
-	<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-	<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
-	<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.6">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageVersion>
-	<PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.6" />
-	<PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
-	<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-	<PackageVersion Include="System.Text.Json" Version="9.0.6" />
-	<PackageVersion Include="Microsoft.OpenApi" Version="1.6.14" /> 
-	<PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-preview.5.24306.11" />
-	<PackageVersion Include="NSwag.AspNetCore" Version="14.1.0" /> 
-	<PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.6" /> 
-	<PackageVersion Include="xunit" Version="2.9.3" /> 
-	<PackageVersion Include="xunit.runner.visualstudio" Version="3.1.1" />		
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="System.Text.Json" Version="9.0.7" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="2.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
+    <PackageVersion Include="NSwag.AspNetCore" Version="14.4.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.7" />
+    <PackageVersion Include="TinyMapper" Version="3.0.3" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.3" />
   </ItemGroup>
 </Project>

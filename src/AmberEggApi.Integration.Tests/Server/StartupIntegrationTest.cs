@@ -1,11 +1,14 @@
 ﻿using AmberEggApi.ApplicationService.InjectionModules;
 using AmberEggApi.Database.Repositories;
-using AmberEggApi.Domain.InjectionModules;
 using AmberEggApi.Infrastructure.InjectionModules;
+
 using Autofac;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 using System.Reflection;
 
 namespace AmberEggApi.IntegrationTests.Server;
@@ -20,9 +23,7 @@ public class StartupIntegrationTest
     {
         // IoC Container Module Registration
         builder.RegisterModule(new IoCModuleApplicationService());
-        builder.RegisterModule(new IoCModuleInfrastructure());
-        builder.RegisterModule(new IoCModuleDomain());
-        builder.RegisterModule(new IoCModuleAutoMapper());
+        builder.RegisterModule(new IoCModuleInfrastructure());                
 
         var opt = new DbContextOptionsBuilder<EfCoreDbContext>();
         opt.UseInMemoryDatabase(databaseName: "AmberEgg-API-DomainTests");
